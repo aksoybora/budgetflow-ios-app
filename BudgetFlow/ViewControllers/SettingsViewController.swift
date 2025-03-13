@@ -18,6 +18,7 @@ class SettingsViewController: UIViewController {
     }
     
 
+    // Sign out & redirect to login page
     @IBAction func logOutClicked(_ sender: Any) {
         do {
             try Auth.auth().signOut()

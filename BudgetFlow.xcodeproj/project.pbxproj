@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */; };
 		7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */; };
 		7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */; };
 		7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B42D50F1AC006A2451 /* ViewController.swift */; };
@@ -19,12 +20,16 @@
 		7C58E5CC2D50F680006A2451 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5CB2D50F680006A2451 /* FirebaseFirestore */; };
 		7C58E5CE2D50F680006A2451 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5CD2D50F680006A2451 /* FirebaseStorage */; };
 		7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */; };
-		7C58E5D22D510518006A2451 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D12D510518006A2451 /* TransactionsViewController.swift */; };
+		7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */; };
 		7C58E5D42D510539006A2451 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D32D510539006A2451 /* ReportsViewController.swift */; };
 		7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D52D510547006A2451 /* SettingsViewController.swift */; };
+		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
+		7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B112D8321ED0064F453 /* TransactionModel.swift */; };
+		7CC50B152D8386180064F453 /* hexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B142D8386180064F453 /* hexColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,9 +40,12 @@
 		7C58E5BE2D50F1AD006A2451 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		7C58E5D12D510518006A2451 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
+		7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		7C58E5D32D510539006A2451 /* ReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
 		7C58E5D52D510547006A2451 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toSelectPhotoViewController.swift; sourceTree = "<group>"; };
+		7CC50B112D8321ED0064F453 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		7CC50B142D8386180064F453 /* hexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hexColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C334AFF2D674D1900F2D499 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7C58E5B42D50F1AC006A2451 /* ViewController.swift */,
+				7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */,
+				7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */,
+				7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */,
+				7C58E5D32D510539006A2451 /* ReportsViewController.swift */,
+				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
+				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		7C58E5A42D50F1AB006A2451 = {
 			isa = PBXGroup;
 			children = (
@@ -74,13 +96,11 @@
 		7C58E5AF2D50F1AC006A2451 /* BudgetFlow */ = {
 			isa = PBXGroup;
 			children = (
+				7CC50B132D8385E90064F453 /* Extensions */,
+				7CC50B102D8321D20064F453 /* Models */,
+				7C334AFF2D674D1900F2D499 /* ViewControllers */,
 				7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */,
 				7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */,
-				7C58E5B42D50F1AC006A2451 /* ViewController.swift */,
-				7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */,
-				7C58E5D12D510518006A2451 /* TransactionsViewController.swift */,
-				7C58E5D32D510539006A2451 /* ReportsViewController.swift */,
-				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
 				7C58E5B62D50F1AC006A2451 /* Main.storyboard */,
 				7C58E5B92D50F1AD006A2451 /* Assets.xcassets */,
 				7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */,
@@ -88,6 +108,22 @@
 				7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */,
 			);
 			path = BudgetFlow;
+			sourceTree = "<group>";
+		};
+		7CC50B102D8321D20064F453 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7CC50B112D8321ED0064F453 /* TransactionModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7CC50B132D8385E90064F453 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7CC50B142D8386180064F453 /* hexColor.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,13 +207,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */,
 				7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */,
 				7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */,
+				7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */,
+				7CC50B152D8386180064F453 /* hexColor.swift in Sources */,
 				7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */,
 				7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */,
 				7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */,
 				7C58E5D42D510539006A2451 /* ReportsViewController.swift in Sources */,
-				7C58E5D22D510518006A2451 /* TransactionsViewController.swift in Sources */,
+				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
+				7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

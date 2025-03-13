@@ -23,6 +23,7 @@ class ViewController: UIViewController {
 
     @IBAction func signInClicked(_ sender: Any) {
         
+        // Sign in & Auth
         if emailText.text != "" && passwordText.text != "" {
             Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { authdata, error in
                 
@@ -42,6 +43,7 @@ class ViewController: UIViewController {
     
     @IBAction func signUpClicked(_ sender: Any) {
         
+        // Sign up & Sign in
         if emailText.text != "" && passwordText.text != "" {
             Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { authdata, error in
                 
@@ -59,6 +61,7 @@ class ViewController: UIViewController {
     
     
     
+    // Alert Function
     func makeAlert(titleInput:String, messageInput:String) {
         let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
         let OKButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
