@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C0203FF2DC135C70004B529 /* AccountInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0203FE2DC135C70004B529 /* AccountInfoVC.swift */; };
 		7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */; };
+		7C409B5B2DC3C9590013208B /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5A2DC3C9590013208B /* DGCharts */; };
+		7C409B5D2DC3C9590013208B /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5C2DC3C9590013208B /* DGChartsDynamic */; };
 		7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */; };
 		7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */; };
 		7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B42D50F1AC006A2451 /* ViewController.swift */; };
@@ -21,14 +24,33 @@
 		7C58E5CE2D50F680006A2451 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5CD2D50F680006A2451 /* FirebaseStorage */; };
 		7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */; };
 		7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */; };
-		7C58E5D42D510539006A2451 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D32D510539006A2451 /* ReportsViewController.swift */; };
+		7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D32D510539006A2451 /* AnalysisViewController.swift */; };
 		7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D52D510547006A2451 /* SettingsViewController.swift */; };
+		7C6AE1122DD8C2600044A2A5 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5C2DC3C9590013208B /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
+		7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA217E32D8CBDB000C52880 /* WalletModel.swift */; };
+		7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */; };
+		7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */; };
 		7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B112D8321ED0064F453 /* TransactionModel.swift */; };
 		7CC50B152D8386180064F453 /* hexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B142D8386180064F453 /* hexColor.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7C6AE1132DD8C2600044A2A5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7C6AE1122DD8C2600044A2A5 /* DGChartsDynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		7C0203FE2DC135C70004B529 /* AccountInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoVC.swift; sourceTree = "<group>"; };
 		7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,9 +63,12 @@
 		7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
-		7C58E5D32D510539006A2451 /* ReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
+		7C58E5D32D510539006A2451 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		7C58E5D52D510547006A2451 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toSelectPhotoViewController.swift; sourceTree = "<group>"; };
+		7CA217E32D8CBDB000C52880 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
+		7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
+		7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		7CC50B112D8321ED0064F453 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		7CC50B142D8386180064F453 /* hexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hexColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,7 +80,9 @@
 			files = (
 				7C58E5C82D50F680006A2451 /* FirebaseAnalytics in Frameworks */,
 				7C58E5CE2D50F680006A2451 /* FirebaseStorage in Frameworks */,
+				7C409B5B2DC3C9590013208B /* DGCharts in Frameworks */,
 				7C58E5CA2D50F680006A2451 /* FirebaseAuth in Frameworks */,
+				7C409B5D2DC3C9590013208B /* DGChartsDynamic in Frameworks */,
 				7C58E5CC2D50F680006A2451 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,16 +90,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C183D872DB68FD9004AD1E5 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */,
+				7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
 		7C334AFF2D674D1900F2D499 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */,
+				7C58E5D32D510539006A2451 /* AnalysisViewController.swift */,
 				7C58E5B42D50F1AC006A2451 /* ViewController.swift */,
 				7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */,
 				7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */,
 				7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */,
-				7C58E5D32D510539006A2451 /* ReportsViewController.swift */,
 				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
 				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
+				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
+				7C0203FE2DC135C70004B529 /* AccountInfoVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -96,11 +135,10 @@
 		7C58E5AF2D50F1AC006A2451 /* BudgetFlow */ = {
 			isa = PBXGroup;
 			children = (
+				7C183D872DB68FD9004AD1E5 /* Delegates */,
 				7CC50B132D8385E90064F453 /* Extensions */,
 				7CC50B102D8321D20064F453 /* Models */,
 				7C334AFF2D674D1900F2D499 /* ViewControllers */,
-				7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */,
-				7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */,
 				7C58E5B62D50F1AC006A2451 /* Main.storyboard */,
 				7C58E5B92D50F1AD006A2451 /* Assets.xcassets */,
 				7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */,
@@ -114,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				7CC50B112D8321ED0064F453 /* TransactionModel.swift */,
+				7CA217E32D8CBDB000C52880 /* WalletModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +175,7 @@
 				7C58E5A92D50F1AC006A2451 /* Sources */,
 				7C58E5AA2D50F1AC006A2451 /* Frameworks */,
 				7C58E5AB2D50F1AC006A2451 /* Resources */,
+				7C6AE1132DD8C2600044A2A5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -147,6 +187,8 @@
 				7C58E5C92D50F680006A2451 /* FirebaseAuth */,
 				7C58E5CB2D50F680006A2451 /* FirebaseFirestore */,
 				7C58E5CD2D50F680006A2451 /* FirebaseStorage */,
+				7C409B5A2DC3C9590013208B /* DGCharts */,
+				7C409B5C2DC3C9590013208B /* DGChartsDynamic */,
 			);
 			productName = BudgetFlow;
 			productReference = 7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */;
@@ -178,6 +220,7 @@
 			mainGroup = 7C58E5A42D50F1AB006A2451;
 			packageReferences = (
 				7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 7C58E5AE2D50F1AC006A2451 /* Products */;
 			projectDirPath = "";
@@ -207,16 +250,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */,
 				7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */,
 				7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */,
 				7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */,
 				7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */,
+				7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */,
 				7CC50B152D8386180064F453 /* hexColor.swift in Sources */,
 				7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */,
 				7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */,
+				7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */,
 				7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */,
-				7C58E5D42D510539006A2451 /* ReportsViewController.swift in Sources */,
+				7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */,
 				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
+				7C0203FF2DC135C70004B529 /* AccountInfoVC.swift in Sources */,
 				7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +489,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -453,6 +508,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7C409B5A2DC3C9590013208B /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		7C409B5C2DC3C9590013208B /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		7C58E5C72D50F680006A2451 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

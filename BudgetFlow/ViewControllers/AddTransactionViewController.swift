@@ -21,12 +21,15 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var datePicker: UIDatePicker!
     
     
-    let currencyOptions = ["TRY ₺", "USD ＄", "EUR €"]
+    
+    let currencyOptions = ["TRY", "USD", "EUR"]
     let categoryOptions = ["Food", "Transportation", "Electricity", "Entertainment", "Accommodation", "Education", "Technology", "Salary", "Other"]
     var selectedCurrency: String?
     var selectedCategory: String?
     var selectedTransactionType: String?
     let titleLabel = UILabel()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +40,6 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
         
-        // Initially make the first pickers & selector selected
         currencyPicker.selectRow(0, inComponent: 0, animated: false)
         categoryPicker.selectRow(0, inComponent: 0, animated: false)
         
@@ -55,19 +57,23 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
+    
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerView == currencyPicker ? currencyOptions.count : categoryOptions.count
     }
 
     
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerView == currencyPicker ? currencyOptions[row] : categoryOptions[row]
     }
+    
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -79,6 +85,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     
+    
     @IBAction func transactionTypeChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
                 selectedTransactionType = "Income"
@@ -88,6 +95,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     
+    
     @IBAction func tapToSelectButton(_ sender: Any) {
         performSegue(withIdentifier: "toSelectPhotoVC", sender: nil)
     }
@@ -95,47 +103,121 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     @IBAction func saveTheTransactionButton(_ sender: Any) {
+        // İşlem bilgilerini al
         guard let title = titleText.text, !title.isEmpty,
               let description = descriptionText.text, !description.isEmpty,
-              let amount = amountText.text, !amount.isEmpty else {
-            
-            let alert = UIAlertController(title: "Error!", message: "Please fill in the blank spaces.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+              let amountText = amountText.text, !amountText.isEmpty,
+              let amount = Double(amountText),
+              let currency = selectedCurrency,
+              let transactionType = selectedTransactionType,
+              let userID = Auth.auth().currentUser?.uid else {
+            print("Eksik bilgi veya kullanıcı girişi yok.")
             return
         }
-        
-        let selectedDate = datePicker.date
-        let timestamp = Timestamp(date: selectedDate) // Tarihi Timestamp olarak kaydet
-        
-        guard let userID = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
-            return
-        }
-        
+
+        // Firestore'a işlemi kaydet
         let transactionData: [String: Any] = [
             "title": title,
             "description": description,
             "amount": amount,
-            "currency": selectedCurrency ?? "TRY ₺",
+            "currency": currency,
+            "type": transactionType,
             "category": selectedCategory ?? "Other",
-            "type": selectedTransactionType ?? "Expense",
-            "date": timestamp, // Timestamp olarak kaydet
-            "userID": userID // Kullanıcı kimliğini ekle
+            "date": Timestamp(date: Date()),
+            "userID": userID
         ]
-        
+
         let db = Firestore.firestore()
         db.collection("transactions").addDocument(data: transactionData) { error in
             if let error = error {
-                print("Error adding document: \(error)")
-                let alert = UIAlertController(title: "Error", message: "Failed to save transaction.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                print("Error saving transaction: \(error)")
             } else {
-                print("Transaction saved successfully")
+                // İşlem başarılıysa cüzdanı güncelle
+                let balanceChange = (transactionType == "Income") ? amount : -amount
+                self.updateWalletBalance(userID: userID, currency: currency, changeAmount: balanceChange)
                 self.navigationController?.popViewController(animated: true)
+                NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
+
             }
         }
     }
+
+    
+    
+    func updateWalletBalance(userID: String, currency: String, changeAmount: Double) {
+        let db = Firestore.firestore()
+        let walletsRef = db.collection("users").document(userID).collection("wallets")
+
+        // Cüzdanı currency'ye göre ara
+        walletsRef.whereField("currency", isEqualTo: currency).getDocuments { snapshot, error in
+            if let error = error {
+                print("Cüzdan sorgulama hatası: \(error.localizedDescription)")
+                return
+            }
+
+            if let document = snapshot?.documents.first {
+                // Cüzdan bulundu, güncelle
+                let docRef = walletsRef.document(document.documentID)
+                docRef.updateData([
+                    "balance": FieldValue.increment(changeAmount)
+                ]) { error in
+                    if let error = error {
+                        print("Cüzdan güncellenemedi: \(error.localizedDescription)")
+                    } else {
+                        print("Cüzdan bakiyesi güncellendi.")
+                    }
+                }
+            } else {
+                // Cüzdan yoksa oluştur
+                walletsRef.addDocument(data: [
+                    "currency": currency,
+                    "balance": changeAmount,
+                    "userID": userID
+                ]) { error in
+                    if let error = error {
+                        print("Yeni cüzdan oluşturulamadı: \(error.localizedDescription)")
+                    } else {
+                        print("Yeni cüzdan oluşturuldu.")
+                    }
+                }
+            }
+        }
+    }
+    
+    /*
+    // Cüzdan oluştruma ve kontrol etme
+    func createOrUpdateWallet(userID: String, currency: String, initialBalance: Double) {
+        let db = Firestore.firestore()
+        let walletRef = db.collection("users").document(userID).collection("wallets").document(currency)
+        
+        db.runTransaction { (transaction, errorPointer) -> Any? in
+            let walletDocument: DocumentSnapshot
+            do {
+                try walletDocument = transaction.getDocument(walletRef)
+            } catch let error as NSError {
+                errorPointer?.pointee = error
+                return nil
+            }
+            
+            if walletDocument.exists {
+                // Cüzdan zaten varsa, bakiyeyi güncelle
+                guard let currentBalance = walletDocument.data()?["balance"] as? Double else {
+                    return nil
+                }
+                let newBalance = currentBalance + initialBalance
+                transaction.updateData(["balance": newBalance], forDocument: walletRef)
+            } else {
+                // Cüzdan yoksa, yeni bir cüzdan oluştur
+                transaction.setData(["currency": currency, "balance": initialBalance], forDocument: walletRef)
+            }
+            return nil
+        } completion: { (_, error) in
+            if let error = error {
+                print("Error creating/updating wallet: \(error)")
+            } else {
+                print("Wallet created/updated successfully")
+            }
+        }
+    } */
     
 }

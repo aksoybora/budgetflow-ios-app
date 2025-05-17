@@ -3,4 +3,85 @@
    uuid = "997CD0FF-D743-4EC0-9D4A-20B45BECB7B5"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4DDA0617-CE95-4E06-B8F8-6D4FCB33A98F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetFlow/ViewControllers/TransactionsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D4165DB8-646F-418D-BF45-26542A525BCD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetFlow/ViewControllers/SettingsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "SettingsViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "D4165DB8-646F-418D-BF45-26542A525BCD - feb2e662d18fcda1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetFlow.SettingsViewController.titleLabel.getter : __C.UILabel"
+                  moduleName = "BudgetFlow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/boraaksoy/Desktop/BudgetFlow/BudgetFlow/ViewControllers/SettingsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "D4165DB8-646F-418D-BF45-26542A525BCD - f2d7a2bf9a5c89bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetFlow.SettingsViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; BudgetFlow.SettingsViewController"
+                  moduleName = "BudgetFlow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/boraaksoy/Desktop/BudgetFlow/BudgetFlow/ViewControllers/SettingsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "D4165DB8-646F-418D-BF45-26542A525BCD - 882f88d69571a56b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BudgetFlow.SettingsViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;BudgetFlow.SettingsViewController&gt;"
+                  moduleName = "BudgetFlow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/boraaksoy/Desktop/BudgetFlow/BudgetFlow/ViewControllers/SettingsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -16,4 +16,5 @@ struct Transaction {
     let category: String
     let type: String
     let date: Timestamp
+    let walletID: String
 }

@@ -15,6 +15,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     let titleLabel = UILabel()
     var transactions: [Transaction] = []
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,30 +56,63 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             print("User not logged in")
             return
         }
-        
+
         let db = Firestore.firestore()
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID) // Sadece mevcut kullanıcının transaction'larını çek
-            .order(by: "date", descending: true) // En yeni işlem en üstte
+            .order(by: "date", descending: true) // En yeni işlem en üstte (tarih ve saat bilgisine göre)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else {
                     self.transactions = querySnapshot?.documents.compactMap { document in
                         let data = document.data()
+
+                        // Cüzdan ID'sini almak için:
+                        let currency = data["currency"] as? String ?? ""
+                        let walletID = self.getWalletID(userID: userID, currency: currency)
+
                         return Transaction(
                             title: data["title"] as? String ?? "",
                             description: data["description"] as? String ?? "",
-                            amount: data["amount"] as? String ?? "",
-                            currency: data["currency"] as? String ?? "",
+                            amount: {
+                                if let amountStr = data["amount"] as? String {
+                                    return amountStr
+                                } else if let amountDouble = data["amount"] as? Double {
+                                    return String(format: "%.2f", amountDouble)
+                                } else {
+                                    return ""
+                                }
+                            }(),
+                            currency: currency,
                             category: data["category"] as? String ?? "",
                             type: data["type"] as? String ?? "",
-                            date: data["date"] as? Timestamp ?? Timestamp()
+                            date: data["date"] as? Timestamp ?? Timestamp(),
+                            walletID: walletID // Wallet ID'yi transaction'a ekliyoruz
                         )
                     } ?? []
                     self.transactionsTableView.reloadData()
                 }
             }
+    }
+
+    
+    
+    
+    // Cüzdan ID'sini almak için bir fonksiyon
+    func getWalletID(userID: String, currency: String) -> String {
+        var walletID = ""
+        let db = Firestore.firestore()
+        let walletsRef = db.collection("users").document(userID).collection("wallets")
+
+        walletsRef.whereField("currency", isEqualTo: currency).getDocuments { snapshot, error in
+            if let error = error {
+                print("Error getting wallet ID: \(error)")
+            } else if let document = snapshot?.documents.first {
+                walletID = document.documentID // WalletID'yi alıyoruz
+            }
+        }
+        return walletID
     }
     
     
@@ -89,7 +123,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        // UITableViewCell'i yeniden kullanılabilir hale getir
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
         let transaction = transactions[indexPath.row]
         
         // Timestamp'i String'e dönüştür
@@ -104,17 +139,34 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         
         // Gelir (Income) veya Gider (Expense) durumuna göre renk ayarla
         if transaction.type == "Income" {
-            //content.textProperties.color = .systemGreen // Başlık yeşil
             content.secondaryTextProperties.color = UIColor(hex: "#3E7B27") // Alt metin yeşil
-            cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.1) // Açık yeşil arka plan
+            cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.2) // Açık yeşil arka plan
         } else if transaction.type == "Expense" {
-            //content.textProperties.color = .systemRed // Başlık kırmızı
             content.secondaryTextProperties.color = .systemRed // Alt metin kırmızı
-            cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.1) // Açık kırmızı arka plan
+            cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.2) // Açık kırmızı arka plan
         }
         
         cell.contentConfiguration = content
         return cell
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedTransaction = transactions[indexPath.row]
+        performSegue(withIdentifier: "toTransactionDetailVC", sender: selectedTransaction)
+    }
+
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toTransactionDetailVC",
+           let destinationVC = segue.destination as? TransactionDetailsViewController,
+           let selectedTransaction = sender as? Transaction {
+            destinationVC.transaction = selectedTransaction
+        } else {
+            print("Segue failed or transaction is nil")
+        }
     }
     
 }
