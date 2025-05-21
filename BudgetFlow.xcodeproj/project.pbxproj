@@ -9,8 +9,15 @@
 /* Begin PBXBuildFile section */
 		7C0203FF2DC135C70004B529 /* AccountInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0203FE2DC135C70004B529 /* AccountInfoVC.swift */; };
 		7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */; };
-		7C409B5B2DC3C9590013208B /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5A2DC3C9590013208B /* DGCharts */; };
-		7C409B5D2DC3C9590013208B /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5C2DC3C9590013208B /* DGChartsDynamic */; };
+		7C1D8FC02DDCC10600E528F2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FBF2DDCC10600E528F2 /* FirebaseAnalytics */; };
+		7C1D8FCB2DDCC15000E528F2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FCA2DDCC15000E528F2 /* FirebaseAuth */; };
+		7C1D8FCD2DDCC15000E528F2 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FCC2DDCC15000E528F2 /* FirebaseCore */; };
+		7C1D8FCF2DDCC15000E528F2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FCE2DDCC15000E528F2 /* FirebaseDatabase */; };
+		7C1D8FD12DDCC15000E528F2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD02DDCC15000E528F2 /* FirebaseFirestore */; };
+		7C1D8FD32DDCC15000E528F2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */; };
+		7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD52DDCC17000E528F2 /* DGCharts */; };
+		7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; };
+		7C1D8FD92DDCC19700E528F2 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */; };
 		7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */; };
 		7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B42D50F1AC006A2451 /* ViewController.swift */; };
@@ -18,15 +25,10 @@
 		7C58E5BA2D50F1AD006A2451 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C58E5B92D50F1AD006A2451 /* Assets.xcassets */; };
 		7C58E5BD2D50F1AD006A2451 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */; };
 		7C58E5C52D50F489006A2451 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */; };
-		7C58E5C82D50F680006A2451 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5C72D50F680006A2451 /* FirebaseAnalytics */; };
-		7C58E5CA2D50F680006A2451 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5C92D50F680006A2451 /* FirebaseAuth */; };
-		7C58E5CC2D50F680006A2451 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5CB2D50F680006A2451 /* FirebaseFirestore */; };
-		7C58E5CE2D50F680006A2451 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C58E5CD2D50F680006A2451 /* FirebaseStorage */; };
 		7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */; };
 		7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */; };
 		7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D32D510539006A2451 /* AnalysisViewController.swift */; };
 		7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D52D510547006A2451 /* SettingsViewController.swift */; };
-		7C6AE1122DD8C2600044A2A5 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7C409B5C2DC3C9590013208B /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
 		7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA217E32D8CBDB000C52880 /* WalletModel.swift */; };
 		7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */; };
@@ -42,7 +44,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7C6AE1122DD8C2600044A2A5 /* DGChartsDynamic in Embed Frameworks */,
+				7C1D8FD92DDCC19700E528F2 /* DGChartsDynamic in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,12 +80,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C58E5C82D50F680006A2451 /* FirebaseAnalytics in Frameworks */,
-				7C58E5CE2D50F680006A2451 /* FirebaseStorage in Frameworks */,
-				7C409B5B2DC3C9590013208B /* DGCharts in Frameworks */,
-				7C58E5CA2D50F680006A2451 /* FirebaseAuth in Frameworks */,
-				7C409B5D2DC3C9590013208B /* DGChartsDynamic in Frameworks */,
-				7C58E5CC2D50F680006A2451 /* FirebaseFirestore in Frameworks */,
+				7C1D8FC02DDCC10600E528F2 /* FirebaseAnalytics in Frameworks */,
+				7C1D8FCD2DDCC15000E528F2 /* FirebaseCore in Frameworks */,
+				7C1D8FCF2DDCC15000E528F2 /* FirebaseDatabase in Frameworks */,
+				7C1D8FD12DDCC15000E528F2 /* FirebaseFirestore in Frameworks */,
+				7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */,
+				7C1D8FCB2DDCC15000E528F2 /* FirebaseAuth in Frameworks */,
+				7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */,
+				7C1D8FD32DDCC15000E528F2 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +101,13 @@
 				7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		7C1D8FC92DDCC15000E528F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7C334AFF2D674D1900F2D499 /* ViewControllers */ = {
@@ -121,6 +132,7 @@
 			children = (
 				7C58E5AF2D50F1AC006A2451 /* BudgetFlow */,
 				7C58E5AE2D50F1AC006A2451 /* Products */,
+				7C1D8FC92DDCC15000E528F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,12 +195,14 @@
 			);
 			name = BudgetFlow;
 			packageProductDependencies = (
-				7C58E5C72D50F680006A2451 /* FirebaseAnalytics */,
-				7C58E5C92D50F680006A2451 /* FirebaseAuth */,
-				7C58E5CB2D50F680006A2451 /* FirebaseFirestore */,
-				7C58E5CD2D50F680006A2451 /* FirebaseStorage */,
-				7C409B5A2DC3C9590013208B /* DGCharts */,
-				7C409B5C2DC3C9590013208B /* DGChartsDynamic */,
+				7C1D8FBF2DDCC10600E528F2 /* FirebaseAnalytics */,
+				7C1D8FCA2DDCC15000E528F2 /* FirebaseAuth */,
+				7C1D8FCC2DDCC15000E528F2 /* FirebaseCore */,
+				7C1D8FCE2DDCC15000E528F2 /* FirebaseDatabase */,
+				7C1D8FD02DDCC15000E528F2 /* FirebaseFirestore */,
+				7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */,
+				7C1D8FD52DDCC17000E528F2 /* DGCharts */,
+				7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */,
 			);
 			productName = BudgetFlow;
 			productReference = 7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */;
@@ -219,8 +233,8 @@
 			);
 			mainGroup = 7C58E5A42D50F1AB006A2451;
 			packageReferences = (
-				7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */,
+				7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 7C58E5AE2D50F1AC006A2451 /* Products */;
 			projectDirPath = "";
@@ -489,7 +503,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */ = {
+		7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 11.7.0;
+			};
+		};
+		7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
@@ -497,46 +519,48 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.7.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7C409B5A2DC3C9590013208B /* DGCharts */ = {
+		7C1D8FBF2DDCC10600E528F2 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
-		7C409B5C2DC3C9590013208B /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7C409B592DC3C9590013208B /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
-		};
-		7C58E5C72D50F680006A2451 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		7C58E5C92D50F680006A2451 /* FirebaseAuth */ = {
+		7C1D8FCA2DDCC15000E528F2 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		7C58E5CB2D50F680006A2451 /* FirebaseFirestore */ = {
+		7C1D8FCC2DDCC15000E528F2 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		7C1D8FCE2DDCC15000E528F2 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		7C1D8FD02DDCC15000E528F2 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		7C58E5CD2D50F680006A2451 /* FirebaseStorage */ = {
+		7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7C58E5C62D50F680006A2451 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		7C1D8FD52DDCC17000E528F2 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
