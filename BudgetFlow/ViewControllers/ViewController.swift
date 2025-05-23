@@ -10,65 +10,188 @@ import Firebase
 import FirebaseAuth
 
 class ViewController: UIViewController {
-
+    
+    // MARK: - UI Elemanları
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
     
+    // MARK: - Logo ve Başlık için StackView oluşturma
+    private let logoTitleStackView = UIStackView()
+    private let logoImageView = UIImageView()
+    private let appNameLabel = UILabel()
     
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setupUI() // UI elemanlarını ayarla
+        setupLogoAndTitle() // <-- Bunu ekle
     }
-
-
-    @IBAction func signInClicked(_ sender: Any) {
+    
+    // MARK: - UI Kurulumu
+    private func setupUI() {
+        // Arka plan rengini ayarla
+        view.backgroundColor = UIColor(hex: "#F5F5F5")
         
-        // Sign in & Auth
+        // Container view'ı ayarla
+        containerView.layer.cornerRadius = 20
+        containerView.backgroundColor = .white
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        containerView.layer.shadowRadius = 8
+        
+        // Text field'ları ayarla
+        setupTextField(emailText, placeholder: "Email")
+        setupTextField(passwordText, placeholder: "Password")
+        
+        // Butonları ayarla
+        setupButton(signInButton, title: "Sign In", isPrimary: true)
+        setupButton(signUpButton, title: "Sign Up", isPrimary: false)
+    }
+    
+    private func setupLogoAndTitle() {
+        // StackView ayarları
+        logoTitleStackView.axis = .horizontal
+        logoTitleStackView.alignment = .center
+        logoTitleStackView.spacing = 8 // Logo ile yazı arası boşluk
+        logoTitleStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Logo ayarları
+        logoImageView.image = UIImage(named: "AppIcon.png") // Assets'teki icon
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        logoImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+
+        // Başlık ayarları
+        appNameLabel.text = "BudgetFlow"
+        appNameLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        appNameLabel.textColor = UIColor(hex: "#007AFF")
+
+        // StackView'a ekle
+        logoTitleStackView.addArrangedSubview(logoImageView)
+        logoTitleStackView.addArrangedSubview(appNameLabel)
+
+        // Ana view'a ekle
+        view.addSubview(logoTitleStackView)
+
+        // StackView'ı emailText'in üstüne ortala
+        NSLayoutConstraint.activate([
+            logoTitleStackView.bottomAnchor.constraint(equalTo: emailText.topAnchor, constant: -45),
+            logoTitleStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    
+    // Text field ayarları
+    private func setupTextField(_ textField: UITextField, placeholder: String) {
+        textField.placeholder = placeholder
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(hex: "#E0E0E0").cgColor
+        textField.backgroundColor = UIColor(hex: "#F8F8F8")
+        
+        // Sol padding ve icon için container view
+        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: textField.frame.height))
+        
+        if textField == emailText {
+            // E-posta ikonu
+            let emailIcon = UIImageView(image: UIImage(systemName: "envelope.fill"))
+            emailIcon.tintColor = UIColor(hex: "#007AFF")
+            emailIcon.contentMode = .scaleAspectFit
+            emailIcon.frame = CGRect(x: 10, y: 0, width: 20, height: textField.frame.height)
+            leftContainerView.addSubview(emailIcon)
+        } else {
+            // Şifre ikonu
+            let passwordIcon = UIImageView(image: UIImage(systemName: "lock.fill"))
+            passwordIcon.tintColor = UIColor(hex: "#007AFF")
+            passwordIcon.contentMode = .scaleAspectFit
+            passwordIcon.frame = CGRect(x: 10, y: 0, width: 20, height: textField.frame.height)
+            leftContainerView.addSubview(passwordIcon)
+        }
+        
+        textField.leftView = leftContainerView
+        textField.leftViewMode = .always
+    }
+    
+    // Buton ayarları
+    private func setupButton(_ button: UIButton, title: String, isPrimary: Bool) {
+        button.setTitle(title, for: .normal)
+        button.layer.cornerRadius = 8
+        
+        if isPrimary {
+            button.backgroundColor = UIColor(hex: "#007AFF")
+            button.setTitleColor(.white, for: .normal)
+        } else {
+            button.backgroundColor = .white
+            button.setTitleColor(UIColor(hex: "#007AFF"), for: .normal)
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor(hex: "#007AFF").cgColor
+        }
+        
+        // Buton gölgesi
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+    }
+    
+    // MARK: - Aksiyonlar
+    @IBAction func signInClicked(_ sender: Any) {
+        // Giriş işlemi
         if emailText.text != "" && passwordText.text != "" {
-            Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { authdata, error in
+            // Yükleniyor göstergesi ekle
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
+            activityIndicator.center = view.center
+            activityIndicator.startAnimating()
+            view.addSubview(activityIndicator)
+            
+            Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authdata, error in
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
                 
-                if error != nil {
-                    self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
+                if let error = error {
+                    self?.makeAlert(titleInput: "Error!", messageInput: error.localizedDescription)
                 } else {
-                    self.performSegue(withIdentifier: "toHomeVC", sender: nil)
+                    self?.performSegue(withIdentifier: "toHomeVC", sender: nil)
                 }
             }
-            
         } else {
-            self.makeAlert(titleInput: "Error!", messageInput: "No email or password was entered.")
+            makeAlert(titleInput: "Error!", messageInput: "Please fill in email and password fields.")
         }
     }
-    
-    
     
     @IBAction func signUpClicked(_ sender: Any) {
-        
-        // Sign up & Sign in
+        // Kayıt işlemi
         if emailText.text != "" && passwordText.text != "" {
-            Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { authdata, error in
+            // Yükleniyor göstergesi ekle
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
+            activityIndicator.center = view.center
+            activityIndicator.startAnimating()
+            view.addSubview(activityIndicator)
+            
+            Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authdata, error in
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
                 
-                if error != nil {
-                    self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
+                if let error = error {
+                    self?.makeAlert(titleInput: "Error!", messageInput: error.localizedDescription)
                 } else {
-                    self.performSegue(withIdentifier: "toHomeVC", sender: nil)
+                    self?.performSegue(withIdentifier: "toHomeVC", sender: nil)
                 }
             }
-            
         } else {
-            self.makeAlert(titleInput: "Error!", messageInput: "No email or password was entered.")
+            makeAlert(titleInput: "Error!", messageInput: "Please fill in email and password fields.")
         }
     }
     
-    
-    
-    // Alert Function
-    func makeAlert(titleInput:String, messageInput:String) {
-        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
-        let OKButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
-        alert.addAction(OKButton)
-        self.present(alert, animated: true, completion: nil)
+    // MARK: - Yardımcı Metodlar
+    func makeAlert(titleInput: String, messageInput: String) {
+        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
     }
-    
-    
 }
 

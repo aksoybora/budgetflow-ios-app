@@ -96,40 +96,66 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as! WalletTableViewCell  // Storyboard'daki Cell Identifier'ı "WalletCell" yapın
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as! WalletTableViewCell
         
         let wallet = wallets[indexPath.row]
-        //cell.backgroundColor = UIColor(hex: "#1B56FD", alpha: 0.2)
-        cell.backgroundColor = .white
-        //cell.layer.cornerRadius
-        cell.layer.shadowColor = UIColor.black.cgColor
-        //cell.layer.shadowOpacity = 0.1
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-        //cell.layer.shadowRadius = 4
-        cell.layer.masksToBounds = false
-        tableView.rowHeight = 100
-        cell.currencyLabel.text = wallet.currency
-        cell.balanceLabel.text = "\(wallet.balance)"  // Formatlı gösterim için String(format: "%.2f", wallet.balance) de kullanabilirsiniz
         
-        let backgroundColors: [UIColor] = [
-            UIColor(hex: "#ecf6e2", alpha: 1),
-            UIColor(hex: "#e1effa", alpha: 1),
-            UIColor(hex: "#fef0d8", alpha: 1),
-        ]
+        // Configure cell with wallet data
+        cell.configure(with: wallet)
         
-        cell.contentView.backgroundColor = backgroundColors[indexPath.row % backgroundColors.count]
-        let textColors: [UIColor] = [
-            UIColor(hex: "#245320"), // Mavi ton
-            UIColor(hex: "#194385"), // Yeşil ton
-            UIColor(hex: "#e37701")  // Turuncu ton
-        ]
-
-        let textColor = textColors[indexPath.row % textColors.count]
+        // Set background gradient
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = cell.contentView.bounds
+        gradientLayer.cornerRadius = 16
+        
+        let colors: [CGColor]
+        switch wallet.currency {
+        case "TRY":
+            colors = [
+                UIColor(hex: "#ecf6e2", alpha: 1).cgColor,
+                UIColor(hex: "#d4e9c5", alpha: 1).cgColor
+            ]
+        case "USD":
+            colors = [
+                UIColor(hex: "#e1effa", alpha: 1).cgColor,
+                UIColor(hex: "#c5dff0", alpha: 1).cgColor
+            ]
+        case "EUR":
+            colors = [
+                UIColor(hex: "#fef0d8", alpha: 1).cgColor,
+                UIColor(hex: "#f5d9b0", alpha: 1).cgColor
+            ]
+        default:
+            colors = [
+                UIColor(hex: "#f5f5f5", alpha: 1).cgColor,
+                UIColor(hex: "#e5e5e5", alpha: 1).cgColor
+            ]
+        }
+        
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        
+        // Remove any existing gradient layers
+        cell.contentView.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        cell.contentView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Set text colors based on currency
+        let textColor: UIColor
+        switch wallet.currency {
+        case "TRY":
+            textColor = UIColor(hex: "#245320")
+        case "USD":
+            textColor = UIColor(hex: "#194385")
+        case "EUR":
+            textColor = UIColor(hex: "#e37701")
+        default:
+            textColor = .darkGray
+        }
+        
         cell.currencyLabel.textColor = textColor
         cell.balanceLabel.textColor = textColor
-        cell.currencyLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        cell.balanceLabel.font = UIFont.boldSystemFont(ofSize: 24)
-
+        cell.walletIconImageView.tintColor = textColor
         
         return cell
     }

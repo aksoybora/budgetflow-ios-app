@@ -16,72 +16,88 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BudgetFlow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0g3-ob-xZG">
-                                <rect key="frame" x="20" y="176" width="374" height="123"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
-                                <color key="textColor" systemColor="systemBlueColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epK-m6-c89">
-                                <rect key="frame" x="55" y="465" width="84" height="35"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="containerView">
+                                <rect key="frame" x="20" y="254" width="374" height="388"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="logoImageView">
+                                        <rect key="frame" x="137" y="20" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="logoHeight"/>
+                                            <constraint firstAttribute="width" constant="100" id="logoWidth"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="E-posta" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="emailText">
+                                        <rect key="frame" x="20" y="140" width="334" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="emailHeight"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Şifre" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="passwordText">
+                                        <rect key="frame" x="20" y="200" width="334" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="passwordHeight"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="signInButton">
+                                        <rect key="frame" x="20" y="260" width="334" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="signInHeight"/>
+                                        </constraints>
+                                        <state key="normal" title="Giriş Yap"/>
+                                        <connections>
+                                            <action selector="signInClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="signInAction"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="signUpButton">
+                                        <rect key="frame" x="20" y="324" width="334" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="signUpHeight"/>
+                                        </constraints>
+                                        <state key="normal" title="Kayıt Ol"/>
+                                        <connections>
+                                            <action selector="signUpClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="signUpAction"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="84" id="gUg-Ag-VwW"/>
+                                    <constraint firstAttribute="bottom" secondItem="signUpButton" secondAttribute="bottom" constant="20" id="containerBottom"/>
+                                    <constraint firstItem="emailText" firstAttribute="leading" secondItem="containerView" secondAttribute="leading" constant="20" id="emailLeading"/>
+                                    <constraint firstItem="emailText" firstAttribute="top" secondItem="logoImageView" secondAttribute="bottom" constant="20" id="emailTop"/>
+                                    <constraint firstAttribute="trailing" secondItem="emailText" secondAttribute="trailing" constant="20" id="emailTrailing"/>
+                                    <constraint firstItem="logoImageView" firstAttribute="centerX" secondItem="containerView" secondAttribute="centerX" id="logoCenterX"/>
+                                    <constraint firstItem="logoImageView" firstAttribute="top" secondItem="containerView" secondAttribute="top" constant="20" id="logoTop"/>
+                                    <constraint firstItem="passwordText" firstAttribute="leading" secondItem="emailText" secondAttribute="leading" id="passwordLeading"/>
+                                    <constraint firstItem="passwordText" firstAttribute="top" secondItem="emailText" secondAttribute="bottom" constant="20" id="passwordTop"/>
+                                    <constraint firstItem="passwordText" firstAttribute="trailing" secondItem="emailText" secondAttribute="trailing" id="passwordTrailing"/>
+                                    <constraint firstItem="signInButton" firstAttribute="leading" secondItem="emailText" secondAttribute="leading" id="signInLeading"/>
+                                    <constraint firstItem="signInButton" firstAttribute="top" secondItem="passwordText" secondAttribute="bottom" constant="20" id="signInTop"/>
+                                    <constraint firstItem="signInButton" firstAttribute="trailing" secondItem="emailText" secondAttribute="trailing" id="signInTrailing"/>
+                                    <constraint firstItem="signUpButton" firstAttribute="leading" secondItem="signInButton" secondAttribute="leading" id="signUpLeading"/>
+                                    <constraint firstItem="signUpButton" firstAttribute="top" secondItem="signInButton" secondAttribute="bottom" constant="20" id="signUpTop"/>
+                                    <constraint firstItem="signUpButton" firstAttribute="trailing" secondItem="signInButton" secondAttribute="trailing" id="signUpTrailing"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Sign In"/>
-                                <connections>
-                                    <action selector="signInClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mWs-qX-t4i"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZm-S7-11f">
-                                <rect key="frame" x="275" y="465" width="84" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Sign Up"/>
-                                <connections>
-                                    <action selector="signUpClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9E9-GL-rR8"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="E-mail:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gQU-Yq-VdG">
-                                <rect key="frame" x="30" y="302" width="355" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="SQs-su-Al8"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tFs-AK-3NN">
-                                <rect key="frame" x="30" y="344" width="355" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="luP-Lr-RGh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0g3-ob-xZG" firstAttribute="centerX" secondItem="gQU-Yq-VdG" secondAttribute="centerX" id="0kS-JV-cos"/>
-                            <constraint firstItem="gQU-Yq-VdG" firstAttribute="trailing" secondItem="tFs-AK-3NN" secondAttribute="trailing" id="6z8-vd-B35"/>
-                            <constraint firstItem="0g3-ob-xZG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="EfK-Zf-ZkQ"/>
-                            <constraint firstItem="LZm-S7-11f" firstAttribute="baseline" secondItem="epK-m6-c89" secondAttribute="firstBaseline" id="Gct-if-lsf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="epK-m6-c89" secondAttribute="bottom" constant="396" id="HkV-uM-872"/>
-                            <constraint firstItem="epK-m6-c89" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="55" id="JDI-oY-gOs"/>
-                            <constraint firstItem="0g3-ob-xZG" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="MlC-Je-Pvn"/>
-                            <constraint firstItem="gQU-Yq-VdG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="UQE-9A-gia"/>
-                            <constraint firstItem="tFs-AK-3NN" firstAttribute="top" secondItem="gQU-Yq-VdG" secondAttribute="bottom" constant="8" id="WDi-vp-i2E"/>
-                            <constraint firstItem="epK-m6-c89" firstAttribute="top" secondItem="tFs-AK-3NN" secondAttribute="bottom" constant="53" id="dKK-AI-2nG"/>
-                            <constraint firstItem="epK-m6-c89" firstAttribute="baseline" secondItem="LZm-S7-11f" secondAttribute="baseline" id="fgJ-RI-DG9"/>
-                            <constraint firstItem="gQU-Yq-VdG" firstAttribute="top" secondItem="0g3-ob-xZG" secondAttribute="bottom" constant="37" id="gc3-Pb-Hwj"/>
-                            <constraint firstItem="gQU-Yq-VdG" firstAttribute="leading" secondItem="tFs-AK-3NN" secondAttribute="leading" id="qgy-qM-97T"/>
-                            <constraint firstItem="0g3-ob-xZG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="176" id="tiS-JD-EdE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LZm-S7-11f" secondAttribute="trailing" constant="55" id="yvz-2D-MnL"/>
+                            <constraint firstItem="containerView" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="containerCenterY"/>
+                            <constraint firstItem="containerView" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="containerLeading"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="containerView" secondAttribute="trailing" constant="20" id="containerTrailing"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailText" destination="gQU-Yq-VdG" id="bLu-40-ocy"/>
-                        <outlet property="passwordText" destination="tFs-AK-3NN" id="ys2-Qz-l79"/>
-                        <segue destination="LSa-gq-yc8" kind="presentation" identifier="toHomeVC" modalPresentationStyle="fullScreen" id="djH-4l-q5B"/>
+                        <outlet property="containerView" destination="containerView" id="containerViewOutlet"/>
+                        <outlet property="emailText" destination="emailText" id="emailTextOutlet"/>
+                        <outlet property="passwordText" destination="passwordText" id="passwordTextOutlet"/>
+                        <outlet property="signInButton" destination="signInButton" id="signInButtonOutlet"/>
+                        <outlet property="signUpButton" destination="signUpButton" id="signUpButtonOutlet"/>
+                        <segue destination="LSa-gq-yc8" kind="presentation" identifier="toHomeVC" modalPresentationStyle="fullScreen" id="toHomeVCSegue"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -808,41 +824,59 @@
                                 <rect key="frame" x="0.0" y="95" width="414" height="752"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletCell" rowHeight="53" id="e9n-zF-rGP" customClass="WalletTableViewCell" customModule="BudgetFlow" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="53"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletCell" rowHeight="100" id="e9n-zF-rGP" customClass="WalletTableViewCell" customModule="BudgetFlow" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e9n-zF-rGP" id="2wW-5s-b2W">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="53"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="balance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoH-yP-yOX">
-                                                    <rect key="frame" x="45" y="11" width="107" height="36"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="walletIcon">
+                                                    <rect key="frame" x="20" y="30" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="107" id="IjQ-Q2-VgA"/>
+                                                        <constraint firstAttribute="height" constant="40" id="iconHeight"/>
+                                                        <constraint firstAttribute="width" constant="40" id="iconWidth"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Wallet Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="walletName">
+                                                    <rect key="frame" x="76" y="20" width="318" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="currency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIz-QT-ejL">
-                                                    <rect key="frame" x="254" y="11" width="67.5" height="36"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="balance">
+                                                    <rect key="frame" x="76" y="44" width="318" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Currency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="currency">
+                                                    <rect key="frame" x="76" y="84" width="318" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="JoH-yP-yOX" firstAttribute="baseline" secondItem="KIz-QT-ejL" secondAttribute="baseline" id="50L-4E-toQ"/>
-                                                <constraint firstItem="JoH-yP-yOX" firstAttribute="top" secondItem="2wW-5s-b2W" secondAttribute="topMargin" id="SYU-eQ-wa6"/>
-                                                <constraint firstItem="JoH-yP-yOX" firstAttribute="firstBaseline" secondItem="KIz-QT-ejL" secondAttribute="firstBaseline" id="bfk-2o-NEj"/>
-                                                <constraint firstItem="JoH-yP-yOX" firstAttribute="leading" secondItem="2wW-5s-b2W" secondAttribute="leadingMargin" constant="25" id="exT-Rz-zDv"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="JoH-yP-yOX" secondAttribute="bottom" constant="-5" id="i79-N6-CH3"/>
-                                                <constraint firstItem="KIz-QT-ejL" firstAttribute="leading" secondItem="JoH-yP-yOX" secondAttribute="trailing" constant="102" id="sl3-eA-LBf"/>
+                                                <constraint firstItem="balance" firstAttribute="leading" secondItem="walletName" secondAttribute="leading" id="balanceLeading"/>
+                                                <constraint firstItem="balance" firstAttribute="top" secondItem="walletName" secondAttribute="bottom" constant="4" id="balanceTop"/>
+                                                <constraint firstItem="balance" firstAttribute="trailing" secondItem="walletName" secondAttribute="trailing" id="balanceTrailing"/>
+                                                <constraint firstAttribute="bottom" secondItem="currency" secondAttribute="bottom" constant="20" id="currencyBottom"/>
+                                                <constraint firstItem="currency" firstAttribute="leading" secondItem="balance" secondAttribute="leading" id="currencyLeading"/>
+                                                <constraint firstItem="currency" firstAttribute="top" secondItem="balance" secondAttribute="bottom" constant="4" id="currencyTop"/>
+                                                <constraint firstItem="currency" firstAttribute="trailing" secondItem="balance" secondAttribute="trailing" id="currencyTrailing"/>
+                                                <constraint firstItem="walletIcon" firstAttribute="centerY" secondItem="2wW-5s-b2W" secondAttribute="centerY" id="iconCenterY"/>
+                                                <constraint firstItem="walletIcon" firstAttribute="leading" secondItem="2wW-5s-b2W" secondAttribute="leading" constant="20" id="iconLeading"/>
+                                                <constraint firstItem="walletName" firstAttribute="leading" secondItem="walletIcon" secondAttribute="trailing" constant="16" id="nameLeading"/>
+                                                <constraint firstItem="walletName" firstAttribute="top" secondItem="2wW-5s-b2W" secondAttribute="top" constant="20" id="nameTop"/>
+                                                <constraint firstAttribute="trailing" secondItem="walletName" secondAttribute="trailing" constant="20" id="nameTrailing"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="balanceLabel" destination="JoH-yP-yOX" id="pgE-a5-I4w"/>
-                                            <outlet property="currencyLabel" destination="KIz-QT-ejL" id="gci-sh-9rV"/>
+                                            <outlet property="balanceLabel" destination="balance" id="pgE-a5-I4w"/>
+                                            <outlet property="currencyLabel" destination="currency" id="gci-sh-9rV"/>
+                                            <outlet property="walletIconImageView" destination="walletIcon" id="walletIconOutlet"/>
+                                            <outlet property="walletNameLabel" destination="walletName" id="walletNameOutlet"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1012,9 +1046,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemFillColor">
             <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
