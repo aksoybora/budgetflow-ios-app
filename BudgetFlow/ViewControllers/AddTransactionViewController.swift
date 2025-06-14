@@ -320,7 +320,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     // İşlem tipi değiştiğinde çağrılır
     @objc private func transactionTypeChanged(_ sender: UISegmentedControl) {
         selectedTransactionType = sender.selectedSegmentIndex == 0 ? "Income" : "Expense"
-    }
+            }
     
     // Fotoğraf seçme butonuna tıklandığında çağrılır
     @objc private func tapToSelectButton(_ sender: Any) {
@@ -363,12 +363,12 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.updateWalletBalance(userID: userID, currency: currency, changeAmount: balanceChange)
                 self.navigationController?.popViewController(animated: true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
                 }
             }
         }
     }
-    
+
     // MARK: - PickerView Metodları
     // Seçici sütun sayısı
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
