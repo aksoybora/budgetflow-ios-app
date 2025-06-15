@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,11 +98,12 @@
                         <outlet property="signInButton" destination="signInButton" id="signInButtonOutlet"/>
                         <outlet property="signUpButton" destination="signUpButton" id="signUpButtonOutlet"/>
                         <segue destination="LSa-gq-yc8" kind="presentation" identifier="toHomeVC" modalPresentationStyle="fullScreen" id="toHomeVCSegue"/>
+                        <segue destination="9Pc-Qn-Sds" kind="show" identifier="toSignUp" id="Gcf-W1-6D3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139.13043478260872" y="3.3482142857142856"/>
+            <point key="canvasLocation" x="-1804" y="-299"/>
         </scene>
         <!--Transactions View Controller-->
         <scene sceneID="z2D-Wa-Rrj">
@@ -560,10 +561,10 @@
             </objects>
             <point key="canvasLocation" x="2891" y="2510"/>
         </scene>
-        <!--Account InfoVC-->
+        <!--Account Info View Controller-->
         <scene sceneID="YNu-Sa-zQ3">
             <objects>
-                <viewController id="0cK-Yi-GuK" customClass="AccountInfoVC" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0cK-Yi-GuK" customClass="AccountInfoViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hKA-9d-Zd7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -777,7 +778,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UjY-FV-uRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3008.6956521739135" y="-490.17857142857139"/>
+            <point key="canvasLocation" x="4828.985507246377" y="-490.17857142857139"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uDR-5Z-g1h">
@@ -837,7 +838,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FQ4-Ux-B19" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2098.5507246376815" y="-490.17857142857139"/>
+            <point key="canvasLocation" x="3918.8405797101454" y="-490.17857142857139"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Q7Q-xc-DvE">
@@ -912,7 +913,29 @@
             </objects>
             <point key="canvasLocation" x="-232" y="1270"/>
         </scene>
+        <!--Sign Up View Controller-->
+        <scene sceneID="gqF-sH-1m2">
+            <objects>
+                <viewController id="9Pc-Qn-Sds" customClass="SignUpViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rBx-xg-UhU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ObO-z6-ZpK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="P2a-Yf-IZe"/>
+                    <connections>
+                        <segue destination="LSa-gq-yc8" kind="presentation" identifier="toHomeFromSignUp" modalPresentationStyle="fullScreen" id="QjL-hf-Dpo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rql-06-Xag" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1279.7101449275362" y="-1157.1428571428571"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="toHomeVCSegue"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="chart.bar.xaxis.ascending.badge.clock" catalog="system" width="128" height="109"/>
         <image name="creditcard.trianglebadge.exclamationmark" catalog="system" width="128" height="82"/>

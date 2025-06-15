@@ -1,0 +1,254 @@
+//
+//  SignUpViewController.swift
+//  BudgetFlow
+//
+//  Created by Bora Aksoy on 15.06.2025.
+//
+
+import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+
+class SignUpViewController: UIViewController {
+
+    // MARK: - UI Elements
+    private let scrollView = UIScrollView()
+    private let containerView = UIView()
+    private let emailTextField = UITextField()
+    private let passwordTextField = UITextField()
+    private let confirmPasswordTextField = UITextField()
+    private let nameTextField = UITextField()
+    private let surnameTextField = UITextField()
+    private let birthdayTextField = UITextField()
+    private let signUpButton = UIButton(type: .system)
+    private let datePicker = UIDatePicker()
+    
+    private let db = Firestore.firestore()
+    
+    // MARK: - Lifecycle Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupDatePicker()
+    }
+    
+    // MARK: - UI Setup
+    private func setupUI() {
+        view.backgroundColor = UIColor(hex: "#F5F5F5")
+        title = "Create Account"
+        
+        // Add title label
+        let titleLabel = UILabel()
+        titleLabel.text = "Create Account"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        titleLabel.textColor = UIColor(hex: "#007AFF")
+        titleLabel.textAlignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(titleLabel)
+        
+        // Setup ScrollView
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        // Setup ContainerView
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 20
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        containerView.layer.shadowRadius = 8
+        scrollView.addSubview(containerView)
+        
+        // Setup TextFields
+        setupTextField(nameTextField, placeholder: "Name", icon: "person.fill")
+        setupTextField(surnameTextField, placeholder: "Surname", icon: "person.fill")
+        setupTextField(emailTextField, placeholder: "Email", icon: "envelope.fill")
+        setupTextField(passwordTextField, placeholder: "Password", icon: "lock.fill", isSecure: true)
+        setupTextField(confirmPasswordTextField, placeholder: "Confirm Password", icon: "lock.fill", isSecure: true)
+        setupTextField(birthdayTextField, placeholder: "Birthday", icon: "calendar")
+        
+        // Setup SignUp Button
+        signUpButton.setTitle("Sign Up", for: .normal)
+        signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        signUpButton.backgroundColor = UIColor(hex: "#007AFF")
+        signUpButton.setTitleColor(.white, for: .normal)
+        signUpButton.layer.cornerRadius = 8
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
+        containerView.addSubview(signUpButton)
+        
+        // Layout
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 12),
+            containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+            containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
+            
+            nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            nameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            nameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            nameTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            surnameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 12),
+            surnameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            surnameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            surnameTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            emailTextField.topAnchor.constraint(equalTo: surnameTextField.bottomAnchor, constant: 12),
+            emailTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            emailTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            emailTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 12),
+            passwordTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            passwordTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            confirmPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 12),
+            confirmPasswordTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            confirmPasswordTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            birthdayTextField.topAnchor.constraint(equalTo: confirmPasswordTextField.bottomAnchor, constant: 12),
+            birthdayTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            birthdayTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            birthdayTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            signUpButton.topAnchor.constraint(equalTo: birthdayTextField.bottomAnchor, constant: 24),
+            signUpButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            signUpButton.heightAnchor.constraint(equalToConstant: 40),
+            signUpButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+        ])
+    }
+    
+    private func setupTextField(_ textField: UITextField, placeholder: String, icon: String, isSecure: Bool = false) {
+        textField.placeholder = placeholder
+        textField.isSecureTextEntry = isSecure
+        textField.font = UIFont.systemFont(ofSize: 15)
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(hex: "#E0E0E0").cgColor
+        textField.backgroundColor = UIColor(hex: "#F8F8F8")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Left icon
+        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let iconView = UIImageView(image: UIImage(systemName: icon))
+        iconView.tintColor = UIColor(hex: "#007AFF")
+        iconView.contentMode = .scaleAspectFit
+        iconView.frame = CGRect(x: 10, y: 10, width: 20, height: 20)
+        leftContainerView.addSubview(iconView)
+        
+        textField.leftView = leftContainerView
+        textField.leftViewMode = .always
+        containerView.addSubview(textField)
+    }
+    
+    private func setupDatePicker() {
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.maximumDate = Date()
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        birthdayTextField.inputView = datePicker
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.setItems([doneButton], animated: true)
+        birthdayTextField.inputAccessoryView = toolbar
+    }
+    
+    // MARK: - Actions
+    @objc private func dateChanged() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        birthdayTextField.text = formatter.string(from: datePicker.date)
+    }
+    
+    @objc private func doneButtonTapped() {
+        birthdayTextField.resignFirstResponder()
+    }
+    
+    @objc private func signUpTapped() {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let confirmPassword = confirmPasswordTextField.text,
+              let name = nameTextField.text,
+              let surname = surnameTextField.text,
+              let birthday = birthdayTextField.text else {
+            makeAlert(title: "Error", message: "Please fill in all fields")
+            return
+        }
+        
+        // Validate password match
+        guard password == confirmPassword else {
+            makeAlert(title: "Error", message: "Passwords do not match")
+            return
+        }
+        
+        // Show loading indicator
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+        
+        // Create user in Firebase Auth
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            if let error = error {
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+                self?.makeAlert(title: "Error", message: error.localizedDescription)
+                return
+            }
+            
+            guard let userID = authResult?.user.uid else { return }
+            
+            // Create user info in Firestore
+            let infoRef = self?.db.collection("users").document(userID).collection("info").document()
+            let infoID = infoRef?.documentID ?? UUID().uuidString
+            
+            let userInfo: [String: Any] = [
+                "infoID": infoID,
+                "userID": userID,
+                "name": name,
+                "surname": surname,
+                "email": email,
+                "birthday": birthday,
+                "createdAt": FieldValue.serverTimestamp()
+            ]
+            
+            infoRef?.setData(userInfo) { error in
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+                
+                if let error = error {
+                    self?.makeAlert(title: "Error", message: error.localizedDescription)
+                } else {
+                    self?.performSegue(withIdentifier: "toHomeFromSignUp", sender: nil)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Helper Methods
+    private func makeAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
+    }
+}

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AccountInfoVC: UIViewController {
+class AccountInfoViewController: UIViewController {
 
     let titleLabel = UILabel() // Navigation bardaki başlık
     

@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class ViewController: UIViewController {
+class SignInViewController: UIViewController {
     
     // MARK: - UI Elemanları
     @IBOutlet weak var emailText: UITextField!
@@ -26,8 +26,8 @@ class ViewController: UIViewController {
     // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI() // UI elemanlarını ayarla
-        setupLogoAndTitle() // <-- Bunu ekle
+        setupUI()
+        setupLogoAndTitle()
     }
     
     // MARK: - UI Kurulumu
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         
         // Butonları ayarla
         setupButton(signInButton, title: "Sign In", isPrimary: true)
-        setupButton(signUpButton, title: "Sign Up", isPrimary: false)
+        setupButton(signUpButton, title: "Create Account", isPrimary: false)
     }
     
     private func setupLogoAndTitle() {
@@ -163,27 +163,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func signUpClicked(_ sender: Any) {
-        // Kayıt işlemi
-        if emailText.text != "" && passwordText.text != "" {
-            // Yükleniyor göstergesi ekle
-            let activityIndicator = UIActivityIndicatorView(style: .medium)
-            activityIndicator.center = view.center
-            activityIndicator.startAnimating()
-            view.addSubview(activityIndicator)
-            
-            Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authdata, error in
-                activityIndicator.stopAnimating()
-                activityIndicator.removeFromSuperview()
-                
-                if let error = error {
-                    self?.makeAlert(titleInput: "Error!", messageInput: error.localizedDescription)
-                } else {
-                    self?.performSegue(withIdentifier: "toHomeVC", sender: nil)
-                }
-            }
-        } else {
-            makeAlert(titleInput: "Error!", messageInput: "Please fill in email and password fields.")
-        }
+        performSegue(withIdentifier: "toSignUp", sender: nil)
     }
     
     // MARK: - Yardımcı Metodlar
