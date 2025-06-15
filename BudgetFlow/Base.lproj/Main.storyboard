@@ -423,6 +423,22 @@
             </objects>
             <point key="canvasLocation" x="6193" y="1871"/>
         </scene>
+        <!--Export View Controller-->
+        <scene sceneID="oco-FJ-grX">
+            <objects>
+                <viewController id="igk-Mf-1KC" customClass="ExportViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CP2-9B-1rj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fwM-af-un4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GiD-hR-gdA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ce-QS-4q5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7893" y="1796"/>
+        </scene>
         <!--Analysis View Controller-->
         <scene sceneID="SjH-2a-ZC6">
             <objects>
@@ -485,15 +501,6 @@
                     <view key="view" contentMode="scaleToFill" id="A0v-3S-yvp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Analysis" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngf-xl-CQG">
-                                <rect key="frame" x="93" y="97" width="228" height="68"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="QTi-7v-ZJj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -501,6 +508,7 @@
                     <connections>
                         <segue destination="fnf-do-NTR" kind="show" identifier="toGraphs" id="ZoZ-Qt-PfZ"/>
                         <segue destination="5n7-fT-d6U" kind="show" identifier="toPredict" id="VVN-MZ-rcR"/>
+                        <segue destination="igk-Mf-1KC" kind="show" identifier="toExport" id="EAw-Tz-oat"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fti-dm-qHc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -550,7 +558,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2B-If-TRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3078" y="2080"/>
+            <point key="canvasLocation" x="2891" y="2510"/>
         </scene>
         <!--Account InfoVC-->
         <scene sceneID="YNu-Sa-zQ3">
@@ -647,7 +655,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="koC-Qf-xUh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4023" y="2080"/>
+            <point key="canvasLocation" x="4065" y="2510"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="7xF-nK-7jF">
