@@ -35,6 +35,10 @@
 		7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */; };
 		7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B112D8321ED0064F453 /* TransactionModel.swift */; };
 		7CC50B152D8386180064F453 /* hexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC50B142D8386180064F453 /* hexColor.swift */; };
+		7CC5B5632DFED42300EC9270 /* AnalysisHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */; };
+		7CC5B5652DFED43800EC9270 /* PredictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5642DFED43800EC9270 /* PredictViewController.swift */; };
+		7CC5B5672DFED76500EC9270 /* BudgetFlowModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5662DFED76500EC9270 /* BudgetFlowModel.mlmodel */; };
+		7CC5B5692DFEDDF100EC9270 /* LimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +77,10 @@
 		7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		7CC50B112D8321ED0064F453 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		7CC50B142D8386180064F453 /* hexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hexColor.swift; sourceTree = "<group>"; };
+		7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisHomeViewController.swift; sourceTree = "<group>"; };
+		7CC5B5642DFED43800EC9270 /* PredictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictViewController.swift; sourceTree = "<group>"; };
+		7CC5B5662DFED76500EC9270 /* BudgetFlowModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = BudgetFlowModel.mlmodel; sourceTree = "<group>"; };
+		7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +131,9 @@
 				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
 				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
 				7C0203FE2DC135C70004B529 /* AccountInfoVC.swift */,
+				7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */,
+				7CC5B5642DFED43800EC9270 /* PredictViewController.swift */,
+				7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -156,6 +167,7 @@
 				7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */,
 				7C58E5BE2D50F1AD006A2451 /* Info.plist */,
 				7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */,
+				7CC5B5662DFED76500EC9270 /* BudgetFlowModel.mlmodel */,
 			);
 			path = BudgetFlow;
 			sourceTree = "<group>";
@@ -268,6 +280,7 @@
 				7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */,
 				7C58E5B52D50F1AC006A2451 /* ViewController.swift in Sources */,
 				7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */,
+				7CC5B5692DFEDDF100EC9270 /* LimitViewController.swift in Sources */,
 				7C1757CA2D68C00C000CEB68 /* TransactionsViewController.swift in Sources */,
 				7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */,
 				7CC50B152D8386180064F453 /* hexColor.swift in Sources */,
@@ -277,8 +290,11 @@
 				7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */,
 				7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */,
 				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
+				7CC5B5672DFED76500EC9270 /* BudgetFlowModel.mlmodel in Sources */,
 				7C0203FF2DC135C70004B529 /* AccountInfoVC.swift in Sources */,
+				7CC5B5632DFED42300EC9270 /* AnalysisHomeViewController.swift in Sources */,
 				7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */,
+				7CC5B5652DFED43800EC9270 /* PredictViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -326,7 +326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHV-1s-0g0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4779.7101449275369" y="663.61607142857144"/>
+            <point key="canvasLocation" x="5689.8550724637689" y="663.61607142857144"/>
         </scene>
         <!--Add Transaction View Controller-->
         <scene sceneID="tak-a9-YNO">
@@ -407,6 +407,22 @@
             </objects>
             <point key="canvasLocation" x="5631.884057971015" y="-113.16964285714285"/>
         </scene>
+        <!--Predict View Controller-->
+        <scene sceneID="a9X-eU-lFV">
+            <objects>
+                <viewController id="5n7-fT-d6U" customClass="PredictViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x9d-tr-atZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="NB1-SV-9pG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="kLv-kK-TW1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F4a-4a-deX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6193" y="1871"/>
+        </scene>
         <!--Analysis View Controller-->
         <scene sceneID="SjH-2a-ZC6">
             <objects>
@@ -460,7 +476,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIM-5x-6OF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3050.7246376811595" y="1033.9285714285713"/>
+            <point key="canvasLocation" x="7102.898550724638" y="1089.5089285714284"/>
+        </scene>
+        <!--Analysis Home View Controller-->
+        <scene sceneID="obI-SH-avZ">
+            <objects>
+                <viewController id="eKg-Fc-vTR" customClass="AnalysisHomeViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A0v-3S-yvp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Analysis" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngf-xl-CQG">
+                                <rect key="frame" x="93" y="97" width="228" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QTi-7v-ZJj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="sCk-4D-YCK"/>
+                    <connections>
+                        <segue destination="fnf-do-NTR" kind="show" identifier="toGraphs" id="ZoZ-Qt-PfZ"/>
+                        <segue destination="5n7-fT-d6U" kind="show" identifier="toPredict" id="VVN-MZ-rcR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fti-dm-qHc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4108.695652173913" y="1033.9285714285713"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ofn-fz-w5j">
@@ -505,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2B-If-TRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3040.579710144928" y="1700.8928571428571"/>
+            <point key="canvasLocation" x="3078" y="2080"/>
         </scene>
         <!--Account InfoVC-->
         <scene sceneID="YNu-Sa-zQ3">
@@ -602,7 +647,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="koC-Qf-xUh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4057" y="1701"/>
+            <point key="canvasLocation" x="4023" y="2080"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="7xF-nK-7jF">
@@ -741,6 +786,7 @@
                         <segue destination="g60-Ri-cuM" kind="relationship" relationship="viewControllers" id="s72-4x-00X"/>
                         <segue destination="uAE-qY-we9" kind="relationship" relationship="viewControllers" id="lKb-Q6-pgd"/>
                         <segue destination="pDf-Oc-KkR" kind="relationship" relationship="viewControllers" id="Mua-iw-f30"/>
+                        <segue destination="hJe-Xm-r0n" kind="relationship" relationship="viewControllers" id="kOr-hZ-cqw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wom-Yb-fan" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -802,7 +848,23 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sTK-p9-ptZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2130.434782608696" y="1700.8928571428571"/>
+            <point key="canvasLocation" x="3040.579710144928" y="1700.8928571428571"/>
+        </scene>
+        <!--Limit View Controller-->
+        <scene sceneID="sUk-H8-Mvn">
+            <objects>
+                <viewController id="6nj-cQ-ccD" customClass="LimitViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5WL-ur-Tvd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2u8-TB-RcH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K2X-be-yfN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rum-2n-uvA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="935" y="1270"/>
         </scene>
         <!--Analysis-->
         <scene sceneID="kWg-S5-802">
@@ -816,16 +878,36 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="fnf-do-NTR" kind="relationship" relationship="rootViewController" id="Dtr-gI-mEn"/>
+                        <segue destination="eKg-Fc-vTR" kind="relationship" relationship="rootViewController" id="Ymf-8g-5Xv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fVd-hO-r8w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2140.5797101449275" y="1033.9285714285713"/>
+            <point key="canvasLocation" x="3049.275362318841" y="1033.9285714285713"/>
+        </scene>
+        <!--Limit-->
+        <scene sceneID="smm-Qa-PZz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hJe-Xm-r0n" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Limit" image="creditcard.trianglebadge.exclamationmark" catalog="system" id="xhG-g0-ctp"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oG1-Kn-IRG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="6nj-cQ-ccD" kind="relationship" relationship="rootViewController" id="tvY-I6-1o5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="28y-Jr-3Bt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-232" y="1270"/>
         </scene>
     </scenes>
     <resources>
         <image name="chart.bar.xaxis.ascending.badge.clock" catalog="system" width="128" height="109"/>
+        <image name="creditcard.trianglebadge.exclamationmark" catalog="system" width="128" height="82"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="plus.slash.minus" catalog="system" width="128" height="115"/>
@@ -834,7 +916,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
