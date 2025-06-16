@@ -41,6 +41,12 @@
 		7CC5B5692DFEDDF100EC9270 /* LimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */; };
 		7CC5B56B2DFEF8D100EC9270 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B56A2DFEF8D100EC9270 /* ExportViewController.swift */; };
 		7CC5B56D2DFF0F5700EC9270 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */; };
+		7CC5B5702DFF5EF000EC9270 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */; };
+		7CC5B5722DFF5F4B00EC9270 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */; };
+		7CC5B5742DFF5FE800EC9270 /* TwoFactorAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */; };
+		7CC5B5762DFF607E00EC9270 /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */; };
+		7CC5B5782DFF626300EC9270 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */; };
+		7CC5B57A2DFF628100EC9270 /* EmailNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -85,6 +91,12 @@
 		7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitViewController.swift; sourceTree = "<group>"; };
 		7CC5B56A2DFEF8D100EC9270 /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorAuthViewController.swift; sourceTree = "<group>"; };
+		7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
+		7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
+		7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailNotificationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +137,7 @@
 		7C334AFF2D674D1900F2D499 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7CC5B56E2DFF5ED200EC9270 /* Settings */,
 				7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */,
 				7C58E5D32D510539006A2451 /* AnalysisViewController.swift */,
 				7C58E5B42D50F1AC006A2451 /* SignInViewController.swift */,
@@ -134,7 +147,6 @@
 				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
 				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
 				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
-				7C0203FE2DC135C70004B529 /* AccountInfoViewController.swift */,
 				7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */,
 				7CC5B5642DFED43800EC9270 /* PredictViewController.swift */,
 				7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */,
@@ -164,16 +176,16 @@
 		7C58E5AF2D50F1AC006A2451 /* BudgetFlow */ = {
 			isa = PBXGroup;
 			children = (
+				7C58E5B92D50F1AD006A2451 /* Assets.xcassets */,
+				7CC5B5662DFED76500EC9270 /* BudgetFlowModel.mlmodel */,
 				7C183D872DB68FD9004AD1E5 /* Delegates */,
 				7CC50B132D8385E90064F453 /* Extensions */,
+				7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */,
+				7C58E5BE2D50F1AD006A2451 /* Info.plist */,
+				7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */,
+				7C58E5B62D50F1AC006A2451 /* Main.storyboard */,
 				7CC50B102D8321D20064F453 /* Models */,
 				7C334AFF2D674D1900F2D499 /* ViewControllers */,
-				7C58E5B62D50F1AC006A2451 /* Main.storyboard */,
-				7C58E5B92D50F1AD006A2451 /* Assets.xcassets */,
-				7C58E5BB2D50F1AD006A2451 /* LaunchScreen.storyboard */,
-				7C58E5BE2D50F1AD006A2451 /* Info.plist */,
-				7C58E5C42D50F489006A2451 /* GoogleService-Info.plist */,
-				7CC5B5662DFED76500EC9270 /* BudgetFlowModel.mlmodel */,
 			);
 			path = BudgetFlow;
 			sourceTree = "<group>";
@@ -193,6 +205,20 @@
 				7CC50B142D8386180064F453 /* hexColor.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7CC5B56E2DFF5ED200EC9270 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7C0203FE2DC135C70004B529 /* AccountInfoViewController.swift */,
+				7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */,
+				7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */,
+				7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */,
+				7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */,
+				7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */,
+				7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC5B5702DFF5EF000EC9270 /* EditProfileViewController.swift in Sources */,
 				7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */,
 				7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */,
 				7C58E5B52D50F1AC006A2451 /* SignInViewController.swift in Sources */,
@@ -291,11 +318,14 @@
 				7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */,
 				7CC50B152D8386180064F453 /* hexColor.swift in Sources */,
 				7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */,
+				7CC5B5742DFF5FE800EC9270 /* TwoFactorAuthViewController.swift in Sources */,
 				7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */,
 				7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */,
 				7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */,
 				7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */,
 				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
+				7CC5B5782DFF626300EC9270 /* NotificationSettingsViewController.swift in Sources */,
+				7CC5B57A2DFF628100EC9270 /* EmailNotificationsViewController.swift in Sources */,
 				7CC5B56B2DFEF8D100EC9270 /* ExportViewController.swift in Sources */,
 				7CC5B56D2DFF0F5700EC9270 /* SignUpViewController.swift in Sources */,
 				7CC5B5672DFED76500EC9270 /* BudgetFlowModel.mlmodel in Sources */,
@@ -303,6 +333,8 @@
 				7CC5B5632DFED42300EC9270 /* AnalysisHomeViewController.swift in Sources */,
 				7C58E5D22D510518006A2451 /* AddTransactionViewController.swift in Sources */,
 				7CC5B5652DFED43800EC9270 /* PredictViewController.swift in Sources */,
+				7CC5B5722DFF5F4B00EC9270 /* ChangePasswordViewController.swift in Sources */,
+				7CC5B5762DFF607E00EC9270 /* ThemeSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
