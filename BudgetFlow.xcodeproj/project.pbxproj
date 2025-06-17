@@ -18,6 +18,9 @@
 		7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD52DDCC17000E528F2 /* DGCharts */; };
 		7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; settings = {ATTRIBUTES = (Required, ); }; };
 		7C1D8FD92DDCC19700E528F2 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7C2B9AA62E01FBBC0005F852 /* WalletInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B9AA52E01FBBC0005F852 /* WalletInfoViewController.swift */; };
+		7C2B9AA92E01FDC30005F852 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C2B9AA82E01FDC30005F852 /* SDWebImage */; };
+		7C2B9AAB2E01FDC30005F852 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C2B9AAA2E01FDC30005F852 /* SDWebImageMapKit */; };
 		7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */; };
 		7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */; };
 		7C58E5B52D50F1AC006A2451 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5B42D50F1AC006A2451 /* SignInViewController.swift */; };
@@ -30,6 +33,7 @@
 		7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D32D510539006A2451 /* AnalysisViewController.swift */; };
 		7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D52D510547006A2451 /* SettingsViewController.swift */; };
 		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
+		7C755A262E01F3550089C9C5 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */; };
 		7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA217E32D8CBDB000C52880 /* WalletModel.swift */; };
 		7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */; };
 		7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */; };
@@ -66,6 +70,7 @@
 /* Begin PBXFileReference section */
 		7C0203FE2DC135C70004B529 /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
 		7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
+		7C2B9AA52E01FBBC0005F852 /* WalletInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewController.swift; sourceTree = "<group>"; };
 		7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C58E5B02D50F1AC006A2451 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C58E5B22D50F1AC006A2451 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +85,7 @@
 		7C58E5D32D510539006A2451 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		7C58E5D52D510547006A2451 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toSelectPhotoViewController.swift; sourceTree = "<group>"; };
+		7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		7CA217E32D8CBDB000C52880 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
@@ -110,6 +116,8 @@
 				7C1D8FD12DDCC15000E528F2 /* FirebaseFirestore in Frameworks */,
 				7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */,
 				7C1D8FCB2DDCC15000E528F2 /* FirebaseAuth in Frameworks */,
+				7C2B9AAB2E01FDC30005F852 /* SDWebImageMapKit in Frameworks */,
+				7C2B9AA92E01FDC30005F852 /* SDWebImage in Frameworks */,
 				7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */,
 				7C1D8FD32DDCC15000E528F2 /* FirebaseStorage in Frameworks */,
 			);
@@ -137,21 +145,11 @@
 		7C334AFF2D674D1900F2D499 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7CF1D92C2E0031B900AED33F /* Analysis */,
+				7CF1D92B2E00318B00AED33F /* Transactions */,
+				7CF1D92A2E00316F00AED33F /* Home */,
+				7CF1D9292E00314F00AED33F /* Login */,
 				7CC5B56E2DFF5ED200EC9270 /* Settings */,
-				7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */,
-				7C58E5D32D510539006A2451 /* AnalysisViewController.swift */,
-				7C58E5B42D50F1AC006A2451 /* SignInViewController.swift */,
-				7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */,
-				7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */,
-				7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */,
-				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
-				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
-				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
-				7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */,
-				7CC5B5642DFED43800EC9270 /* PredictViewController.swift */,
-				7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */,
-				7CC5B56A2DFEF8D100EC9270 /* ExportViewController.swift */,
-				7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -210,6 +208,7 @@
 		7CC5B56E2DFF5ED200EC9270 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				7C58E5D52D510547006A2451 /* SettingsViewController.swift */,
 				7C0203FE2DC135C70004B529 /* AccountInfoViewController.swift */,
 				7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */,
 				7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */,
@@ -219,6 +218,49 @@
 				7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		7CF1D9292E00314F00AED33F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7C58E5B42D50F1AC006A2451 /* SignInViewController.swift */,
+				7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7CF1D92A2E00316F00AED33F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7C58E5CF2D5104E4006A2451 /* HomeViewController.swift */,
+				7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */,
+				7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */,
+				7C2B9AA52E01FBBC0005F852 /* WalletInfoViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7CF1D92B2E00318B00AED33F /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				7C1757C92D68C00C000CEB68 /* TransactionsViewController.swift */,
+				7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */,
+				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
+				7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		7CF1D92C2E0031B900AED33F /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				7C58E5D32D510539006A2451 /* AnalysisViewController.swift */,
+				7CC5B5622DFED42300EC9270 /* AnalysisHomeViewController.swift */,
+				7CC5B5642DFED43800EC9270 /* PredictViewController.swift */,
+				7CC5B56A2DFEF8D100EC9270 /* ExportViewController.swift */,
+				7CC5B5682DFEDDF100EC9270 /* LimitViewController.swift */,
+			);
+			path = Analysis;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +289,8 @@
 				7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */,
 				7C1D8FD52DDCC17000E528F2 /* DGCharts */,
 				7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */,
+				7C2B9AA82E01FDC30005F852 /* SDWebImage */,
+				7C2B9AAA2E01FDC30005F852 /* SDWebImageMapKit */,
 			);
 			productName = BudgetFlow;
 			productReference = 7C58E5AD2D50F1AC006A2451 /* BudgetFlow.app */;
@@ -279,6 +323,7 @@
 			packageReferences = (
 				7C1D8FBE2DDCC10600E528F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */,
+				7C2B9AA72E01FDC30005F852 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 7C58E5AE2D50F1AC006A2451 /* Products */;
 			projectDirPath = "";
@@ -325,8 +370,10 @@
 				7C58E5D42D510539006A2451 /* AnalysisViewController.swift in Sources */,
 				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
 				7CC5B5782DFF626300EC9270 /* NotificationSettingsViewController.swift in Sources */,
+				7C2B9AA62E01FBBC0005F852 /* WalletInfoViewController.swift in Sources */,
 				7CC5B57A2DFF628100EC9270 /* EmailNotificationsViewController.swift in Sources */,
 				7CC5B56B2DFEF8D100EC9270 /* ExportViewController.swift in Sources */,
+				7C755A262E01F3550089C9C5 /* WalletCardCollectionViewCell.swift in Sources */,
 				7CC5B56D2DFF0F5700EC9270 /* SignUpViewController.swift in Sources */,
 				7CC5B5672DFED76500EC9270 /* BudgetFlowModel.mlmodel in Sources */,
 				7C0203FF2DC135C70004B529 /* AccountInfoViewController.swift in Sources */,
@@ -576,6 +623,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		7C2B9AA72E01FDC30005F852 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -618,6 +673,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGChartsDynamic;
+		};
+		7C2B9AA82E01FDC30005F852 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C2B9AA72E01FDC30005F852 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		7C2B9AAA2E01FDC30005F852 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C2B9AA72E01FDC30005F852 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

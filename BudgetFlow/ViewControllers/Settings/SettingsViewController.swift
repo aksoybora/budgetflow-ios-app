@@ -40,12 +40,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             switch self {
             case .profile:
                 return [
-                    ("Account Info", "person"),
+        ("Account Info", "person"),
                     ("Edit Profile", "pencil")
                 ]
             case .security:
                 return [
-                    ("Change Password", "lock"),
+        ("Change Password", "lock"),
                     ("Two-Factor Authentication", "lock.shield")
                 ]
             case .appearance:
@@ -60,15 +60,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 ]
             case .support:
                 return [
-                    ("FAQ", "questionmark"),
-                    ("Contact Support", "envelope"),
-                    ("Rate the App", "star"),
+        ("FAQ", "questionmark"),
+        ("Contact Support", "envelope"),
+        ("Rate the App", "star"),
                     ("Privacy Policy", "hand.raised")
                 ]
             case .account:
                 return [
-                    ("Sign Out", "arrow.backward")
-                ]
+        ("Sign Out", "arrow.backward")
+    ]
             }
         }
     }
@@ -79,7 +79,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         setupUI()
         setupTableView()
     }
-    
+        
     private func setupUI() {
         titleLabel.text = "Settings"
         titleLabel.textColor = .black
@@ -87,7 +87,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
     }
-    
+        
     private func setupTableView() {
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
@@ -99,7 +99,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingsSection.allCases.count
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return SettingsSection(rawValue: section)?.title
     }
@@ -115,7 +115,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
               let item = section.items[safe: indexPath.row] else {
             return cell
         }
-        
+
         cell.textLabel?.text = item.title
         cell.imageView?.image = UIImage(systemName: item.icon)
         cell.imageView?.tintColor = .systemBlue
@@ -124,9 +124,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if item.title == "Sign Out" {
             cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.1)
         }
-        
-        return cell
-    }
+
+            return cell
+        }
     
     // MARK: - UITableViewDelegate
     
@@ -135,7 +135,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
               let item = section.items[safe: indexPath.row] else {
             return
         }
-        
+
         switch item.title {
         case "Sign Out":
             handleSignOut()
@@ -156,7 +156,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             break
         }
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -168,8 +168,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             print("Sign Out failed!")
         }
     }
-}
-
+    }
+    
 // MARK: - Array Extension
 extension Array {
     subscript(safe index: Index) -> Element? {

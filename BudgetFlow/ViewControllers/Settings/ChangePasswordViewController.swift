@@ -10,7 +10,7 @@ import Firebase
 import FirebaseAuth
 
 class ChangePasswordViewController: UIViewController {
-    
+
     // MARK: - UI Elements
     private let scrollView = UIScrollView()
     private let containerView = UIView()

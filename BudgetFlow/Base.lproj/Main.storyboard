@@ -694,120 +694,34 @@
                     <view key="view" contentMode="scaleToFill" id="5Ab-i2-Tta">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zPh-91-9IL">
-                                <rect key="frame" x="0.0" y="95" width="414" height="752"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletCell" rowHeight="100" id="e9n-zF-rGP" customClass="WalletTableViewCell" customModule="BudgetFlow" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e9n-zF-rGP" id="2wW-5s-b2W">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="walletIcon">
-                                                    <rect key="frame" x="20" y="30" width="40" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="iconHeight"/>
-                                                        <constraint firstAttribute="width" constant="40" id="iconWidth"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Wallet Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="walletName">
-                                                    <rect key="frame" x="76" y="20" width="318" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="balance">
-                                                    <rect key="frame" x="76" y="44" width="318" height="36"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Currency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="currency">
-                                                    <rect key="frame" x="76" y="84" width="318" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="balance" firstAttribute="leading" secondItem="walletName" secondAttribute="leading" id="balanceLeading"/>
-                                                <constraint firstItem="balance" firstAttribute="top" secondItem="walletName" secondAttribute="bottom" constant="4" id="balanceTop"/>
-                                                <constraint firstItem="balance" firstAttribute="trailing" secondItem="walletName" secondAttribute="trailing" id="balanceTrailing"/>
-                                                <constraint firstAttribute="bottom" secondItem="currency" secondAttribute="bottom" constant="20" id="currencyBottom"/>
-                                                <constraint firstItem="currency" firstAttribute="leading" secondItem="balance" secondAttribute="leading" id="currencyLeading"/>
-                                                <constraint firstItem="currency" firstAttribute="top" secondItem="balance" secondAttribute="bottom" constant="4" id="currencyTop"/>
-                                                <constraint firstItem="currency" firstAttribute="trailing" secondItem="balance" secondAttribute="trailing" id="currencyTrailing"/>
-                                                <constraint firstItem="walletIcon" firstAttribute="centerY" secondItem="2wW-5s-b2W" secondAttribute="centerY" id="iconCenterY"/>
-                                                <constraint firstItem="walletIcon" firstAttribute="leading" secondItem="2wW-5s-b2W" secondAttribute="leading" constant="20" id="iconLeading"/>
-                                                <constraint firstItem="walletName" firstAttribute="leading" secondItem="walletIcon" secondAttribute="trailing" constant="16" id="nameLeading"/>
-                                                <constraint firstItem="walletName" firstAttribute="top" secondItem="2wW-5s-b2W" secondAttribute="top" constant="20" id="nameTop"/>
-                                                <constraint firstAttribute="trailing" secondItem="walletName" secondAttribute="trailing" constant="20" id="nameTrailing"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="balanceLabel" destination="balance" id="pgE-a5-I4w"/>
-                                            <outlet property="currencyLabel" destination="currency" id="gci-sh-9rV"/>
-                                            <outlet property="walletIconImageView" destination="walletIcon" id="walletIconOutlet"/>
-                                            <outlet property="walletNameLabel" destination="walletName" id="walletNameOutlet"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wallets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQQ-9I-s8A">
-                                <rect key="frame" x="20" y="49" width="374" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="Djz-mb-kdm"/>
-                                    <constraint firstAttribute="width" constant="374" id="oMO-gc-BQQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="jFN-2l-9F1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="6us-Hv-9zb"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="6wD-F7-ndX"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="8Vz-m8-vMS"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="9AG-hH-ihU"/>
-                            <constraint firstItem="jFN-2l-9F1" firstAttribute="trailing" secondItem="zPh-91-9IL" secondAttribute="trailing" id="9Ic-Vr-cH0"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="Axk-QB-evv"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="top" secondItem="cQQ-9I-s8A" secondAttribute="bottom" constant="10" id="BrX-2b-dfo"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="DlN-ke-7tU"/>
-                            <constraint firstItem="jFN-2l-9F1" firstAttribute="bottom" secondItem="zPh-91-9IL" secondAttribute="bottom" id="JO5-Kt-28f"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="Lmk-9u-7Jc"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="MeW-dz-ixr"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="PEV-qs-COZ"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="QJI-fa-vH6"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="Qyz-0X-pJ7"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="UIu-lt-CUq"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="W9W-9J-996"/>
-                            <constraint firstItem="cQQ-9I-s8A" firstAttribute="centerX" secondItem="zPh-91-9IL" secondAttribute="centerX" id="cIl-07-coX"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="e1u-F1-JAO"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="e7E-rf-uUQ"/>
-                            <constraint firstItem="cQQ-9I-s8A" firstAttribute="top" secondItem="jFN-2l-9F1" secondAttribute="top" constant="5" id="gk4-vf-PFY"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="jB6-R3-7GE"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="jCD-rN-lcz"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="bottom" secondItem="jFN-2l-9F1" secondAttribute="bottom" id="jre-lH-njG"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="rj2-8C-DCs"/>
-                            <constraint firstItem="cQQ-9I-s8A" firstAttribute="leading" secondItem="5Ab-i2-Tta" secondAttribute="leadingMargin" id="tGY-WN-0d3"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="leading" secondItem="jFN-2l-9F1" secondAttribute="leading" id="tvO-ix-T1n"/>
-                            <constraint firstItem="zPh-91-9IL" firstAttribute="trailing" secondItem="jFN-2l-9F1" secondAttribute="trailing" id="u3K-Oj-Gml"/>
-                            <constraint firstItem="jFN-2l-9F1" firstAttribute="bottom" secondItem="zPh-91-9IL" secondAttribute="bottom" id="x5b-Zm-pbc"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9er-Mk-zHc"/>
                     <connections>
-                        <outlet property="walletsTableView" destination="zPh-91-9IL" id="IwT-i8-2KH"/>
+                        <segue destination="jZc-PE-GIb" kind="show" identifier="toAddTransacitonFromHome" id="btk-hQ-wOg"/>
+                        <segue destination="72P-8m-Lc6" kind="show" identifier="toWalletInfo" id="zbo-Sc-EAp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UjY-FV-uRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4780" y="-1129"/>
+        </scene>
+        <!--Wallet Info View Controller-->
+        <scene sceneID="sMb-EW-avE">
+            <objects>
+                <viewController id="72P-8m-Lc6" customClass="WalletInfoViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qec-Dn-Oof">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="SJP-r3-G7j"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6dr-mO-IPk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JsQ-vf-eFb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6113" y="-1132"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uDR-5Z-g1h">
@@ -964,6 +878,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="toHomeVCSegue"/>
+        <segue reference="btk-hQ-wOg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chart.bar.xaxis.ascending.badge.clock" catalog="system" width="128" height="109"/>
@@ -976,7 +891,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

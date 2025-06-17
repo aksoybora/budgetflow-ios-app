@@ -8,7 +8,7 @@
 import UIKit
 
 class ThemeSettingsViewController: UIViewController {
-    
+
     // MARK: - UI Elements
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let themes = ["System", "Light", "Dark"]

@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class EditProfileViewController: UIViewController {
-    
+
     // MARK: - UI Elements
     private let scrollView = UIScrollView()
     private let containerView = UIView()
