@@ -362,9 +362,6 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                 let balanceChange = (transactionType == "Income") ? amount : -amount
                 self.updateWalletBalance(userID: userID, currency: currency, changeAmount: balanceChange)
                 self.navigationController?.popViewController(animated: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
-                }
             }
         }
     }
@@ -400,7 +397,8 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         let db = Firestore.firestore()
         let walletsRef = db.collection("users").document(userID).collection("wallets")
 
-        walletsRef.whereField("currency", isEqualTo: currency).getDocuments { snapshot, error in
+        // First check if wallet exists
+        walletsRef.whereField("currency", isEqualTo: currency).getDocuments { [weak self] snapshot, error in
             if let error = error {
                 print("Cüzdan sorgulama hatası: \(error.localizedDescription)")
                 return
@@ -416,19 +414,28 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                         print("Cüzdan güncellenemedi: \(error.localizedDescription)")
                     } else {
                         print("Cüzdan bakiyesi güncellendi.")
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
+                        }
                     }
                 }
             } else {
                 // Yeni cüzdan oluştur
-                walletsRef.addDocument(data: [
+                let newWalletData: [String: Any] = [
                     "currency": currency,
                     "balance": changeAmount,
-                    "userID": userID
-                ]) { error in
+                    "userID": userID,
+                    "createdAt": FieldValue.serverTimestamp()
+                ]
+                
+                walletsRef.addDocument(data: newWalletData) { error in
                     if let error = error {
                         print("Yeni cüzdan oluşturulamadı: \(error.localizedDescription)")
                     } else {
                         print("Yeni cüzdan oluşturuldu.")
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: Notification.Name("WalletsDidUpdate"), object: nil)
+                        }
                     }
                 }
             }

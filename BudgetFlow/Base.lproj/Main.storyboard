@@ -347,6 +347,38 @@
             </objects>
             <point key="canvasLocation" x="4108.695652173913" y="1033.9285714285713"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="DvM-pB-A4L">
+            <objects>
+                <viewController id="fXG-IW-uGP" customClass="FAQViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fJy-xN-GrW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="HYF-3n-zPd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rYh-EI-a90"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Spe-hj-izD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="65" y="3679"/>
+        </scene>
+        <!--Contact Support View Controller-->
+        <scene sceneID="pQi-fY-L3Y">
+            <objects>
+                <viewController id="jRO-DL-A3D" customClass="ContactSupportViewController" customModule="BudgetFlow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="H3l-EO-Y1E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jv6-Nd-KD2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Nx8-uT-5cm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BsN-j3-otL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1240" y="3693"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ofn-fz-w5j">
             <objects>
@@ -392,6 +424,8 @@
                         <segue destination="RxM-ht-FdD" kind="show" identifier="toThemeSettings" id="sgY-QL-KRG"/>
                         <segue destination="dax-X8-Ctr" kind="show" identifier="toNotificationSettings" id="THz-Zh-FOU"/>
                         <segue destination="N56-zq-Yse" kind="show" identifier="toEmailNotifications" id="CyD-tJ-FHa"/>
+                        <segue destination="fXG-IW-uGP" kind="show" identifier="toFAQ" id="O8B-Rh-BaX"/>
+                        <segue destination="jRO-DL-A3D" kind="show" identifier="toContactSupport" id="89X-nL-tsx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2B-If-TRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -532,6 +566,7 @@
                     <connections>
                         <segue destination="jZc-PE-GIb" kind="show" identifier="toAddTransacitonFromHome" id="btk-hQ-wOg"/>
                         <segue destination="72P-8m-Lc6" kind="show" identifier="toWalletInfo" id="zbo-Sc-EAp"/>
+                        <segue destination="0cK-Yi-GuK" kind="show" identifier="toAccountInfoFromHome" id="YRe-fD-qUU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UjY-FV-uRi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -709,6 +744,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="toHomeVCSegue"/>
+        <segue reference="1RJ-3e-0Kd"/>
         <segue reference="btk-hQ-wOg"/>
     </inferredMetricsTieBreakers>
     <resources>

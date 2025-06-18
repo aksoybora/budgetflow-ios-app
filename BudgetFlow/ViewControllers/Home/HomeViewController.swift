@@ -16,7 +16,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let contentView = UIView()
     let greetingLabel = UILabel()
     let welcomeLabel = UILabel()
-    let profileButton = UIButton(type: .system)
+    private lazy var profileButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "person.circle"), for: .normal)
+        button.tintColor = .label
+        button.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        return button
+    }()
     let balanceCardView = UIView()
     let balanceTitleLabel = UILabel()
     let balanceLabel = UILabel()
@@ -36,11 +42,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var isBalanceHidden = false
     private var userName: String = "CARDHOLDER"
     
+    // MARK: - UI Components
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.tintColor = .systemBlue
+        return refreshControl
+    }()
+    
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        setupRefreshControl()
         loadUserName()
         loadWallets()
     }
@@ -78,8 +93,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         contentView.addSubview(welcomeLabel)
         
         // Profile button
-        profileButton.setImage(UIImage(systemName: "person.circle"), for: .normal)
-        profileButton.tintColor = UIColor.gray
         profileButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(profileButton)
         
@@ -226,6 +239,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         ])
         
         seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    
+    @objc private func refreshData() {
+        // Reload all data
+        loadWallets()
+        
+        // End refreshing after a short delay to show the animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
     
     // MARK: - Wallets CollectionView
@@ -505,6 +533,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
+    }
+
+    @objc private func profileButtonTapped() {
+        performSegue(withIdentifier: "toAccountInfoFromHome", sender: nil)
     }
 }
 

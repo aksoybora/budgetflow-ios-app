@@ -35,6 +35,8 @@
 		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
 		7C755A262E01F3550089C9C5 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */; };
 		7C9FD8B12E02E80400E3E672 /* TransactionInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FD8B02E02E80400E3E672 /* TransactionInfoTableViewCell.swift */; };
+		7C9FD8B32E0309A900E3E672 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FD8B22E0309A900E3E672 /* FAQViewController.swift */; };
+		7C9FD8B52E0309BD00E3E672 /* ContactSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FD8B42E0309BD00E3E672 /* ContactSupportViewController.swift */; };
 		7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA217E32D8CBDB000C52880 /* WalletModel.swift */; };
 		7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */; };
 		7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */; };
@@ -48,7 +50,6 @@
 		7CC5B56D2DFF0F5700EC9270 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */; };
 		7CC5B5702DFF5EF000EC9270 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */; };
 		7CC5B5722DFF5F4B00EC9270 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */; };
-		7CC5B5742DFF5FE800EC9270 /* TwoFactorAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */; };
 		7CC5B5762DFF607E00EC9270 /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */; };
 		7CC5B5782DFF626300EC9270 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */; };
 		7CC5B57A2DFF628100EC9270 /* EmailNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */; };
@@ -88,6 +89,8 @@
 		7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toSelectPhotoViewController.swift; sourceTree = "<group>"; };
 		7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		7C9FD8B02E02E80400E3E672 /* TransactionInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoTableViewCell.swift; sourceTree = "<group>"; };
+		7C9FD8B22E0309A900E3E672 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
+		7C9FD8B42E0309BD00E3E672 /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
 		7CA217E32D8CBDB000C52880 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,7 +104,6 @@
 		7CC5B56C2DFF0F5700EC9270 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
-		7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorAuthViewController.swift; sourceTree = "<group>"; };
 		7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
 		7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
 		7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailNotificationsViewController.swift; sourceTree = "<group>"; };
@@ -215,9 +217,10 @@
 				7CC5B5712DFF5F4B00EC9270 /* ChangePasswordViewController.swift */,
 				7CC5B56F2DFF5EF000EC9270 /* EditProfileViewController.swift */,
 				7CC5B5752DFF607E00EC9270 /* ThemeSettingsViewController.swift */,
-				7CC5B5732DFF5FE800EC9270 /* TwoFactorAuthViewController.swift */,
 				7CC5B5772DFF626300EC9270 /* NotificationSettingsViewController.swift */,
 				7CC5B5792DFF628100EC9270 /* EmailNotificationsViewController.swift */,
+				7C9FD8B22E0309A900E3E672 /* FAQViewController.swift */,
+				7C9FD8B42E0309BD00E3E672 /* ContactSupportViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -359,6 +362,8 @@
 				7CC5B5702DFF5EF000EC9270 /* EditProfileViewController.swift in Sources */,
 				7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */,
 				7CC50B122D8321ED0064F453 /* TransactionModel.swift in Sources */,
+				7C9FD8B32E0309A900E3E672 /* FAQViewController.swift in Sources */,
+				7C9FD8B52E0309BD00E3E672 /* ContactSupportViewController.swift in Sources */,
 				7C58E5B52D50F1AC006A2451 /* SignInViewController.swift in Sources */,
 				7C58E5B12D50F1AC006A2451 /* AppDelegate.swift in Sources */,
 				7CC5B5692DFEDDF100EC9270 /* LimitViewController.swift in Sources */,
@@ -366,7 +371,6 @@
 				7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */,
 				7CC50B152D8386180064F453 /* hexColor.swift in Sources */,
 				7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */,
-				7CC5B5742DFF5FE800EC9270 /* TwoFactorAuthViewController.swift in Sources */,
 				7C58E5B32D50F1AC006A2451 /* SceneDelegate.swift in Sources */,
 				7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */,
 				7C58E5D02D5104E4006A2451 /* HomeViewController.swift in Sources */,

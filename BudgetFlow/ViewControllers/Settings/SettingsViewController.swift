@@ -208,14 +208,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             performSegue(withIdentifier: "toEditProfile", sender: nil)
         case "Change Password":
             performSegue(withIdentifier: "toChangePassword", sender: nil)
-        case "Two-Factor Authentication":
-            performSegue(withIdentifier: "toTwoFactorAuth", sender: nil)
         case "Theme":
             performSegue(withIdentifier: "toThemeSettings", sender: nil)
         case "Notification Settings":
             performSegue(withIdentifier: "toNotificationSettings", sender: nil)
         case "Email Notifications":
             performSegue(withIdentifier: "toEmailNotifications", sender: nil)
+        case "FAQ":
+            performSegue(withIdentifier: "toFAQ", sender: nil)
+        case "Contact Support":
+            performSegue(withIdentifier: "toContactSupport", sender: nil)
         default:
             break
         }
@@ -229,6 +231,23 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             performSegue(withIdentifier: "toVC", sender: nil)
         } catch {
             print("Sign Out failed!")
+        }
+    }
+    
+    @IBAction func faqButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "toFAQ", sender: nil)
+    }
+    
+    @IBAction func contactSupportButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "toContactSupport", sender: nil)
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toFAQ" {
+            // No additional setup needed for FAQ
+        } else if segue.identifier == "toContactSupport" {
+            // No additional setup needed for Contact Support
         }
     }
 }
