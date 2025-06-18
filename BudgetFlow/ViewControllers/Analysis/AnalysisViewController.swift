@@ -13,7 +13,8 @@ import FirebaseFirestore
 
 class AnalysisViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - Özellikler
+    // ScrollView ve içerik görünümü
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -29,6 +30,7 @@ class AnalysisViewController: UIViewController {
         return view
     }()
     
+    // Başlık ve alt başlık
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Financial Analysis"
@@ -47,7 +49,7 @@ class AnalysisViewController: UIViewController {
         return label
     }()
     
-    // Filter controls
+    // Filtre kontrolleri
     private let filterSegmentedControl: UISegmentedControl = {
         let items = ["1M", "3M", "6M", "1Y", "All"]
         let control = UISegmentedControl(items: items)
@@ -64,7 +66,8 @@ class AnalysisViewController: UIViewController {
         return control
     }()
     
-    // MARK: - Chart Views
+    // MARK: - Grafik Kartları
+    // Pasta grafik, bar grafik ve cüzdan grafik kartları
     private let pieChartCard: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -101,23 +104,23 @@ class AnalysisViewController: UIViewController {
         return view
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Yaşam Döngüsü
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupCharts()
-        setupFilterActions()
+        setupUI() // Arayüzü kur
+        setupCharts() // Grafik kurulumlarını yap
+        setupFilterActions() // Filtre butonlarını ayarla
         
-        // Remove tab bar item image insets
+        // Sekme çubuğu simge boşluklarını kaldır
         tabBarItem.imageInsets = .zero
         tabBarItem.titlePositionAdjustment = .zero
     }
     
-    // MARK: - UI Setup
+    // MARK: - Arayüz Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -129,7 +132,7 @@ class AnalysisViewController: UIViewController {
         contentView.addSubview(barChartCard)
         contentView.addSubview(walletChartCard)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamalarını ayarla
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -176,83 +179,92 @@ class AnalysisViewController: UIViewController {
         ])
     }
     
+    // Filtre butonları için aksiyonları ayarla
     private func setupFilterActions() {
         filterSegmentedControl.addTarget(self, action: #selector(filterChanged), for: .valueChanged)
         currencySegmentedControl.addTarget(self, action: #selector(currencyChanged), for: .valueChanged)
     }
     
+    // Filtre değiştiğinde çağrılır
     @objc private func filterChanged() {
         updateCharts()
     }
     
+    // Para birimi değiştiğinde çağrılır
     @objc private func currencyChanged() {
         updateCharts()
     }
     
+    // Grafiklerin güncellenmesi
     private func updateCharts() {
         setupPieChart()
         setupBarChart()
         setupBarChartt()
     }
     
+    // Seçili tarih aralığını döndürür
     private func getDateRange() -> Date {
         let calendar = Calendar.current
         let now = Date()
         
         switch filterSegmentedControl.selectedSegmentIndex {
-        case 0: // 1M
+        case 0: // 1 Ay
             return calendar.date(byAdding: .month, value: -1, to: now) ?? now
-        case 1: // 3M
+        case 1: // 3 Ay
             return calendar.date(byAdding: .month, value: -3, to: now) ?? now
-        case 2: // 6M
+        case 2: // 6 Ay
             return calendar.date(byAdding: .month, value: -6, to: now) ?? now
-        case 3: // 1Y
+        case 3: // 1 Yıl
             return calendar.date(byAdding: .year, value: -1, to: now) ?? now
-        default: // All - use 5 years ago instead of distant past
+        default: // Tümü - 5 yıl geriye git
             return calendar.date(byAdding: .year, value: -5, to: now) ?? now
         }
     }
     
+    // Seçili para birimini döndürür
     private func getSelectedCurrency() -> String? {
         let index = currencySegmentedControl.selectedSegmentIndex
         return index == 0 ? nil : currencySegmentedControl.titleForSegment(at: index)
     }
     
+    // Tüm grafiklerin kurulumunu yapar
     private func setupCharts() {
         setupPieChart()
         setupBarChart()
         setupBarChartt()
     }
     
-    // MARK: - Chart Setup
+    // MARK: - Grafik Kurulumu
+    // Pasta grafik kurulumunu yapar
     private func setupPieChart() {
-        // Remove any existing subviews first
+        // Önce mevcut alt görünümleri kaldır
         pieChartCard.subviews.forEach { $0.removeFromSuperview() }
         
-        // Title Label
-        let titleLabel = UILabel()
-        titleLabel.text = "Expense Breakdown by Category"
-        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-        titleLabel.textColor = .label
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        pieChartCard.addSubview(titleLabel)
+        // Grafik başlık etiketi
+        let chartTitleLabel = UILabel()
+        chartTitleLabel.text = "Expense Breakdown by Category"
+        chartTitleLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        chartTitleLabel.textColor = .label
+        chartTitleLabel.textAlignment = .center
+        chartTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        pieChartCard.addSubview(chartTitleLabel)
         
-        // Pie Chart
+        // Pasta grafik görünümü
         let pieChart = PieChartView()
         pieChart.translatesAutoresizingMaskIntoConstraints = false
         pieChartCard.addSubview(pieChart)
         
-        // Legend View
+        // Legend (açıklama) görünümü
         let legendView = UIView()
         legendView.translatesAutoresizingMaskIntoConstraints = false
         pieChartCard.addSubview(legendView)
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: pieChartCard.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: pieChartCard.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: pieChartCard.trailingAnchor, constant: -16),
+            chartTitleLabel.topAnchor.constraint(equalTo: pieChartCard.topAnchor, constant: 16),
+            chartTitleLabel.leadingAnchor.constraint(equalTo: pieChartCard.leadingAnchor, constant: 16),
+            chartTitleLabel.trailingAnchor.constraint(equalTo: pieChartCard.trailingAnchor, constant: -16),
             
-            pieChart.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            pieChart.topAnchor.constraint(equalTo: chartTitleLabel.bottomAnchor, constant: 16),
             pieChart.leadingAnchor.constraint(equalTo: pieChartCard.leadingAnchor, constant: 16),
             pieChart.trailingAnchor.constraint(equalTo: pieChartCard.trailingAnchor, constant: -16),
             pieChart.heightAnchor.constraint(equalToConstant: 280),
@@ -263,7 +275,7 @@ class AnalysisViewController: UIViewController {
             legendView.bottomAnchor.constraint(equalTo: pieChartCard.bottomAnchor, constant: -16)
         ])
         
-        // Fetch and setup data
+        // Kategoriye göre harcamaları getir ve grafiği doldur
         fetchExpensesGroupedByCategory { [weak self] categoryTotals in
             guard let self = self else { return }
             
@@ -299,13 +311,17 @@ class AnalysisViewController: UIViewController {
                 dataSet.colors = colors
                 dataSet.valueFont = .systemFont(ofSize: 14)
                 dataSet.entryLabelFont = .systemFont(ofSize: 14)
+                dataSet.drawValuesEnabled = false
+                dataSet.drawIconsEnabled = false
 
                 let data = PieChartData(dataSet: dataSet)
+                data.setDrawValues(false)
                 pieChart.data = data
                 pieChart.legend.enabled = false
                 pieChart.animate(xAxisDuration: 1.0)
+                pieChart.drawEntryLabelsEnabled = false
                 
-                // Update legend
+                // Legend (açıklama) güncelle
                 legendView.subviews.forEach { $0.removeFromSuperview() }
                 var previousRow: UIView? = nil
 
@@ -366,11 +382,12 @@ class AnalysisViewController: UIViewController {
         }
     }
     
+    // Bar grafik kurulumunu yapar
     private func setupBarChart() {
-        // Remove any existing subviews first
+        // Önce mevcut alt görünümleri kaldır
         barChartCard.subviews.forEach { $0.removeFromSuperview() }
         
-        // Title Label
+        // Grafik başlık etiketi
         let titleLabel = UILabel()
         titleLabel.text = "Monthly Income-Expense Breakdown"
         titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -378,7 +395,7 @@ class AnalysisViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         barChartCard.addSubview(titleLabel)
         
-        // Bar Chart
+        // Bar grafik görünümü
         let barChart = BarChartView()
         barChart.translatesAutoresizingMaskIntoConstraints = false
         barChartCard.addSubview(barChart)
@@ -394,7 +411,7 @@ class AnalysisViewController: UIViewController {
             barChart.bottomAnchor.constraint(equalTo: barChartCard.bottomAnchor, constant: -16)
         ])
         
-        // Fetch and setup data
+        // Aylık gelir-gider verilerini getir ve grafiği doldur
         fetchMonthlyIncomeAndExpense { [weak self] monthlyData in
             guard let self = self else { return }
             
@@ -438,11 +455,12 @@ class AnalysisViewController: UIViewController {
         }
     }
     
+    // Cüzdan bakiyeleri bar grafik kurulumunu yapar
     private func setupBarChartt() {
-        // Remove any existing subviews first
+        // Önce mevcut alt görünümleri kaldır
         walletChartCard.subviews.forEach { $0.removeFromSuperview() }
         
-        // Title Label
+        // Grafik başlık etiketi
         let titleLabel = UILabel()
         titleLabel.text = "Wallet Balances"
         titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -450,7 +468,7 @@ class AnalysisViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         walletChartCard.addSubview(titleLabel)
         
-        // Bar Chart
+        // Bar grafik görünümü
         let barChart = BarChartView()
         barChart.translatesAutoresizingMaskIntoConstraints = false
         walletChartCard.addSubview(barChart)
@@ -466,7 +484,7 @@ class AnalysisViewController: UIViewController {
             barChart.bottomAnchor.constraint(equalTo: walletChartCard.bottomAnchor, constant: -16)
         ])
         
-        // Fetch wallet data from Firestore
+        // Cüzdan bakiyelerini Firestore'dan getir ve grafiği doldur
         fetchWalletBalances { [weak self] wallets in
             guard let self = self else { return }
             
@@ -494,12 +512,13 @@ class AnalysisViewController: UIViewController {
         }
     }
     
-    // MARK: - Data Fetching
+    // MARK: - Veri Çekme
+    // Kategoriye göre harcamaları Firestore'dan getirir
     private func fetchExpensesGroupedByCategory(completion: @escaping ([String: Double]) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         
-        // First fetch all transactions
+        // Tüm işlemleri çek
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
             .whereField("type", isEqualTo: "Expense")
@@ -519,17 +538,17 @@ class AnalysisViewController: UIViewController {
                        let category = data["category"] as? String {
                         let date = timestamp.dateValue()
                         
-                        // Apply date filter
+                        // Tarih filtresi uygula
                         guard date >= startDate else { continue }
                         
-                        // Apply currency filter if selected
+                        // Para birimi filtresi uygula
                         if let selectedCurrency = self.getSelectedCurrency(),
                            let currency = data["currency"] as? String,
                            currency != selectedCurrency {
                             continue
                         }
                         
-                        // Handle amount (could be String or Double)
+                        // Tutarı işle (String veya Double olabilir)
                         let amount: Double
                         if let amountStr = data["amount"] as? String {
                             amount = Double(amountStr) ?? 0.0
@@ -547,11 +566,12 @@ class AnalysisViewController: UIViewController {
             }
     }
     
+    // Aylık gelir ve giderleri Firestore'dan getirir
     private func fetchMonthlyIncomeAndExpense(completion: @escaping ([(month: String, income: Double, expense: Double)]) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         
-        // First fetch all transactions
+        // Tüm işlemleri çek
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
             .getDocuments { (snapshot, error) in
@@ -572,17 +592,17 @@ class AnalysisViewController: UIViewController {
                        let type = data["type"] as? String {
                         let date = timestamp.dateValue()
                         
-                        // Apply date filter
+                        // Tarih filtresi uygula
                         guard date >= startDate else { continue }
                         
-                        // Apply currency filter if selected
+                        // Para birimi filtresi uygula
                         if let selectedCurrency = self.getSelectedCurrency(),
                            let currency = data["currency"] as? String,
                            currency != selectedCurrency {
                             continue
                         }
                         
-                        // Handle amount (could be String or Double)
+                        // Tutarı işle (String veya Double olabilir)
                         let amount: Double
                         if let amountStr = data["amount"] as? String {
                             amount = Double(amountStr) ?? 0.0
@@ -614,6 +634,7 @@ class AnalysisViewController: UIViewController {
             }
     }
 
+    // Cüzdan bakiyelerini Firestore'dan getirir
     private func fetchWalletBalances(completion: @escaping ([(name: String, balance: Double)]) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
@@ -635,7 +656,7 @@ class AnalysisViewController: UIViewController {
                 }
             }
             
-            // Sort wallets in the desired order: TRY, USD, EUR
+            // Cüzdanları istenen sırada sırala: TRY, USD, EUR
             let currencyOrder = ["TRY", "USD", "EUR"]
             wallets.sort { wallet1, wallet2 in
                 let currency1 = wallet1.name.split(separator: " ")[0]

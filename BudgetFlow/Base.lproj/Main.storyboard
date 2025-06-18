@@ -502,7 +502,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GTQ-Lo-yFH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4338" y="4553"/>
+            <point key="canvasLocation" x="6957" y="2948"/>
         </scene>
         <!--Theme Settings View Controller-->
         <scene sceneID="Paf-qr-pKQ">
@@ -518,7 +518,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q3l-ku-Xmw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4338" y="5395"/>
+            <point key="canvasLocation" x="6957" y="3790"/>
         </scene>
         <!--Notification Settings View Controller-->
         <scene sceneID="FVk-t7-5OL">
@@ -534,7 +534,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9w-Oi-2vs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4338" y="6188"/>
+            <point key="canvasLocation" x="8397" y="2948"/>
         </scene>
         <!--Email Notifications View Controller-->
         <scene sceneID="eCI-IC-Q4Y">
@@ -550,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTL-XT-j24" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4338" y="7018"/>
+            <point key="canvasLocation" x="8397" y="3790"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="7xF-nK-7jF">
