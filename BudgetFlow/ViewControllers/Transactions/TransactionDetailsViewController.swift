@@ -9,10 +9,10 @@ import UIKit
 
 class TransactionDetailsViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Özellikler
     var transaction: Transaction?
     
-    // MARK: - UI Elements
+    // MARK: - Arayüz Elemanları
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -28,6 +28,7 @@ class TransactionDetailsViewController: UIViewController {
         return view
     }()
     
+    // İşlem kartı görünümü
     private let transactionCard: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -36,6 +37,7 @@ class TransactionDetailsViewController: UIViewController {
         return view
     }()
     
+    // İşlem simgesi
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -43,6 +45,7 @@ class TransactionDetailsViewController: UIViewController {
         return imageView
     }()
     
+    // Başlık etiketi
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .bold)
@@ -51,6 +54,7 @@ class TransactionDetailsViewController: UIViewController {
         return label
     }()
     
+    // Tutar etiketi
     private let amountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 32, weight: .bold)
@@ -59,6 +63,7 @@ class TransactionDetailsViewController: UIViewController {
         return label
     }()
     
+    // Detay kartı görünümü
     private let detailsCard: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -67,6 +72,7 @@ class TransactionDetailsViewController: UIViewController {
         return view
     }()
     
+    // Detaylar için stack view
     private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -75,19 +81,19 @@ class TransactionDetailsViewController: UIViewController {
         return stack
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Yaşam Döngüsü
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        configureWithTransaction()
+        setupUI() // Arayüzü kur
+        configureWithTransaction() // İşlem detaylarını göster
     }
     
-    // MARK: - UI Setup
+    // MARK: - Arayüz Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Transaction Details"
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -99,7 +105,7 @@ class TransactionDetailsViewController: UIViewController {
         contentView.addSubview(detailsCard)
         detailsCard.addSubview(stackView)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamalarını ayarla
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -141,10 +147,11 @@ class TransactionDetailsViewController: UIViewController {
         ])
     }
     
+    // İşlem detaylarını arayüze yerleştirir
     private func configureWithTransaction() {
         guard let transaction = transaction else { return }
         
-        // Configure icon
+        // Simgeyi ayarla
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 32, weight: .medium)
         let image: UIImage?
         
@@ -182,18 +189,18 @@ class TransactionDetailsViewController: UIViewController {
         iconImageView.image = image
         iconImageView.tintColor = transaction.type == "Income" ? UIColor(hex: "#3E7B27") : .systemRed
         
-        // Configure title and amount
+        // Başlık ve tutarı ayarla
         titleLabel.text = transaction.title
         let amount = Double(transaction.amount) ?? 0
         let formattedAmount = String(format: "%.2f", abs(amount))
         amountLabel.text = "\(formattedAmount) \(transaction.currency)"
         amountLabel.textColor = transaction.type == "Income" ? UIColor(hex: "#3E7B27") : .systemRed
         
-        // Configure transaction card background
+        // Kart arka plan rengini ayarla
         transactionCard.backgroundColor = transaction.type == "Income" ? 
             UIColor(hex: "#A7D477", alpha: 0.2) : UIColor(hex: "#F44336", alpha: 0.2)
         
-        // Add detail items
+        // Detayları ekle
         let details: [(String, String)] = [
             ("Description", transaction.description),
             ("Category", transaction.category),
@@ -208,6 +215,7 @@ class TransactionDetailsViewController: UIViewController {
         }
     }
     
+    // Detay satırı oluşturan yardımcı fonksiyon
     private func createDetailView(title: String, value: String) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -241,6 +249,7 @@ class TransactionDetailsViewController: UIViewController {
         return container
     }
     
+    // Tarihi formatlayan yardımcı fonksiyon
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy HH:mm"

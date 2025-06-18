@@ -9,25 +9,26 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// Giriş ekranını yöneten ViewController
 class SignInViewController: UIViewController {
     
     // MARK: - UI Elemanları
-    @IBOutlet weak var emailText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var emailText: UITextField! // E-posta giriş alanı
+    @IBOutlet weak var passwordText: UITextField! // Şifre giriş alanı
+    @IBOutlet weak var signInButton: UIButton! // Giriş yap butonu
+    @IBOutlet weak var signUpButton: UIButton! // Hesap oluştur butonu
+    @IBOutlet weak var containerView: UIView! // Ana konteyner görünümü
     
     // MARK: - Logo ve Başlık için StackView oluşturma
-    private let logoTitleStackView = UIStackView()
-    private let logoImageView = UIImageView()
-    private let appNameLabel = UILabel()
+    private let logoTitleStackView = UIStackView() // Logo ve başlık için yığın görünümü
+    private let logoImageView = UIImageView() // Logo görüntüsü
+    private let appNameLabel = UILabel() // Uygulama adı etiketi
     
     // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupLogoAndTitle()
+        setupUI() // UI ayarlarını yap
+        setupLogoAndTitle() // Logo ve başlığı ayarla
     }
     
     // MARK: - UI Kurulumu

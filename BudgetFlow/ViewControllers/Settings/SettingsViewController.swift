@@ -9,12 +9,13 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// Ayarlar ekranını yöneten ViewController
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var userEmailLabel: UILabel!
-    @IBOutlet weak var settingsTableView: UITableView!
+    @IBOutlet weak var userEmailLabel: UILabel! // Kullanıcı e-posta etiketi
+    @IBOutlet weak var settingsTableView: UITableView! // Ayarlar tablosu
     
-    // MARK: - Properties
+    // MARK: - Özellikler
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = UIColor(hex: "#F5F5F5")
@@ -48,7 +49,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return label
     }()
     
-    // Define sections
+    // Ayarlar bölümlerini tanımlayan enum
     enum SettingsSection: Int, CaseIterable {
         case profile
         case security
@@ -68,6 +69,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         
+        // Her bölümdeki ayar seçenekleri ve ikonları
         var items: [(title: String, icon: String)] {
             switch self {
             case .profile:
@@ -105,13 +107,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        self.title = "Settings" // Navigation bar başlığı ekle
+        setupUI() // UI kurulumunu yap
     }
     
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -119,12 +122,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         contentView.addSubview(subtitleLabel)
         contentView.addSubview(settingsTableView)
         
-        // Setup table view
+        // Tabloyu ayarla
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
         settingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingsCell")
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -155,15 +158,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SettingsSection.allCases.count
+        return SettingsSection.allCases.count // Bölüm sayısı
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return SettingsSection(rawValue: section)?.title
+        return SettingsSection(rawValue: section)?.title // Her bölümün başlığı
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SettingsSection(rawValue: section)?.items.count ?? 0
+        return SettingsSection(rawValue: section)?.items.count ?? 0 // Her bölümdeki satır sayısı
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -199,6 +202,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
 
+        // Seçilen ayar seçeneğine göre işlem yap
         switch item.title {
         case "Sign Out":
             handleSignOut()
@@ -225,6 +229,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // Çıkış işlemini yöneten fonksiyon
     private func handleSignOut() {
         do {
             try Auth.auth().signOut()
@@ -245,14 +250,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFAQ" {
-            // No additional setup needed for FAQ
+            // FAQ için ek bir ayar gerekmez
         } else if segue.identifier == "toContactSupport" {
-            // No additional setup needed for Contact Support
+            // Destek için ek bir ayar gerekmez
         }
     }
 }
 
 // MARK: - Array Extension
+// Diziye güvenli erişim için eklenti
 extension Array {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil

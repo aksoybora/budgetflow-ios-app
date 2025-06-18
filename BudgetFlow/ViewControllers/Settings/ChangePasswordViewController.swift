@@ -9,24 +9,25 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// Şifre değiştirme ekranını yöneten ViewController
 class ChangePasswordViewController: UIViewController {
 
-    // MARK: - UI Elements
-    private let scrollView = UIScrollView()
-    private let containerView = UIView()
-    private let stackView = UIStackView()
-    private let currentPasswordTextField = UITextField()
-    private let newPasswordTextField = UITextField()
-    private let confirmPasswordTextField = UITextField()
-    private let saveButton = UIButton(type: .system)
+    // MARK: - UI Elemanları
+    private let scrollView = UIScrollView() // Kaydırılabilir ana görünüm
+    private let containerView = UIView() // İçerik için ana konteyner
+    private let stackView = UIStackView() // Dikey yığın görünümü
+    private let currentPasswordTextField = UITextField() // Mevcut şifre alanı
+    private let newPasswordTextField = UITextField() // Yeni şifre alanı
+    private let confirmPasswordTextField = UITextField() // Yeni şifre tekrar alanı
+    private let saveButton = UIButton(type: .system) // Kaydet butonu
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupUI() // UI kurulumunu yap
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Change Password"
@@ -50,7 +51,7 @@ class ChangePasswordViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(stackView)
         
-        // Add fields to stack
+        // Alanları stack'e ekle
         let currentField = createLabeledField(label: "Current Password", textField: currentPasswordTextField, icon: "lock.fill", isSecure: true)
         let newField = createLabeledField(label: "New Password", textField: newPasswordTextField, icon: "lock.fill", isSecure: true)
         let confirmField = createLabeledField(label: "Confirm New Password", textField: confirmPasswordTextField, icon: "lock.fill", isSecure: true)
@@ -58,7 +59,7 @@ class ChangePasswordViewController: UIViewController {
         stackView.addArrangedSubview(newField)
         stackView.addArrangedSubview(confirmField)
         
-        // Save Button
+        // Kaydet butonu
         saveButton.setTitle("Update Password", for: .normal)
         saveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         saveButton.backgroundColor = UIColor(hex: "#007AFF")
@@ -69,7 +70,7 @@ class ChangePasswordViewController: UIViewController {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         stackView.addArrangedSubview(saveButton)
         
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -89,6 +90,7 @@ class ChangePasswordViewController: UIViewController {
         ])
     }
     
+    // Etiketli ve ikonlu textfield oluşturan yardımcı fonksiyon
     private func createLabeledField(label: String, textField: UITextField, icon: String, isSecure: Bool = false) -> UIView {
         let container = UIStackView()
         container.axis = .vertical
@@ -110,7 +112,7 @@ class ChangePasswordViewController: UIViewController {
         textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         textField.borderStyle = .none
         
-        // Left icon
+        // Sol tarafta ikon gösterimi
         let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         let iconView = UIImageView(image: UIImage(systemName: icon))
         iconView.tintColor = UIColor(hex: "#007AFF")
@@ -125,7 +127,7 @@ class ChangePasswordViewController: UIViewController {
         return container
     }
     
-    // MARK: - Actions
+    // MARK: - Aksiyonlar
     @objc private func saveButtonTapped() {
         guard let currentPassword = currentPasswordTextField.text,
               let newPassword = newPasswordTextField.text,
@@ -134,7 +136,7 @@ class ChangePasswordViewController: UIViewController {
             return
         }
         
-        // Validate passwords
+        // Şifreleri doğrula
         guard newPassword == confirmPassword else {
             makeAlert(title: "Error", message: "New passwords do not match")
             return
@@ -145,13 +147,13 @@ class ChangePasswordViewController: UIViewController {
             return
         }
         
-        // Show loading indicator
+        // Yükleniyor göstergesi ekle
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
         
-        // Reauthenticate user
+        // Kullanıcıyı tekrar doğrula (reauthenticate)
         guard let user = Auth.auth().currentUser,
               let email = user.email else {
             activityIndicator.stopAnimating()
@@ -170,7 +172,7 @@ class ChangePasswordViewController: UIViewController {
                 return
             }
             
-            // Update password
+            // Şifreyi güncelle
             user.updatePassword(to: newPassword) { error in
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()
@@ -185,7 +187,7 @@ class ChangePasswordViewController: UIViewController {
         }
     }
     
-    // MARK: - Helper Methods
+    // MARK: - Yardımcı Metodlar
     private func makeAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default)

@@ -28,6 +28,7 @@ class ExportViewController: UIViewController {
         return view
     }()
     
+    // Başlık ve alt başlık
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Export Transactions"
@@ -46,6 +47,7 @@ class ExportViewController: UIViewController {
         return label
     }()
     
+    // Filtre kartı
     private let filterCard: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -58,6 +60,7 @@ class ExportViewController: UIViewController {
         return view
     }()
 
+    // Tarih seçiciler
     private let startDatePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
@@ -76,12 +79,14 @@ class ExportViewController: UIViewController {
         return picker
     }()
 
+    // Kategori seçici
     private let categoryPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
+    // Tip segmenti
     private let typeSegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["All", "Income", "Expense"])
         segment.selectedSegmentIndex = 0
@@ -93,6 +98,7 @@ class ExportViewController: UIViewController {
         return segment
     }()
 
+    // Dışa aktar butonu
     private let exportButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Export as PDF", for: .normal)
@@ -115,12 +121,13 @@ class ExportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#F5F5F5")
-        setupUI()
-        setupActions()
+        setupUI() // Arayüzü kur
+        setupActions() // Buton ve segment aksiyonlarını ayarla
     }
 
+    // Arayüzü ve filtre kartını kurar
     private func setupUI() {
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -128,7 +135,7 @@ class ExportViewController: UIViewController {
         contentView.addSubview(subtitleLabel)
         contentView.addSubview(filterCard)
         
-        // Add filter card content
+        // Filtre kartı içeriği
         let dateStack = createLabeledStack(title: "Date Range", spacing: 16)
         dateStack.addArrangedSubview(createLabeledComponent(label: "From", component: startDatePicker))
         dateStack.addArrangedSubview(createLabeledComponent(label: "To", component: endDatePicker))
@@ -147,7 +154,7 @@ class ExportViewController: UIViewController {
         
         contentView.addSubview(exportButton)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamalarını ayarla
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -186,16 +193,18 @@ class ExportViewController: UIViewController {
             exportButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
         
-        // Setup delegates
+        // Picker delegate ve data source
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
     }
     
+    // Buton ve segment aksiyonlarını ayarla
     private func setupActions() {
         typeSegment.addTarget(self, action: #selector(typeChanged), for: .valueChanged)
         exportButton.addTarget(self, action: #selector(exportTapped), for: .touchUpInside)
     }
     
+    // Başlıklı bir stack oluşturur
     private func createLabeledStack(title: String, spacing: CGFloat) -> UIStackView {
         let titleLabel = UILabel()
         titleLabel.text = title
@@ -209,6 +218,7 @@ class ExportViewController: UIViewController {
         return stack
     }
     
+    // Etiketli bir bileşen oluşturur
     private func createLabeledComponent(label: String, component: UIView) -> UIStackView {
         let titleLabel = UILabel()
         titleLabel.text = label
@@ -221,7 +231,7 @@ class ExportViewController: UIViewController {
         return stack
     }
 
-    // Tip segmenti değişince
+    // Tip segmenti değişince çağrılır
     @objc private func typeChanged() {
         let idx = typeSegment.selectedSegmentIndex
         if idx == 0 { selectedType = "All" }
@@ -229,7 +239,7 @@ class ExportViewController: UIViewController {
         else { selectedType = "Expense" }
     }
 
-    // Export butonuna tıklanınca
+    // Dışa aktar butonuna tıklanınca çağrılır
     @objc private func exportTapped() {
         // Filtreye göre işlemleri çek
         fetchFilteredTransactions { [weak self] in
@@ -249,7 +259,7 @@ class ExportViewController: UIViewController {
         }
     }
 
-    // Filtreye göre işlemleri Firestore'dan çek
+    // Filtreye göre işlemleri Firestore'dan çeker
     private func fetchFilteredTransactions(completion: @escaping () -> Void) {
         guard let userId = userId else { completion(); return }
         var query: Query = db.collection("transactions").whereField("userID", isEqualTo: userId)
@@ -277,7 +287,7 @@ class ExportViewController: UIViewController {
         }
     }
 
-    // PDF dosyası oluştur
+    // PDF dosyası oluşturur
     private func createPDF() -> Data {
         let pdfMetaData = [
             kCGPDFContextCreator: "BudgetFlow",

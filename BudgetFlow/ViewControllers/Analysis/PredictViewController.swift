@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class PredictViewController: UIViewController {
+    // Kart görünümü, başlık, tahmin etiketi, açıklama ve yükleniyor göstergesi
     private let cardView = UIView()
     private let titleLabel = UILabel()
     private let predictionLabel = UILabel()
@@ -20,12 +21,13 @@ class PredictViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.systemGroupedBackground
-        setupUI()
-        fetchAndPredictExpense()
+        setupUI() // Arayüzü kur
+        fetchAndPredictExpense() // Tahmin işlemini başlat
     }
 
+    // Arayüz elemanlarını kurar ve yerleşimini ayarlar
     private func setupUI() {
-        // Card View
+        // Kart görünümü
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 18
         cardView.layer.shadowColor = UIColor.black.cgColor
@@ -35,7 +37,7 @@ class PredictViewController: UIViewController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cardView)
 
-        // Title Label
+        // Başlık etiketi
         titleLabel.text = "AI Expense Estimate"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         titleLabel.textColor = .systemBlue
@@ -43,7 +45,7 @@ class PredictViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(titleLabel)
 
-        // Prediction Label
+        // Tahmin etiketi
         predictionLabel.text = "-- ₺"
         predictionLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
         predictionLabel.textColor = .systemGreen
@@ -51,7 +53,7 @@ class PredictViewController: UIViewController {
         predictionLabel.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(predictionLabel)
 
-        // Explanation Label
+        // Açıklama etiketi
         explanationLabel.text = "This is your estimated expense for next month based on your previous spending."
         explanationLabel.font = UIFont.systemFont(ofSize: 15)
         explanationLabel.textColor = .darkGray
@@ -60,11 +62,11 @@ class PredictViewController: UIViewController {
         explanationLabel.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(explanationLabel)
 
-        // Activity Indicator
+        // Yükleniyor göstergesi
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
 
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -91,6 +93,7 @@ class PredictViewController: UIViewController {
         ])
     }
 
+    // Kullanıcının harcama verilerini çekip, makine öğrenmesi modeliyle tahmin yapar
     private func fetchAndPredictExpense() {
         activityIndicator.startAnimating()
         predictionLabel.text = "-- ₺"
@@ -112,13 +115,13 @@ class PredictViewController: UIViewController {
                     return
                 }
                 let docs = snapshot?.documents ?? []
-                // Sort docs by date ascending
+                // Belgeleri tarihe göre artan şekilde sırala
                 let sortedDocs = docs.sorted { (doc1, doc2) -> Bool in
                     let ts1 = (doc1.data()["date"] as? Timestamp)?.dateValue() ?? Date.distantPast
                     let ts2 = (doc2.data()["date"] as? Timestamp)?.dateValue() ?? Date.distantPast
                     return ts1 < ts2
                 }
-                // Group by month, sum expenses
+                // Aylara göre grupla ve toplam harcamayı hesapla
                 var monthlyTotals: [String: Double] = [:]
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM"
@@ -131,33 +134,33 @@ class PredictViewController: UIViewController {
                         monthlyTotals[key, default: 0.0] += amount
                     }
                 }
-                // Sort months
+                // Ayları sırala
                 let sortedMonths = monthlyTotals.keys.sorted()
                 let sortedTotals = sortedMonths.map { monthlyTotals[$0] ?? 0.0 }
-                // Prepare input for model: use last N months (e.g., 3)
+                // Model için son N ayı kullan
                 let N = 3
                 let inputArray = Array(sortedTotals.suffix(N))
-                // If not enough data, show info
+                // Yeterli veri yoksa bilgi göster
                 if inputArray.count < N {
                     self.predictionLabel.text = "Not enough data"
                     self.explanationLabel.text = "You need at least \(N) months of expense data."
                     self.activityIndicator.stopAnimating()
                     return
                 }
-                // Prepare MLMultiArray for model input
+                // Model girişi için MLMultiArray hazırla
                 guard let categoryArray = try? MLMultiArray(shape: [NSNumber(value: N)], dataType: .double),
                       let transactionTypeArray = try? MLMultiArray(shape: [NSNumber(value: 1)], dataType: .double) else {
                     self.predictionLabel.text = "Model error"
                     self.activityIndicator.stopAnimating()
                     return
                 }
-                // Fill categoryArray with last N months' expenses
+                // Son N ayın harcamalarını diziye doldur
                 for (i, value) in inputArray.enumerated() {
                     categoryArray[i] = NSNumber(value: value)
                 }
-                // transaction_type: 1 for Expense
+                // transaction_type: 1 = Gider
                 transactionTypeArray[0] = 1.0
-                // Run model
+                // Modeli çalıştır
                 do {
                     let model = try BudgetFlowModel(configuration: MLModelConfiguration())
                     let output = try model.prediction(category: categoryArray, transaction_type: transactionTypeArray)
@@ -176,10 +179,10 @@ class PredictViewController: UIViewController {
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Storyboard tabanlı uygulamalarda, genellikle gezinmeden önce biraz hazırlık yapmak istersiniz
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Yeni view controller'ı segue.destination ile alın.
+        // Seçilen nesneyi yeni view controller'a iletin.
     }
     */
 

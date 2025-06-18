@@ -8,14 +8,15 @@
 import UIKit
 import UserNotifications
 
+// Bildirim ayarları ekranını yöneten ViewController
 class NotificationSettingsViewController: UIViewController {
 
-    // MARK: - UI Elements
-    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    // MARK: - UI Elemanları
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped) // Bildirim seçeneklerini gösteren tablo
     private let notificationTypes = [
-        ("Transaction Notifications", "bell.fill"),
-        ("Budget Alerts", "exclamationmark.triangle.fill"),
-        ("Reminders", "clock.fill")
+        ("Transaction Notifications", "bell.fill"), // İşlem bildirimleri
+        ("Budget Alerts", "exclamationmark.triangle.fill"), // Bütçe uyarıları
+        ("Reminders", "clock.fill") // Hatırlatıcılar
     ]
     
     private var notificationSettings: [String: Bool] {
@@ -31,26 +32,26 @@ class NotificationSettingsViewController: UIViewController {
         }
     }
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        requestNotificationPermission()
+        setupUI() // UI kurulumunu yap
+        requestNotificationPermission() // Bildirim izni iste
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Notifications"
         
-        // Setup TableView
+        // Tabloyu ayarla
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NotificationCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -59,7 +60,7 @@ class NotificationSettingsViewController: UIViewController {
         ])
     }
     
-    // MARK: - Notification Methods
+    // MARK: - Bildirim Metodları
     private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             DispatchQueue.main.async {
@@ -76,7 +77,7 @@ class NotificationSettingsViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension NotificationSettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notificationTypes.count
+        return notificationTypes.count // Bildirim türü sayısı
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,7 +105,7 @@ extension NotificationSettingsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Actions
+// MARK: - Aksiyonlar
 extension NotificationSettingsViewController {
     @objc private func switchChanged(_ sender: UISwitch) {
         let (title, _) = notificationTypes[sender.tag]
@@ -112,18 +113,17 @@ extension NotificationSettingsViewController {
         settings[title] = sender.isOn
         notificationSettings = settings
         
-        // Update notification settings in the system
+        // Sistem bildirim ayarlarını güncelle
         updateNotificationSettings()
     }
     
     private func updateNotificationSettings() {
-        // Here you would typically update your notification scheduling logic
-        // based on the user's preferences
+        // Burada genellikle kullanıcının tercihlerine göre bildirim planlama mantığı güncellenir
         print("Notification settings updated:", notificationSettings)
     }
 }
 
-// MARK: - Helper Methods
+// MARK: - Yardımcı Metodlar
 extension NotificationSettingsViewController {
     private func makeAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

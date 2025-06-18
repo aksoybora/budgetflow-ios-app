@@ -7,32 +7,33 @@
 
 import UIKit
 
+// Cüzdan bilgilerini gösteren TableView hücresi
 class WalletTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var balanceLabel: UILabel!
-    @IBOutlet weak var currencyLabel: UILabel!
-    @IBOutlet weak var walletNameLabel: UILabel!
-    @IBOutlet weak var walletIconImageView: UIImageView!
+    @IBOutlet weak var balanceLabel: UILabel! // Bakiye etiketi
+    @IBOutlet weak var currencyLabel: UILabel! // Para birimi etiketi
+    @IBOutlet weak var walletNameLabel: UILabel! // Cüzdan adı etiketi
+    @IBOutlet weak var walletIconImageView: UIImageView! // Cüzdan ikonu
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        // Configure cell appearance
+        // Hücre görünümünü ayarla
         self.backgroundColor = .clear
         self.selectionStyle = .none
         
-        // Configure content view
+        // İçerik görünümünü ayarla
         self.contentView.layer.cornerRadius = 16
         self.contentView.layer.masksToBounds = true
         
-        // Configure shadow
+        // Gölge ayarlarını yap
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.1
         self.layer.shadowOffset = CGSize(width: 0, height: 4)
         self.layer.shadowRadius = 8
         self.layer.masksToBounds = false
         
-        // Configure labels
+        // Etiketleri ayarla
         walletNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         walletNameLabel.textColor = .darkGray
         
@@ -40,7 +41,7 @@ class WalletTableViewCell: UITableViewCell {
         
         balanceLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
-        // Configure icon
+        // İkonu ayarla
         walletIconImageView.contentMode = .scaleAspectFit
         walletIconImageView.tintColor = .darkGray
     }
@@ -48,20 +49,20 @@ class WalletTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Add a subtle animation when selected
+        // Seçildiğinde hafif bir animasyon ekle
         UIView.animate(withDuration: 0.2) {
             self.transform = selected ? CGAffineTransform(scaleX: 0.98, y: 0.98) : .identity
         }
     }
     
     func configure(with wallet: Wallet) {
-        // Set wallet name based on currency
+        // Para birimine göre cüzdan adını ayarla
         walletNameLabel.text = "\(wallet.currency) Wallet"
         
-        // Set currency
+        // Para birimini ayarla
         currencyLabel.text = wallet.currency
         
-        // Format balance with currency symbol and thousands separator
+        // Bakiyeyi para birimi sembolü ve binlik ayracı ile formatla
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencySymbol = ""
@@ -72,7 +73,7 @@ class WalletTableViewCell: UITableViewCell {
             balanceLabel.text = formattedBalance
         }
         
-        // Set wallet icon based on currency
+        // Para birimine göre cüzdan ikonunu ayarla
         let iconName: String
         switch wallet.currency {
         case "TRY":

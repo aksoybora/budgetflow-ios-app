@@ -9,7 +9,8 @@ import UIKit
 
 class AnalysisHomeViewController: UIViewController {
 
-    // MARK: - UI Elements
+    // MARK: - Arayüz Elemanları
+    // ScrollView ve içerik görünümü
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -25,6 +26,7 @@ class AnalysisHomeViewController: UIViewController {
         return view
     }()
     
+    // Başlık ve alt başlık
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Analysis Tools"
@@ -43,6 +45,7 @@ class AnalysisHomeViewController: UIViewController {
         return label
     }()
     
+    // Kartlar: Grafikler, Tahmin, Dışa Aktar
     private lazy var graphsCard: UIView = createCard(
         title: "Graphs",
         description: "View detailed charts and graphs of your spending patterns",
@@ -67,17 +70,17 @@ class AnalysisHomeViewController: UIViewController {
         action: #selector(exportButtonTapped)
     )
 
-    // MARK: - Lifecycle
+    // MARK: - Yaşam Döngüsü
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupUI() // Arayüzü kur
     }
 
-    // MARK: - UI Setup
+    // MARK: - Arayüz Kurulumu
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -87,7 +90,7 @@ class AnalysisHomeViewController: UIViewController {
         contentView.addSubview(predictCard)
         contentView.addSubview(exportCard)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamalarını ayarla
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -123,6 +126,7 @@ class AnalysisHomeViewController: UIViewController {
         ])
     }
     
+    // Kart oluşturan yardımcı fonksiyon
     private func createCard(title: String, description: String, icon: String, color: UIColor, action: Selector) -> UIView {
         let card = UIView()
         card.backgroundColor = .white
@@ -133,26 +137,26 @@ class AnalysisHomeViewController: UIViewController {
         card.layer.shadowRadius = 8
         card.translatesAutoresizingMaskIntoConstraints = false
         
-        // Add tap gesture
+        // Tıklama hareketi ekle
         let tapGesture = UITapGestureRecognizer(target: self, action: action)
         card.addGestureRecognizer(tapGesture)
         card.isUserInteractionEnabled = true
         
-        // Icon
+        // Simge
         let iconView = UIImageView()
         iconView.image = UIImage(systemName: icon)
         iconView.tintColor = color
         iconView.contentMode = .scaleAspectFit
         iconView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Title
+        // Kart başlığı
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         titleLabel.textColor = .black
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        // Description
+        // Açıklama
         let descLabel = UILabel()
         descLabel.text = description
         descLabel.font = .systemFont(ofSize: 14)
@@ -160,7 +164,7 @@ class AnalysisHomeViewController: UIViewController {
         descLabel.numberOfLines = 0
         descLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        // Arrow icon
+        // Ok simgesi
         let arrowView = UIImageView()
         arrowView.image = UIImage(systemName: "chevron.right")
         arrowView.tintColor = .gray
@@ -198,27 +202,29 @@ class AnalysisHomeViewController: UIViewController {
         return card
     }
 
-    // MARK: - Actions
+    // MARK: - Aksiyonlar
+    // Grafikler kartına tıklandığında
     @objc private func graphsButtonTapped() {
         performSegue(withIdentifier: "toGraphs", sender: self)
     }
 
+    // Tahmin kartına tıklandığında
     @objc private func predictButtonTapped() {
         performSegue(withIdentifier: "toPredict", sender: self)
     }
 
+    // Dışa aktar kartına tıklandığında
     @objc private func exportButtonTapped() {
         performSegue(withIdentifier: "toExport", sender: self)
     }
     
-
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Storyboard tabanlı uygulamalarda, genellikle gezinmeden önce biraz hazırlık yapmak istersiniz
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Yeni view controller'ı segue.destination ile alın.
+        // Seçilen nesneyi yeni view controller'a iletin.
     }
     */
 

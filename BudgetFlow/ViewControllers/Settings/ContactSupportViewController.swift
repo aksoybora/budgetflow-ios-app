@@ -8,9 +8,10 @@
 import UIKit
 import MessageUI
 
+// Destek ile iletişim ekranını yöneten ViewController
 class ContactSupportViewController: UIViewController {
     
-    // MARK: - UI Components
+    // MARK: - UI Bileşenleri
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,18 +92,18 @@ class ContactSupportViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupActions()
+        setupUI() // UI kurulumunu yap
+        setupActions() // Buton ve etiket aksiyonlarını ayarla
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -115,7 +116,7 @@ class ContactSupportViewController: UIViewController {
         supportCard.addSubview(messageLabel)
         supportCard.addSubview(emailButton)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -164,7 +165,7 @@ class ContactSupportViewController: UIViewController {
         emailLabel.addGestureRecognizer(tapGesture)
     }
     
-    // MARK: - Actions
+    // MARK: - Aksiyonlar
     @objc private func emailButtonTapped() {
         sendEmail()
     }
@@ -173,6 +174,7 @@ class ContactSupportViewController: UIViewController {
         sendEmail()
     }
     
+    // E-posta gönderme işlemini başlatan fonksiyon
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
             let mailComposer = MFMailComposeViewController()
@@ -181,12 +183,13 @@ class ContactSupportViewController: UIViewController {
             mailComposer.setSubject("BudgetFlow Support")
             present(mailComposer, animated: true)
         } else {
-            // If email is not configured, copy email to clipboard
+            // Eğer e-posta yapılandırılmamışsa, e-posta adresini panoya kopyala
             UIPasteboard.general.string = "bora.aksoy@ogr.gelisim.edu.tr"
             showAlert(title: "Email Not Configured", message: "Email address has been copied to clipboard. Please use your email app to send a message.")
         }
     }
     
+    // Uyarı gösteren yardımcı fonksiyon
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))

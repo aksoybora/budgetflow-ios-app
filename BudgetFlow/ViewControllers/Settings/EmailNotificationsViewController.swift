@@ -10,15 +10,16 @@ import Firebase
 import FirebaseFirestore
 import FirebaseAuth
 
+// E-posta bildirim ayarları ekranını yöneten ViewController
 class EmailNotificationsViewController: UIViewController {
     
-    // MARK: - UI Elements
-    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    // MARK: - UI Elemanları
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped) // E-posta bildirim seçeneklerini gösteren tablo
     private let emailTypes = [
-        ("Weekly Reports", "chart.bar.fill"),
-        ("Budget Alerts", "exclamationmark.triangle.fill"),
-        ("Account Updates", "envelope.fill"),
-        ("Promotional Emails", "megaphone.fill")
+        ("Weekly Reports", "chart.bar.fill"), // Haftalık raporlar
+        ("Budget Alerts", "exclamationmark.triangle.fill"), // Bütçe uyarıları
+        ("Account Updates", "envelope.fill"), // Hesap güncellemeleri
+        ("Promotional Emails", "megaphone.fill") // Tanıtım e-postaları
     ]
     
     private var emailSettings: [String: Bool] {
@@ -35,28 +36,28 @@ class EmailNotificationsViewController: UIViewController {
         }
     }
     
-    private let db = Firestore.firestore()
+    private let db = Firestore.firestore() // Firestore veritabanı referansı
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        loadEmailSettings()
+        setupUI() // UI kurulumunu yap
+        loadEmailSettings() // E-posta ayarlarını yükle
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Email Notifications"
         
-        // Setup TableView
+        // Tabloyu ayarla
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "EmailCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -65,7 +66,7 @@ class EmailNotificationsViewController: UIViewController {
         ])
     }
     
-    // MARK: - Data Methods
+    // MARK: - Veri Metodları
     private func loadEmailSettings() {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         
@@ -102,7 +103,7 @@ class EmailNotificationsViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension EmailNotificationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return emailTypes.count
+        return emailTypes.count // E-posta türü sayısı
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +131,7 @@ extension EmailNotificationsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Actions
+// MARK: - Aksiyonlar
 extension EmailNotificationsViewController {
     @objc private func switchChanged(_ sender: UISwitch) {
         let (title, _) = emailTypes[sender.tag]
@@ -138,12 +139,12 @@ extension EmailNotificationsViewController {
         settings[title] = sender.isOn
         emailSettings = settings
         
-        // Save to Firestore
+        // Firestore'a kaydet
         saveEmailSettings()
     }
 }
 
-// MARK: - Helper Methods
+// MARK: - Yardımcı Metodlar
 extension EmailNotificationsViewController {
     private func makeAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

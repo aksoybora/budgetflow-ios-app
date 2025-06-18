@@ -7,9 +7,10 @@
 
 import UIKit
 
+// Sıkça Sorulan Sorular (SSS) ekranını yöneten ViewController
 class FAQViewController: UIViewController {
     
-    // MARK: - UI Components
+    // MARK: - UI Bileşenleri
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,8 +40,9 @@ class FAQViewController: UIViewController {
         return stack
     }()
     
-    // MARK: - Properties
+    // MARK: - Özellikler
     private let faqs: [(question: String, answer: String)] = [
+        // SSS soruları ve cevapları
         (
             "How do I add a new transaction?",
             "Go to the Home screen and tap the '+' button. Fill in the transaction details and tap 'Save' to add it."
@@ -83,25 +85,25 @@ class FAQViewController: UIViewController {
         )
     ]
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupFAQs()
+        setupUI() // UI kurulumunu yap
+        setupFAQs() // SSS'leri ekle
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(faqStack)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -131,6 +133,7 @@ class FAQViewController: UIViewController {
         }
     }
     
+    // SSS kutusu oluşturan yardımcı fonksiyon
     private func createFAQView(question: String, answer: String) -> UIView {
         let container = UIView()
         container.backgroundColor = .systemBackground

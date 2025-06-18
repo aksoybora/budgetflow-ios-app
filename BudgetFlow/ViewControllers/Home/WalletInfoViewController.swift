@@ -10,69 +10,70 @@ import FirebaseFirestore
 import FirebaseAuth
 import SDWebImage
 
+// Cüzdan detaylarını gösteren ViewController
 class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Veriler
-    var wallet: Wallet?
-    var transactions: [Transaction] = []
-    private var userName: String = ""
+    var wallet: Wallet? // Cüzdan bilgisi
+    var transactions: [Transaction] = [] // İşlemler
+    private var userName: String = "" // Kullanıcı adı
     
     // MARK: - UI Elemanları
-    let scrollView = UIScrollView()
-    let contentView = UIView()
-    let walletCardView = UIView()
-    let walletNameLabel = UILabel()
-    let balanceLabel = UILabel()
-    let currencyLabel = UILabel()
-    let cardLogoImageView = UIImageView()
-    let cardholderNameLabel = UILabel()
-    let transactionsTitleLabel = UILabel()
-    let transactionsTableView = UITableView()
+    let scrollView = UIScrollView() // Kaydırma görünümü
+    let contentView = UIView() // İçerik görünümü
+    let walletCardView = UIView() // Cüzdan kartı
+    let walletNameLabel = UILabel() // Cüzdan adı
+    let balanceLabel = UILabel() // Bakiye
+    let currencyLabel = UILabel() // Para birimi
+    let cardLogoImageView = UIImageView() // Kart logosu
+    let cardholderNameLabel = UILabel() // Kart sahibi adı
+    let transactionsTitleLabel = UILabel() // İşlemler başlığı
+    let transactionsTableView = UITableView() // İşlemler tablosu
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
-        loadUserName()
+        loadUserName() // Kullanıcı adını yükle
         // Initialize and add all views to hierarchy
-        setupViewHierarchy()
+        setupViewHierarchy() // Görünüm hiyerarşisini ayarla
         // Set up constraints and styling
-        setupUI()
-        updateWalletInfo()
-        loadTransactionsForWallet()
+        setupUI() // UI ayarlarını yap
+        updateWalletInfo() // Cüzdan bilgilerini güncelle
+        loadTransactionsForWallet() // İşlemleri yükle
     }
     
     private func setupViewHierarchy() {
         // Add ScrollView to main view
-        view.addSubview(scrollView)
+        view.addSubview(scrollView) // ScrollView'ı ana görünüme ekle
         
         // Add ContentView to ScrollView
-        scrollView.addSubview(contentView)
+        scrollView.addSubview(contentView) // ContentView'ı ScrollView'a ekle
         
         // Add WalletCardView to ContentView
-        contentView.addSubview(walletCardView)
+        contentView.addSubview(walletCardView) // WalletCardView'ı ContentView'a ekle
         
         // Add Card Logo
-        cardLogoImageView.contentMode = .scaleAspectFit
-        walletCardView.addSubview(cardLogoImageView)
+        cardLogoImageView.contentMode = .scaleAspectFit // Kart logosunu ayarla
+        walletCardView.addSubview(cardLogoImageView) // Kart logosunu WalletCardView'a ekle
         
         // Add labels to WalletCardView
-        walletCardView.addSubview(walletNameLabel)
-        walletCardView.addSubview(balanceLabel)
-        walletCardView.addSubview(currencyLabel)
-        walletCardView.addSubview(cardholderNameLabel)
+        walletCardView.addSubview(walletNameLabel) // Cüzdan adı etiketini ekle
+        walletCardView.addSubview(balanceLabel) // Bakiye etiketini ekle
+        walletCardView.addSubview(currencyLabel) // Para birimi etiketini ekle
+        walletCardView.addSubview(cardholderNameLabel) // Kart sahibi adı etiketini ekle
         
         // Add Transactions title and TableView to ContentView
-        contentView.addSubview(transactionsTitleLabel)
-        contentView.addSubview(transactionsTableView)
+        contentView.addSubview(transactionsTitleLabel) // İşlemler başlığını ekle
+        contentView.addSubview(transactionsTableView) // İşlemler tablosunu ekle
         
         // Configure TableView
-        transactionsTableView.delegate = self
-        transactionsTableView.dataSource = self
-        transactionsTableView.backgroundColor = .clear
-        transactionsTableView.separatorStyle = .none
-        transactionsTableView.register(TransactionInfoTableViewCell.self, forCellReuseIdentifier: "TransactionInfoCell")
-        transactionsTableView.showsVerticalScrollIndicator = false
-        transactionsTableView.isScrollEnabled = false // Disable table scroll, let scroll view handle it
+        transactionsTableView.delegate = self // TableView delegesini ayarla
+        transactionsTableView.dataSource = self // TableView veri kaynağını ayarla
+        transactionsTableView.backgroundColor = .clear // Arka planı temizle
+        transactionsTableView.separatorStyle = .none // Ayırıcı çizgileri kaldır
+        transactionsTableView.register(TransactionInfoTableViewCell.self, forCellReuseIdentifier: "TransactionInfoCell") // Hücre kaydını yap
+        transactionsTableView.showsVerticalScrollIndicator = false // Dikey kaydırma göstergesini gizle
+        transactionsTableView.isScrollEnabled = false // Tablo kaydırmayı devre dışı bırak, scroll view yönetsin
         
         // Set up translatesAutoresizingMaskIntoConstraints
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +88,7 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         transactionsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         // Set up initial text
-        transactionsTitleLabel.text = "Transactions"
+        transactionsTitleLabel.text = "Transactions" // İşlemler başlığını ayarla
     }
     
     private func setupUI() {
@@ -210,6 +211,7 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func loadUserName() {
+        // Kullanıcı adını Firestore'dan çek
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         

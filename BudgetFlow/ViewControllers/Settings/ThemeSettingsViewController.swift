@@ -7,35 +7,36 @@
 
 import UIKit
 
+// Tema ayarları ekranını yöneten ViewController
 class ThemeSettingsViewController: UIViewController {
 
-    // MARK: - UI Elements
-    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    private let themes = ["System", "Light", "Dark"]
+    // MARK: - UI Elemanları
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped) // Tema seçeneklerini gösteren tablo
+    private let themes = ["System", "Light", "Dark"] // Tema seçenekleri
     private var selectedTheme: String {
-        get { UserDefaults.standard.string(forKey: "AppTheme") ?? "System" }
-        set { UserDefaults.standard.set(newValue, forKey: "AppTheme") }
+        get { UserDefaults.standard.string(forKey: "AppTheme") ?? "System" } // Seçili temayı getir
+        set { UserDefaults.standard.set(newValue, forKey: "AppTheme") } // Seçili temayı kaydet
     }
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupUI() // UI kurulumunu yap
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Theme"
         
-        // Setup TableView
+        // Tabloyu ayarla
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ThemeCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -48,7 +49,7 @@ class ThemeSettingsViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ThemeSettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return themes.count
+        return themes.count // Tema sayısı
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,7 +57,7 @@ extension ThemeSettingsViewController: UITableViewDataSource {
         let theme = themes[indexPath.row]
         
         cell.textLabel?.text = theme
-        cell.accessoryType = theme == selectedTheme ? .checkmark : .none
+        cell.accessoryType = theme == selectedTheme ? .checkmark : .none // Seçili temayı işaretle
         
         return cell
     }
@@ -68,10 +69,10 @@ extension ThemeSettingsViewController: UITableViewDelegate {
         let selectedTheme = themes[indexPath.row]
         self.selectedTheme = selectedTheme
         
-        // Update UI
+        // UI'yı güncelle
         tableView.reloadData()
         
-        // Apply theme
+        // Temayı uygula
         switch selectedTheme {
         case "Light":
             overrideUserInterfaceStyle = .light
@@ -81,7 +82,7 @@ extension ThemeSettingsViewController: UITableViewDelegate {
             overrideUserInterfaceStyle = .unspecified
         }
         
-        // Notify other view controllers
+        // Diğer view controller'lara tema değişikliğini bildir
         NotificationCenter.default.post(name: NSNotification.Name("ThemeChanged"), object: nil)
     }
 }

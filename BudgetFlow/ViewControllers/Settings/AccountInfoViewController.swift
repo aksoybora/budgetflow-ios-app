@@ -10,9 +10,10 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+// Hesap bilgileri ekranını yöneten ViewController
 class AccountInfoViewController: UIViewController {
 
-    // MARK: - UI Elements
+    // MARK: - UI Elemanları
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -102,20 +103,20 @@ class AccountInfoViewController: UIViewController {
         return stack
     }()
     
-    private let db = Firestore.firestore()
+    private let db = Firestore.firestore() // Firestore veritabanı referansı
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        loadUserData()
+        setupUI() // UI kurulumunu yap
+        loadUserData() // Kullanıcı verilerini yükle
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -127,7 +128,7 @@ class AccountInfoViewController: UIViewController {
         personalInfoCard.addSubview(personalInfoHeader)
         personalInfoCard.addSubview(personalInfoStack)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -169,6 +170,7 @@ class AccountInfoViewController: UIViewController {
         ])
     }
     
+    // Bilgi satırı oluşturan yardımcı fonksiyon
     private func createInfoRow(icon: String, title: String, value: String) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -216,28 +218,29 @@ class AccountInfoViewController: UIViewController {
         return container
     }
     
+    // Kullanıcı bilgilerini ekrana yerleştiren fonksiyon
     private func updateUI(with data: [String: Any]) {
         personalInfoStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        // Add personal info rows with icons
-        // Name and Surname
+        // İkonlu kişisel bilgi satırlarını ekle
+        // Ad ve Soyad
         let name = data["name"] as? String ?? "-"
         let surname = data["surname"] as? String ?? "-"
         personalInfoStack.addArrangedSubview(createInfoRow(icon: "person.fill", 
                                                          title: "Name", 
                                                          value: "\(name) \(surname)"))
         
-        // Email
+        // E-posta
         personalInfoStack.addArrangedSubview(createInfoRow(icon: "envelope.fill", 
                                                          title: "E-mail", 
                                                          value: data["email"] as? String ?? "-"))
         
-        // Birthday
+        // Doğum günü
         personalInfoStack.addArrangedSubview(createInfoRow(icon: "calendar", 
                                                          title: "Birthday", 
                                                          value: data["birthday"] as? String ?? "-"))
         
-        // Created At
+        // Kayıt tarihi
         if let timestamp = data["createdAt"] as? Timestamp {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
@@ -247,7 +250,7 @@ class AccountInfoViewController: UIViewController {
                                                              value: dateFormatter.string(from: timestamp.dateValue())))
         }
         
-        // Set profile image if available
+        // Profil fotoğrafı varsa yükle
         if let imageUrlString = data["profileImage"] as? String,
            let imageUrl = URL(string: imageUrlString) {
             URLSession.shared.dataTask(with: imageUrl) { [weak self] data, _, _ in
@@ -263,7 +266,7 @@ class AccountInfoViewController: UIViewController {
         }
     }
 
-    // MARK: - Data Methods
+    // MARK: - Veri Yükleme Fonksiyonları
     private func loadUserData() {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         
@@ -272,7 +275,7 @@ class AccountInfoViewController: UIViewController {
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
         
-        // Fetch from info subcollection
+        // info alt koleksiyonundan veriyi çek
         db.collection("users").document(userID).collection("info").getDocuments { [weak self] snapshot, error in
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()

@@ -10,12 +10,14 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+// Ana ekranı yöneten ViewController
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     // MARK: - UI Elemanları
+    // Ekranda kullanılacak tüm arayüz elemanları burada tanımlanır
     let scrollView = UIScrollView()
     let contentView = UIView()
-    let greetingLabel = UILabel()
-    let welcomeLabel = UILabel()
+    let greetingLabel = UILabel() // Kullanıcıya günaydın mesajı
+    let welcomeLabel = UILabel() // Hoşgeldin mesajı
     private lazy var profileButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "person.circle"), for: .normal)
@@ -23,26 +25,28 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         button.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
         return button
     }()
-    let balanceCardView = UIView()
-    let balanceTitleLabel = UILabel()
-    let balanceLabel = UILabel()
-    let balanceCurrencyLabel = UILabel()
-    let eyeButton = UIButton(type: .system)
-    let addTransactionButton = UIButton(type: .system)
-    let walletsTitleLabel = UILabel()
-    var walletsCollectionView: UICollectionView!
-    let transactionsTitleLabel = UILabel()
-    let seeAllButton = UIButton(type: .system)
-    let transactionsTableView = UITableView()
+    let balanceCardView = UIView() // Bakiye kartı
+    let balanceTitleLabel = UILabel() // "Your balance" başlığı
+    let balanceLabel = UILabel() // Bakiye miktarı
+    let balanceCurrencyLabel = UILabel() // Para birimi
+    let eyeButton = UIButton(type: .system) // Bakiyeyi gizle/göster butonu
+    let addTransactionButton = UIButton(type: .system) // İşlem ekleme butonu
+    let walletsTitleLabel = UILabel() // "Your cards" başlığı
+    var walletsCollectionView: UICollectionView! // Cüzdanlar için CollectionView
+    let transactionsTitleLabel = UILabel() // "Transactions" başlığı
+    let seeAllButton = UIButton(type: .system) // Tüm işlemleri gör butonu
+    let transactionsTableView = UITableView() // İşlemler için tablo
     
     // MARK: - Veriler
-    var wallets: [Wallet] = []
-    var selectedWalletIndex: Int = 0
-    var transactions: [Transaction] = []
-    var isBalanceHidden = false
-    private var userName: String = "CARDHOLDER"
+    // Ekranda gösterilecek veriler burada tutulur
+    var wallets: [Wallet] = [] // Kullanıcının cüzdanları
+    var selectedWalletIndex: Int = 0 // Seçili cüzdanın indeksi
+    var transactions: [Transaction] = [] // İşlemler
+    var isBalanceHidden = false // Bakiye gizli mi?
+    private var userName: String = "CARDHOLDER" // Kullanıcı adı
     
     // MARK: - UI Components
+    // Pull-to-refresh için kontrol
     private let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -54,13 +58,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        setupUI()
-        setupRefreshControl()
-        loadUserName()
-        loadWallets()
+        setupUI() // Arayüzü kur
+        setupRefreshControl() // Pull-to-refresh kur
+        loadUserName() // Kullanıcı adını yükle
+        loadWallets() // Cüzdanları yükle
     }
     
     // MARK: - UI Kurulumu
+    // Tüm arayüz elemanlarının ekrana yerleştirilmesi ve ayarlanması
     func setupUI() {
         // ScrollView ve contentView
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +102,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         contentView.addSubview(profileButton)
         
         // Balance Card
-        balanceCardView.backgroundColor = UIColor(red: 0.95, green: 0.90, blue: 1.0, alpha: 1.0) // Light purple
+        balanceCardView.backgroundColor = UIColor(red: 0.95, green: 0.90, blue: 1.0, alpha: 1.0) // Açık mor arka plan
         balanceCardView.layer.cornerRadius = 24
         balanceCardView.layer.borderWidth = 2
         balanceCardView.layer.borderColor = UIColor.systemPurple.cgColor
@@ -242,21 +247,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     private func setupRefreshControl() {
+        // Pull-to-refresh özelliğini scrollView'a ekle
         scrollView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     @objc private func refreshData() {
-        // Reload all data
+        // Tüm verileri yeniden yükle
         loadWallets()
         
-        // End refreshing after a short delay to show the animation
+        // Animasyonun görünmesi için kısa bir gecikmeden sonra refresh'i bitir
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
     }
     
     // MARK: - Wallets CollectionView
+    // Cüzdanlar CollectionView için gerekli fonksiyonlar
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return wallets.count
     }
@@ -281,25 +288,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - Transactions TableView
+    // İşlemler TableView için gerekli fonksiyonlar
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return min(transactions.count, 4) // Show up to 4 transactions
+        return min(transactions.count, 4) // En fazla 4 işlem göster
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
         let transaction = transactions[indexPath.row]
         
-        // Format date
+        // Tarihi formatla
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: transaction.date.dateValue())
         
-        // Configure cell content
+        // Hücre içeriğini ayarla
         var content = cell.defaultContentConfiguration()
         content.text = transaction.title
         content.secondaryText = "\(transaction.amount) \(transaction.currency) - \(dateString)"
         
-        // Set text color based on transaction type
+        // İşlem tipine göre renk ayarla
         if transaction.type == "Income" {
             content.secondaryTextProperties.color = UIColor(hex: "#3E7B27")
             cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.2)
@@ -308,7 +316,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.2)
         }
         
-        // Configure icon based on transaction description
+        // İşlem başlığına göre ikon ayarla
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         let image: UIImage?
         
@@ -359,6 +367,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - Balance Card Güncelleme
+    // Seçili cüzdanın bakiyesini ve para birimini günceller
     func updateBalanceCard() {
         guard wallets.indices.contains(selectedWalletIndex) else { return }
         let wallet = wallets[selectedWalletIndex]
@@ -379,21 +388,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @objc func toggleBalanceVisibility() {
+        // Bakiyeyi gizle/göster
         isBalanceHidden.toggle()
         updateBalanceCard()
     }
     
     @objc func addTransactionTapped() {
+        // İşlem ekleme ekranına geçiş
         performSegue(withIdentifier: "toAddTransacitonFromHome", sender: nil)
     }
     
     @objc func detailsButtonTapped(_ sender: UIButton) {
+        // Cüzdan detay ekranına geçiş
         let index = sender.tag
         let wallet = wallets[index]
         performSegue(withIdentifier: "toWalletInfo", sender: wallet)
     }
     
     // MARK: - See All Button Action
+    // Tüm işlemleri gösteren ekrana geçiş
     @objc private func seeAllButtonTapped() {
         let walletInfoVC = WalletInfoViewController()
         walletInfoVC.wallet = wallets[selectedWalletIndex]
@@ -401,6 +414,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - Firestore'dan Cüzdanları Yükle
+    // Kullanıcının cüzdanlarını Firestore'dan çeker
     func loadWallets() {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
@@ -411,15 +425,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             guard let documents = snapshot?.documents else { return }
             
-            // First get all wallets
+            // Önce tüm cüzdanları al
             var allWallets = documents.compactMap { Wallet(document: $0) }
             
-            // Sort wallets in the desired order: TRY, USD, EUR
+            // Cüzdanları istenen sıraya göre sırala: TRY, USD, EUR
             let currencyOrder = ["TRY", "USD", "EUR"]
             self?.wallets = allWallets.sorted { wallet1, wallet2 in
                 guard let index1 = currencyOrder.firstIndex(of: wallet1.currency),
                       let index2 = currencyOrder.firstIndex(of: wallet2.currency) else {
-                    // If currency not in the order list, put it at the end
+                    // Sıralama listesinde olmayan para birimleri sona atılır
                     return false
                 }
                 return index1 < index2
@@ -434,6 +448,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - Firestore'dan İşlemleri Yükle
+    // Seçili cüzdan için işlemleri Firestore'dan çeker
     func loadTransactionsForSelectedWallet() {
         guard let userID = Auth.auth().currentUser?.uid,
               selectedWalletIndex < wallets.count else { return }
@@ -473,12 +488,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     )
                 }
                 
-                // Sort by date descending
+                // Tarihe göre azalan sırala
                 allTransactions.sort { (t1: Transaction, t2: Transaction) in 
                     t1.date.dateValue() > t2.date.dateValue() 
                 }
                 
-                // Take only the first 4 transactions
+                // Sadece ilk 4 işlemi al
                 self?.transactions = Array(allTransactions.prefix(4))
                 
                 DispatchQueue.main.async {
@@ -488,6 +503,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     // MARK: - Segue ile veri aktarımı
+    // Segue ile diğer ekranlara veri gönderme
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toWalletInfo",
            let dest = segue.destination as? WalletInfoViewController,
@@ -497,6 +513,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     private func loadUserName() {
+        // Kullanıcı adını Firestore'dan çek
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         
@@ -515,15 +532,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - CollectionView DataSource & Delegate
+    // CollectionView için kenar boşluklarını ayarlama
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        // If there's only one wallet, center it
+        // Sadece bir cüzdan varsa ortala
         if wallets.count == 1 {
             let totalWidth = collectionView.bounds.width
-            let itemWidth: CGFloat = 240 // Width of a single wallet card
+            let itemWidth: CGFloat = 240 // Tek bir cüzdan kartının genişliği
             let padding = (totalWidth - itemWidth) / 2
             return UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
         }
-        // Otherwise use default left alignment
+        // Diğer durumlarda sola hizala
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
@@ -536,6 +554,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     @objc private func profileButtonTapped() {
+        // Profil ekranına geçiş
         performSegue(withIdentifier: "toAccountInfoFromHome", sender: nil)
     }
 }

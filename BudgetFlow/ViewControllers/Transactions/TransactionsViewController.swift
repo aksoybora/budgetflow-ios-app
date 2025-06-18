@@ -13,13 +13,13 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
 
     @IBOutlet weak var transactionsTableView: UITableView!
     let titleLabel = UILabel()
-    var transactions: [Transaction] = []
-    var filteredTransactions: [Transaction] = []
-    let filterSegmentedControl = UISegmentedControl(items: ["All", "Income", "Expense"])
+    var transactions: [Transaction] = [] // Tüm işlemler
+    var filteredTransactions: [Transaction] = [] // Filtrelenmiş işlemler
+    let filterSegmentedControl = UISegmentedControl(items: ["All", "Income", "Expense"]) // Tip filtresi
     var datePicker: UIDatePicker?
     var filterButton: UIButton?
-    var selectedDateFilter: Date?
-    var selectedDateRange: (Date, Date)?
+    var selectedDateFilter: Date? // Seçili tarih filtresi
+    var selectedDateRange: (Date, Date)? // Seçili özel tarih aralığı
     
     // MARK: - View Lifecycle
     
@@ -317,12 +317,12 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionInfoCell", for: indexPath) as! TransactionInfoTableViewCell
         let transaction = filteredTransactions[indexPath.row]
         
-        // Format date
+        // Tarihi formatla
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: transaction.date.dateValue())
         
-        // Configure icon based on transaction description
+        // İşlem başlığına göre ikon seç
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         let image: UIImage?
         

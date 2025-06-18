@@ -10,35 +10,36 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+// Kayıt (Hesap Oluşturma) ekranını yöneten ViewController
 class SignUpViewController: UIViewController {
 
-    // MARK: - UI Elements
-    private let scrollView = UIScrollView()
-    private let containerView = UIView()
-    private let emailTextField = UITextField()
-    private let passwordTextField = UITextField()
-    private let confirmPasswordTextField = UITextField()
-    private let nameTextField = UITextField()
-    private let surnameTextField = UITextField()
-    private let birthdayTextField = UITextField()
-    private let signUpButton = UIButton(type: .system)
-    private let datePicker = UIDatePicker()
+    // MARK: - UI Elemanları
+    private let scrollView = UIScrollView() // Kaydırılabilir ana görünüm
+    private let containerView = UIView() // İçerik için ana konteyner
+    private let emailTextField = UITextField() // E-posta giriş alanı
+    private let passwordTextField = UITextField() // Şifre giriş alanı
+    private let confirmPasswordTextField = UITextField() // Şifre tekrar giriş alanı
+    private let nameTextField = UITextField() // İsim giriş alanı
+    private let surnameTextField = UITextField() // Soyisim giriş alanı
+    private let birthdayTextField = UITextField() // Doğum günü giriş alanı
+    private let signUpButton = UIButton(type: .system) // Kayıt ol butonu
+    private let datePicker = UIDatePicker() // Doğum günü için tarih seçici
     
-    private let db = Firestore.firestore()
+    private let db = Firestore.firestore() // Firestore veritabanı referansı
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupDatePicker()
+        setupUI() // UI elemanlarını kur
+        setupDatePicker() // Tarih seçiciyi ayarla
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "#F5F5F5")
         title = "Create Account"
         
-        // Add title label
+        // Başlık etiketi ekle
         let titleLabel = UILabel()
         titleLabel.text = "Create Account"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 15)
@@ -47,11 +48,11 @@ class SignUpViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        // Setup ScrollView
+        // ScrollView ayarları
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         
-        // Setup ContainerView
+        // ContainerView ayarları
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 20
@@ -61,7 +62,7 @@ class SignUpViewController: UIViewController {
         containerView.layer.shadowRadius = 8
         scrollView.addSubview(containerView)
         
-        // Setup TextFields
+        // TextField'ları ayarla
         setupTextField(nameTextField, placeholder: "Name", icon: "person.fill")
         setupTextField(surnameTextField, placeholder: "Surname", icon: "person.fill")
         setupTextField(emailTextField, placeholder: "Email", icon: "envelope.fill")
@@ -69,7 +70,7 @@ class SignUpViewController: UIViewController {
         setupTextField(confirmPasswordTextField, placeholder: "Confirm Password", icon: "lock.fill", isSecure: true)
         setupTextField(birthdayTextField, placeholder: "Birthday", icon: "calendar")
         
-        // Setup SignUp Button
+        // Kayıt ol butonunu ayarla
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         signUpButton.backgroundColor = UIColor(hex: "#007AFF")
@@ -79,7 +80,7 @@ class SignUpViewController: UIViewController {
         signUpButton.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
         containerView.addSubview(signUpButton)
         
-        // Layout
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -136,8 +137,8 @@ class SignUpViewController: UIViewController {
     }
     
     private func setupTextField(_ textField: UITextField, placeholder: String, icon: String, isSecure: Bool = false) {
-        textField.placeholder = placeholder
-        textField.isSecureTextEntry = isSecure
+        textField.placeholder = placeholder // Placeholder metni ayarla
+        textField.isSecureTextEntry = isSecure // Şifre alanı ise gizli göster
         textField.font = UIFont.systemFont(ofSize: 15)
         textField.layer.cornerRadius = 8
         textField.layer.borderWidth = 1
@@ -145,7 +146,7 @@ class SignUpViewController: UIViewController {
         textField.backgroundColor = UIColor(hex: "#F8F8F8")
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        // Left icon
+        // Sol tarafta ikon gösterimi
         let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         let iconView = UIImageView(image: UIImage(systemName: icon))
         iconView.tintColor = UIColor(hex: "#007AFF")
@@ -159,31 +160,32 @@ class SignUpViewController: UIViewController {
     }
     
     private func setupDatePicker() {
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .wheels
-        datePicker.maximumDate = Date()
+        datePicker.datePickerMode = .date // Sadece tarih seçimi
+        datePicker.preferredDatePickerStyle = .wheels // Tekerlek stili
+        datePicker.maximumDate = Date() // Bugünden ileri tarih seçilemez
         datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
-        birthdayTextField.inputView = datePicker
+        birthdayTextField.inputView = datePicker // Doğum günü alanına tarih seçici ekle
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         toolbar.setItems([doneButton], animated: true)
-        birthdayTextField.inputAccessoryView = toolbar
+        birthdayTextField.inputAccessoryView = toolbar // Tarih seçiciye tamam butonu ekle
     }
     
-    // MARK: - Actions
+    // MARK: - Aksiyonlar
     @objc private func dateChanged() {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        birthdayTextField.text = formatter.string(from: datePicker.date)
+        formatter.dateFormat = "dd.MM.yyyy" // Tarih formatı
+        birthdayTextField.text = formatter.string(from: datePicker.date) // Seçilen tarihi göster
     }
     
     @objc private func doneButtonTapped() {
-        birthdayTextField.resignFirstResponder()
+        birthdayTextField.resignFirstResponder() // Tarih seçiciyi kapat
     }
     
     @objc private func signUpTapped() {
+        // Tüm alanların dolu olup olmadığını kontrol et
         guard let email = emailTextField.text,
               let password = passwordTextField.text,
               let confirmPassword = confirmPasswordTextField.text,
@@ -194,19 +196,19 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        // Validate password match
+        // Şifrelerin eşleşip eşleşmediğini kontrol et
         guard password == confirmPassword else {
             makeAlert(title: "Error", message: "Passwords do not match")
             return
         }
         
-        // Show loading indicator
+        // Yükleniyor göstergesi ekle
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
         
-        // Create user in Firebase Auth
+        // Firebase Auth ile kullanıcı oluştur
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 activityIndicator.stopAnimating()
@@ -217,7 +219,7 @@ class SignUpViewController: UIViewController {
             
             guard let userID = authResult?.user.uid else { return }
             
-            // Create user info in Firestore
+            // Firestore'da kullanıcı bilgisi oluştur
             let infoRef = self?.db.collection("users").document(userID).collection("info").document()
             let infoID = infoRef?.documentID ?? UUID().uuidString
             
@@ -244,7 +246,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    // MARK: - Helper Methods
+    // MARK: - Yardımcı Metodlar
     private func makeAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default)

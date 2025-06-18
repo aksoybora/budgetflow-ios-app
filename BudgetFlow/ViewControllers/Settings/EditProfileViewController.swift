@@ -10,9 +10,10 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+// Profil düzenleme ekranını yöneten ViewController
 class EditProfileViewController: UIViewController {
 
-    // MARK: - UI Components
+    // MARK: - UI Bileşenleri
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,22 +99,22 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
-    private let db = Firestore.firestore()
+    private let db = Firestore.firestore() // Firestore veritabanı referansı
     private var currentUser: User?
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Yaşam Döngüsü Metodları
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        loadUserData()
-        setupActions()
+        setupUI() // UI kurulumunu yap
+        loadUserData() // Kullanıcı verilerini yükle
+        setupActions() // Buton aksiyonlarını ayarla
     }
     
-    // MARK: - UI Setup
+    // MARK: - UI Kurulumu
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Add views to hierarchy
+        // Görünümleri hiyerarşiye ekle
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -127,7 +128,7 @@ class EditProfileViewController: UIViewController {
         editInfoCard.addSubview(confirmPasswordTextField)
         editInfoCard.addSubview(saveButton)
         
-        // Setup constraints
+        // Otomatik yerleşim kısıtlamaları
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -180,7 +181,7 @@ class EditProfileViewController: UIViewController {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - Data Loading
+    // MARK: - Veri Yükleme
     private func loadUserData() {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         
@@ -195,11 +196,11 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    // MARK: - Actions
+    // MARK: - Aksiyonlar
     @objc private func saveButtonTapped() {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         
-        // Validate password if provided
+        // Şifre girildiyse doğrulama yap
         if !passwordTextField.text!.isEmpty {
             guard passwordTextField.text == confirmPasswordTextField.text else {
                 showAlert(title: "Error", message: "Passwords do not match")
@@ -211,7 +212,7 @@ class EditProfileViewController: UIViewController {
                 return
             }
             
-            // Update password
+            // Şifreyi güncelle
             Auth.auth().currentUser?.updatePassword(to: passwordTextField.text!) { [weak self] error in
                 if let error = error {
                     self?.showAlert(title: "Error", message: error.localizedDescription)
@@ -219,7 +220,7 @@ class EditProfileViewController: UIViewController {
             }
         }
         
-        // Update user info
+        // Kullanıcı bilgilerini güncelle
         let userInfo: [String: Any] = [
             "name": nameTextField.text ?? "",
             "surname": surnameTextField.text ?? ""
@@ -236,6 +237,7 @@ class EditProfileViewController: UIViewController {
         }
     }
     
+    // Uyarı gösteren yardımcı fonksiyon
     private func showAlert(title: String, message: String, completion: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: completion))

@@ -7,13 +7,14 @@
 
 import UIKit
 
+// Cüzdan kartı için CollectionView hücresi
 class WalletCardCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Elemanları
     let cardBackgroundView = UIView() // Kartın arka planı
     let walletNameLabel = UILabel()   // Cüzdan adı
     let balanceLabel = UILabel()      // Bakiye
     let currencyLabel = UILabel()     // Para birimi
-    let cardholderNameLabel = UILabel() // Cardholder name
+    let cardholderNameLabel = UILabel() // Kart sahibi adı
     let detailsButton = UIButton(type: .system) // Detaylar butonu
     let cardLogoImageView = UIImageView() // Kart logosu
 
@@ -26,46 +27,46 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
-        setupConstraints()
+        setupViews() // Görünümleri ayarla
+        setupConstraints() // Kısıtlamaları ayarla
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupViews()
-        setupConstraints()
+        setupViews() // Görünümleri ayarla
+        setupConstraints() // Kısıtlamaları ayarla
     }
 
     // UI elemanlarını oluştur ve özelleştir
     private func setupViews() {
-        // Card background
+        // Kart arka planı
         cardBackgroundView.layer.cornerRadius = 16
         cardBackgroundView.layer.borderWidth = 2
         cardBackgroundView.clipsToBounds = true
         addSubview(cardBackgroundView)
 
-        // Wallet name
+        // Cüzdan adı
         walletNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         cardBackgroundView.addSubview(walletNameLabel)
 
-        // Balance
+        // Bakiye
         balanceLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         cardBackgroundView.addSubview(balanceLabel)
 
-        // Currency
+        // Para birimi
         currencyLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         cardBackgroundView.addSubview(currencyLabel)
 
-        // Card logo
+        // Kart logosu
         cardLogoImageView.contentMode = .scaleAspectFit
         cardBackgroundView.addSubview(cardLogoImageView)
 
-        // Cardholder name
+        // Kart sahibi adı
         cardholderNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         cardholderNameLabel.textColor = .gray
         cardBackgroundView.addSubview(cardholderNameLabel)
 
-        // Details button
+        // Detaylar butonu
         detailsButton.setTitle("Details", for: .normal)
         detailsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         detailsButton.layer.cornerRadius = 12
@@ -85,35 +86,35 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
         detailsButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            // Card background
+            // Kart arka planı
             cardBackgroundView.topAnchor.constraint(equalTo: topAnchor),
             cardBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cardBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             cardBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            // Wallet name
+            // Cüzdan adı
             walletNameLabel.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 16),
             walletNameLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
 
-            // Balance
+            // Bakiye
             balanceLabel.topAnchor.constraint(equalTo: walletNameLabel.bottomAnchor, constant: 8),
             balanceLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
 
-            // Currency
+            // Para birimi
             currencyLabel.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
             currencyLabel.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 8),
 
-            // Card logo
+            // Kart logosu
             cardLogoImageView.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 16),
             cardLogoImageView.trailingAnchor.constraint(equalTo: cardBackgroundView.trailingAnchor, constant: -16),
             cardLogoImageView.widthAnchor.constraint(equalToConstant: 32),
             cardLogoImageView.heightAnchor.constraint(equalToConstant: 32),
 
-            // Cardholder name
+            // Kart sahibi adı
             cardholderNameLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
             cardholderNameLabel.bottomAnchor.constraint(equalTo: cardBackgroundView.bottomAnchor, constant: -16),
 
-            // Details button
+            // Detaylar butonu
             detailsButton.trailingAnchor.constraint(equalTo: cardBackgroundView.trailingAnchor, constant: -16),
             detailsButton.bottomAnchor.constraint(equalTo: cardBackgroundView.bottomAnchor, constant: -16),
             detailsButton.widthAnchor.constraint(equalToConstant: 80),
