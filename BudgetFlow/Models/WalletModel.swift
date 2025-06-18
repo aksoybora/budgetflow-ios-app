@@ -1,10 +1,3 @@
-//
-//  WalletModel.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 21.03.2025.
-//
-
 import FirebaseFirestore
 
 struct Wallet {

@@ -1,10 +1,3 @@
-//
-//  TransactionModel.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 13.03.2025.
-//
-
 import Foundation
 import FirebaseFirestore
 

@@ -1,10 +1,3 @@
-//
-//  AnalysisViewController.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 3.02.2025.
-//
-
 import UIKit
 import DGCharts
 import Charts

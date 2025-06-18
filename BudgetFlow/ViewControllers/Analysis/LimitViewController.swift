@@ -1,13 +1,3 @@
-//
-//  LimitViewController.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 15.06.2025.
-//
-
-// LimitViewController.swift
-// Kullanıcıların harcama limitlerini ve harcamalarını yönetmesini sağlar.
-// Her kategori için limit belirlenebilir ve harcamalar anlık olarak güncellenir.
 
 import UIKit
 import FirebaseAuth

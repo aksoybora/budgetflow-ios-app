@@ -1,9 +1,3 @@
-//
-//  ContactSupportViewController.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 18.06.2025.
-//
 
 import UIKit
 import MessageUI

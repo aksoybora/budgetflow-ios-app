@@ -1,9 +1,3 @@
-//
-//  WalletCardCollectionViewCell.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 17.06.2025.
-//
 
 import UIKit
 

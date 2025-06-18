@@ -1,10 +1,3 @@
-//
-//  TransactionInfoTableViewCell.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 21.02.2025.
-//
-
 import UIKit
 
 class TransactionInfoTableViewCell: UITableViewCell {

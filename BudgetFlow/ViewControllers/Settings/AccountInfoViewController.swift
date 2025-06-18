@@ -1,9 +1,3 @@
-//
-//  AccountInfoVC.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 29.04.2025.
-//
 
 import UIKit
 import Firebase

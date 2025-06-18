@@ -1,10 +1,3 @@
-//
-//  TransactionDetailViewController.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 18.03.2025.
-//
-
 import UIKit
 
 class TransactionDetailsViewController: UIViewController {

@@ -1,10 +1,3 @@
-//
-//  toSelectPhotoVC.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 6.02.2025.
-//
-
 import UIKit
 
 class toSelectPhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {

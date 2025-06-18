@@ -1,9 +1,3 @@
-//
-//  ThemeSettingsViewController.swift
-//  BudgetFlow
-//
-//  Created by Bora Aksoy on 15.06.2025.
-//
 
 import UIKit
 
