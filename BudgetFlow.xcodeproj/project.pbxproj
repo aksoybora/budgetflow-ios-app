@@ -34,6 +34,7 @@
 		7C58E5D62D510547006A2451 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58E5D52D510547006A2451 /* SettingsViewController.swift */; };
 		7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */; };
 		7C755A262E01F3550089C9C5 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */; };
+		7C9FD8B12E02E80400E3E672 /* TransactionInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FD8B02E02E80400E3E672 /* TransactionInfoTableViewCell.swift */; };
 		7CA217E42D8CBDB000C52880 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA217E32D8CBDB000C52880 /* WalletModel.swift */; };
 		7CB921952D8A0D1000066F21 /* TransactionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */; };
 		7CB95EA22DA9A04100263633 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */; };
@@ -86,6 +87,7 @@
 		7C58E5D52D510547006A2451 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toSelectPhotoViewController.swift; sourceTree = "<group>"; };
 		7C755A252E01F3550089C9C5 /* WalletCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		7C9FD8B02E02E80400E3E672 /* TransactionInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoTableViewCell.swift; sourceTree = "<group>"; };
 		7CA217E32D8CBDB000C52880 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewController.swift; sourceTree = "<group>"; };
 		7CB95EA12DA9A04100263633 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				7C58E5D12D510518006A2451 /* AddTransactionViewController.swift */,
 				7CB921942D8A0D1000066F21 /* TransactionDetailsViewController.swift */,
 				7C72F15D2D54D4A000463A70 /* toSelectPhotoViewController.swift */,
+				7C9FD8B02E02E80400E3E672 /* TransactionInfoTableViewCell.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				7C72F15E2D54D4A000463A70 /* toSelectPhotoViewController.swift in Sources */,
 				7CC5B5782DFF626300EC9270 /* NotificationSettingsViewController.swift in Sources */,
 				7C2B9AA62E01FBBC0005F852 /* WalletInfoViewController.swift in Sources */,
+				7C9FD8B12E02E80400E3E672 /* TransactionInfoTableViewCell.swift in Sources */,
 				7CC5B57A2DFF628100EC9270 /* EmailNotificationsViewController.swift in Sources */,
 				7CC5B56B2DFEF8D100EC9270 /* ExportViewController.swift in Sources */,
 				7C755A262E01F3550089C9C5 /* WalletCardCollectionViewCell.swift in Sources */,

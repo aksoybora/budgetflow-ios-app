@@ -51,18 +51,18 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     
     // Filtreleme kontrollerini ayarla
     private func setupFilterControls() {
-        // Tip filtresi ayarları
+        // Segment control ayarları
         filterSegmentedControl.selectedSegmentIndex = 0
         filterSegmentedControl.backgroundColor = .systemBackground
         filterSegmentedControl.selectedSegmentTintColor = .systemBlue
         filterSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.systemBlue], for: .selected)
         filterSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
-        filterSegmentedControl.addTarget(self, action: #selector(filterChanged(_:)), for: .valueChanged)
+        filterSegmentedControl.addTarget(self, action: #selector(filterChanged), for: .valueChanged)
         
         // Filtre butonu oluştur
         filterButton = UIButton(type: .system)
         filterButton?.setImage(UIImage(systemName: "calendar"), for: .normal)
-        filterButton?.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
+        filterButton?.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         
         // Navigation Bar'a ekle
         let filterBarButton = UIBarButtonItem(customView: filterButton!)
@@ -73,12 +73,28 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         datePicker?.datePickerMode = .date
         datePicker?.preferredDatePickerStyle = .wheels
         datePicker?.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        
+        // TableView ayarları
+        transactionsTableView.register(TransactionInfoTableViewCell.self, forCellReuseIdentifier: "TransactionInfoCell")
+        transactionsTableView.separatorStyle = .none
+        transactionsTableView.backgroundColor = .clear
+        transactionsTableView.showsVerticalScrollIndicator = false
+        
+        // Navigation Bar'a "+" butonu ekle
+        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonClicked))
+        
+        // Başlık ayarları
+        titleLabel.text = "Transactions"
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.sizeToFit()
+        navigationController?.navigationBar.topItem?.titleView = titleLabel
     }
     
     // MARK: - Actions
     
     // Date Picker'ı göster
-    @objc private func showDatePicker() {
+    @objc private func filterButtonTapped() {
         let alertController = UIAlertController(title: "Select Date Filter", message: nil, preferredStyle: .actionSheet)
         
         // Filtreleme seçenekleri
@@ -298,30 +314,57 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     
     // Tablo hücrelerini yapılandır
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionInfoCell", for: indexPath) as! TransactionInfoTableViewCell
         let transaction = filteredTransactions[indexPath.row]
         
-        // Tarihi formatla
+        // Format date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: transaction.date.dateValue())
         
-        // Hücre içeriğini ayarla
-        var content = cell.defaultContentConfiguration()
-        content.text = transaction.title
-        content.secondaryText = "\(transaction.amount) \(transaction.currency) - \(dateString)"
+        // Configure icon based on transaction description
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
+        let image: UIImage?
         
-        // İşlem tipine göre renk ayarla
-        if transaction.type == "Income" {
-            content.secondaryTextProperties.color = UIColor(hex: "#3E7B27")
-            cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.2)
-        } else if transaction.type == "Expense" {
-            content.secondaryTextProperties.color = .systemRed
-            cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.2)
+        switch transaction.title.lowercased() {
+        case let title where title.contains("coffee"):
+            image = UIImage(systemName: "cup.and.saucer.fill", withConfiguration: imageConfig)
+        case let title where title.contains("transport") || title.contains("uber"):
+            image = UIImage(systemName: "car.fill", withConfiguration: imageConfig)
+        case let title where title.contains("shopping") || title.contains("market"):
+            image = UIImage(systemName: "cart.fill", withConfiguration: imageConfig)
+        case let title where title.contains("bill") || title.contains("utilities"):
+            image = UIImage(systemName: "doc.text.fill", withConfiguration: imageConfig)
+        case let title where title.contains("entertainment") || title.contains("movie"):
+            image = UIImage(systemName: "tv.fill", withConfiguration: imageConfig)
+        case let title where title.contains("health") || title.contains("medical"):
+            image = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
+        case let title where title.contains("education") || title.contains("school"):
+            image = UIImage(systemName: "book.fill", withConfiguration: imageConfig)
+        case let title where title.contains("salary") || title.contains("income"):
+            image = UIImage(systemName: "dollarsign.circle.fill", withConfiguration: imageConfig)
+        case let title where title.contains("food") || title.contains("restaurant"):
+            image = UIImage(systemName: "fork.knife", withConfiguration: imageConfig)
+        case let title where title.contains("tech") || title.contains("technology"):
+            image = UIImage(systemName: "laptopcomputer", withConfiguration: imageConfig)
+        case let title where title.contains("app") || title.contains("software"):
+            image = UIImage(systemName: "app.fill", withConfiguration: imageConfig)
+        case let title where title.contains("stay") || title.contains("hotel"):
+            image = UIImage(systemName: "house.fill", withConfiguration: imageConfig)
+        case let title where title.contains("rent") || title.contains("housing"):
+            image = UIImage(systemName: "building.2.fill", withConfiguration: imageConfig)
+        case let title where title.contains("groceries"):
+            image = UIImage(systemName: "basket.fill", withConfiguration: imageConfig)
+        default:
+            image = UIImage(systemName: "banknote.fill", withConfiguration: imageConfig)
         }
         
-        cell.contentConfiguration = content
+        cell.configure(with: transaction, dateString: dateString, icon: image)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     // MARK: - Table View Delegate

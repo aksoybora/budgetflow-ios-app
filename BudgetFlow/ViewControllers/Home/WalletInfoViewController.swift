@@ -14,6 +14,7 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - Veriler
     var wallet: Wallet?
     var transactions: [Transaction] = []
+    private var userName: String = ""
     
     // MARK: - UI Elemanları
     let scrollView = UIScrollView()
@@ -22,99 +23,207 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     let walletNameLabel = UILabel()
     let balanceLabel = UILabel()
     let currencyLabel = UILabel()
+    let cardLogoImageView = UIImageView()
+    let cardholderNameLabel = UILabel()
     let transactionsTitleLabel = UILabel()
     let transactionsTableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        
+        loadUserName()
+        // Initialize and add all views to hierarchy
+        setupViewHierarchy()
+        // Set up constraints and styling
         setupUI()
         updateWalletInfo()
         loadTransactionsForWallet()
     }
     
-    // MARK: - UI Kurulumu
-    func setupUI() {
-        // ScrollView ve contentView
+    private func setupViewHierarchy() {
+        // Add ScrollView to main view
+        view.addSubview(scrollView)
+        
+        // Add ContentView to ScrollView
+        scrollView.addSubview(contentView)
+        
+        // Add WalletCardView to ContentView
+        contentView.addSubview(walletCardView)
+        
+        // Add Card Logo
+        cardLogoImageView.contentMode = .scaleAspectFit
+        walletCardView.addSubview(cardLogoImageView)
+        
+        // Add labels to WalletCardView
+        walletCardView.addSubview(walletNameLabel)
+        walletCardView.addSubview(balanceLabel)
+        walletCardView.addSubview(currencyLabel)
+        walletCardView.addSubview(cardholderNameLabel)
+        
+        // Add Transactions title and TableView to ContentView
+        contentView.addSubview(transactionsTitleLabel)
+        contentView.addSubview(transactionsTableView)
+        
+        // Configure TableView
+        transactionsTableView.delegate = self
+        transactionsTableView.dataSource = self
+        transactionsTableView.backgroundColor = .clear
+        transactionsTableView.separatorStyle = .none
+        transactionsTableView.register(TransactionInfoTableViewCell.self, forCellReuseIdentifier: "TransactionInfoCell")
+        transactionsTableView.showsVerticalScrollIndicator = false
+        transactionsTableView.isScrollEnabled = false // Disable table scroll, let scroll view handle it
+        
+        // Set up translatesAutoresizingMaskIntoConstraints
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
+        walletCardView.translatesAutoresizingMaskIntoConstraints = false
+        cardLogoImageView.translatesAutoresizingMaskIntoConstraints = false
+        walletNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        currencyLabel.translatesAutoresizingMaskIntoConstraints = false
+        cardholderNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        transactionsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        transactionsTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Set up initial text
+        transactionsTitleLabel.text = "Transactions"
+    }
+    
+    private func setupUI() {
+        // Set up constraints
         NSLayoutConstraint.activate([
+            // ScrollView constraints
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // ContentView constraints
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-        
-        // Wallet Card
-        walletCardView.layer.cornerRadius = 24
-        walletCardView.layer.borderWidth = 3
-        walletCardView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(walletCardView)
-        
-        walletNameLabel.font = UIFont.boldSystemFont(ofSize: 22)
-        walletNameLabel.textColor = .black
-        walletNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        walletCardView.addSubview(walletNameLabel)
-        
-        balanceLabel.font = UIFont.boldSystemFont(ofSize: 32)
-        balanceLabel.textColor = .black
-        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        walletCardView.addSubview(balanceLabel)
-        
-        currencyLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        currencyLabel.textColor = .black
-        currencyLabel.translatesAutoresizingMaskIntoConstraints = false
-        walletCardView.addSubview(currencyLabel)
-        
-        // Transactions title
-        transactionsTitleLabel.text = "Transactions"
-        transactionsTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        transactionsTitleLabel.textColor = .black
-        transactionsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(transactionsTitleLabel)
-        
-        // Transactions TableView
-        transactionsTableView.delegate = self
-        transactionsTableView.dataSource = self
-        transactionsTableView.backgroundColor = UIColor.white
-        transactionsTableView.separatorStyle = .none
-        transactionsTableView.layer.cornerRadius = 16
-        transactionsTableView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(transactionsTableView)
-        transactionsTableView.register(TransactionInfoTableViewCell.self, forCellReuseIdentifier: "TransactionInfoCell")
-        
-        // Otomatik yerleşim (Auto Layout)
-        NSLayoutConstraint.activate([
-            walletCardView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
-            walletCardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            walletCardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            walletCardView.heightAnchor.constraint(equalToConstant: 120),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor),
             
-            walletNameLabel.topAnchor.constraint(equalTo: walletCardView.topAnchor, constant: 20),
-            walletNameLabel.leadingAnchor.constraint(equalTo: walletCardView.leadingAnchor, constant: 20),
+            // WalletCardView constraints
+            walletCardView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            walletCardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            walletCardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            walletCardView.heightAnchor.constraint(equalToConstant: 160),
             
-            balanceLabel.topAnchor.constraint(equalTo: walletNameLabel.bottomAnchor, constant: 12),
-            balanceLabel.leadingAnchor.constraint(equalTo: walletCardView.leadingAnchor, constant: 20),
+            // Card logo
+            cardLogoImageView.topAnchor.constraint(equalTo: walletCardView.topAnchor, constant: 16),
+            cardLogoImageView.trailingAnchor.constraint(equalTo: walletCardView.trailingAnchor, constant: -16),
+            cardLogoImageView.widthAnchor.constraint(equalToConstant: 32),
+            cardLogoImageView.heightAnchor.constraint(equalToConstant: 32),
             
+            // Wallet name label constraints
+            walletNameLabel.topAnchor.constraint(equalTo: walletCardView.topAnchor, constant: 16),
+            walletNameLabel.leadingAnchor.constraint(equalTo: walletCardView.leadingAnchor, constant: 16),
+            
+            // Balance label constraints
+            balanceLabel.topAnchor.constraint(equalTo: walletNameLabel.bottomAnchor, constant: 8),
+            balanceLabel.leadingAnchor.constraint(equalTo: walletCardView.leadingAnchor, constant: 16),
+            
+            // Currency label constraints
             currencyLabel.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
             currencyLabel.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 8),
             
-            transactionsTitleLabel.topAnchor.constraint(equalTo: walletCardView.bottomAnchor, constant: 32),
-            transactionsTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            // Cardholder name constraints
+            cardholderNameLabel.leadingAnchor.constraint(equalTo: walletCardView.leadingAnchor, constant: 16),
+            cardholderNameLabel.bottomAnchor.constraint(equalTo: walletCardView.bottomAnchor, constant: -16),
             
-            transactionsTableView.topAnchor.constraint(equalTo: transactionsTitleLabel.bottomAnchor, constant: 12),
+            // Transactions title constraints
+            transactionsTitleLabel.topAnchor.constraint(equalTo: walletCardView.bottomAnchor, constant: 24),
+            transactionsTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            
+            // TransactionsTableView constraints
+            transactionsTableView.topAnchor.constraint(equalTo: transactionsTitleLabel.bottomAnchor, constant: 16),
             transactionsTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             transactionsTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            transactionsTableView.heightAnchor.constraint(equalToConstant: 400),
-            transactionsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+            transactionsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
+        
+        // Style the wallet card view based on currency
+        if let wallet = wallet {
+            switch wallet.currency {
+            case "TRY":
+                cardLogoImageView.image = UIImage(systemName: "turkishlirasign.circle.fill")
+                walletCardView.backgroundColor = UIColor(red: 0.91, green: 0.97, blue: 0.89, alpha: 1) // Açık yeşil
+                let walletColor = UIColor(red: 0.22, green: 0.65, blue: 0.32, alpha: 1) // Koyu yeşil
+                walletCardView.layer.borderColor = walletColor.cgColor
+                walletNameLabel.textColor = walletColor
+                balanceLabel.textColor = walletColor
+                currencyLabel.textColor = walletColor
+                cardLogoImageView.tintColor = walletColor
+            case "USD":
+                cardLogoImageView.image = UIImage(systemName: "dollarsign.circle.fill")
+                walletCardView.backgroundColor = UIColor(red: 0.89, green: 0.94, blue: 0.98, alpha: 1) // Açık mavi
+                let walletColor = UIColor(red: 0.13, green: 0.36, blue: 0.75, alpha: 1) // Koyu mavi
+                walletCardView.layer.borderColor = walletColor.cgColor
+                walletNameLabel.textColor = walletColor
+                balanceLabel.textColor = walletColor
+                currencyLabel.textColor = walletColor
+                cardLogoImageView.tintColor = walletColor
+            case "EUR":
+                cardLogoImageView.image = UIImage(systemName: "eurosign.circle.fill")
+                walletCardView.backgroundColor = UIColor(red: 1.0, green: 0.96, blue: 0.86, alpha: 1) // Açık sarı
+                let walletColor = UIColor(red: 0.98, green: 0.60, blue: 0.18, alpha: 1) // Koyu turuncu
+                walletCardView.layer.borderColor = walletColor.cgColor
+                walletNameLabel.textColor = walletColor
+                balanceLabel.textColor = walletColor
+                currencyLabel.textColor = walletColor
+                cardLogoImageView.tintColor = walletColor
+            default:
+                cardLogoImageView.image = UIImage(systemName: "creditcard.fill")
+                walletCardView.backgroundColor = UIColor(white: 0.97, alpha: 1)
+                let walletColor = UIColor.systemPurple
+                walletCardView.layer.borderColor = walletColor.cgColor
+                walletNameLabel.textColor = walletColor
+                balanceLabel.textColor = walletColor
+                currencyLabel.textColor = walletColor
+                cardLogoImageView.tintColor = walletColor
+            }
+        }
+        
+        walletCardView.layer.cornerRadius = 16
+        walletCardView.layer.borderWidth = 2
+        walletCardView.clipsToBounds = true
+        
+        // Configure labels
+        walletNameLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        balanceLabel.font = .systemFont(ofSize: 32, weight: .bold)
+        currencyLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        cardholderNameLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        cardholderNameLabel.textColor = .gray
+        
+        // Configure TableView appearance
+        transactionsTitleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        transactionsTitleLabel.textColor = .black
+        
+        // Configure table view
+        transactionsTableView.backgroundColor = .clear
+        transactionsTableView.separatorStyle = .none
+        transactionsTableView.showsVerticalScrollIndicator = false
+    }
+    
+    private func loadUserName() {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(userID).collection("info").getDocuments { [weak self] (snapshot, error) in
+            if let document = snapshot?.documents.first {
+                let name = document.data()["name"] as? String ?? ""
+                let surname = document.data()["surname"] as? String ?? ""
+                let fullName = "\(name) \(surname)".trimmingCharacters(in: .whitespaces)
+                DispatchQueue.main.async {
+                    self?.userName = fullName
+                    self?.updateWalletInfo()
+                }
+            }
+        }
     }
     
     // MARK: - Wallet Bilgisi Güncelle
@@ -122,29 +231,15 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         guard let wallet = wallet else { return }
         walletNameLabel.text = "\(wallet.currency) Wallet"
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         if let formattedBalance = formatter.string(from: NSNumber(value: wallet.balance)) {
             balanceLabel.text = formattedBalance
         }
         currencyLabel.text = wallet.currency
-        // Kart rengi
-        switch wallet.currency {
-        case "TRY":
-            walletCardView.backgroundColor = UIColor.white
-            walletCardView.layer.borderColor = UIColor(red: 0.22, green: 0.65, blue: 0.32, alpha: 1).cgColor // Yeşil
-        case "USD":
-            walletCardView.backgroundColor = UIColor.white
-            walletCardView.layer.borderColor = UIColor(red: 0.13, green: 0.36, blue: 0.75, alpha: 1).cgColor // Mavi
-        case "EUR":
-            walletCardView.backgroundColor = UIColor.white
-            walletCardView.layer.borderColor = UIColor(red: 0.98, green: 0.82, blue: 0.18, alpha: 1).cgColor // Sarı
-        default:
-            walletCardView.backgroundColor = UIColor.white
-            walletCardView.layer.borderColor = UIColor.systemPurple.cgColor
-        }
+        cardholderNameLabel.text = userName.uppercased()
     }
     
     // MARK: - İşlemleri Yükle
@@ -159,7 +254,6 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
             .whereField("currency", isEqualTo: wallet.currency)
-            .order(by: "date", descending: true)
             .getDocuments { [weak self] (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error)")
@@ -185,6 +279,10 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
                             walletID: ""
                         )
                     } ?? []
+                    
+                    // Sort transactions by date (newest first)
+                    self?.transactions.sort { $0.date.dateValue() > $1.date.dateValue() }
+                    
                     DispatchQueue.main.async {
                         self?.transactionsTableView.reloadData()
                     }
@@ -214,20 +312,20 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionInfoCell", for: indexPath) as! TransactionInfoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionInfoCell", for: indexPath)
         let transaction = transactions[indexPath.row]
         
-        // Tarihi formatla
+        // Format date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: transaction.date.dateValue())
         
-        // Hücre içeriğini ayarla
+        // Configure cell content
         var content = cell.defaultContentConfiguration()
         content.text = transaction.title
         content.secondaryText = "\(transaction.amount) \(transaction.currency) - \(dateString)"
         
-        // İşlem tipine göre renk ayarla
+        // Set text color based on transaction type
         if transaction.type == "Income" {
             content.secondaryTextProperties.color = UIColor(hex: "#3E7B27")
             cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.2)
@@ -236,34 +334,47 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.2)
         }
         
-        // İkon ayarla
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        // Configure icon based on transaction description
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         let image: UIImage?
         
-        switch transaction.description.lowercased() {
-        case let desc where desc.contains("food") || desc.contains("restaurant"):
-            image = UIImage(systemName: "fork.knife", withConfiguration: imageConfig)
-        case let desc where desc.contains("transport") || desc.contains("car"):
+        switch transaction.title.lowercased() {
+        case let title where title.contains("coffee"):
+            image = UIImage(systemName: "cup.and.saucer.fill", withConfiguration: imageConfig)
+        case let title where title.contains("transport") || title.contains("uber"):
             image = UIImage(systemName: "car.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("shopping"):
+        case let title where title.contains("shopping") || title.contains("market"):
             image = UIImage(systemName: "cart.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("bills") || desc.contains("utilities"):
+        case let title where title.contains("bill") || title.contains("utilities"):
             image = UIImage(systemName: "doc.text.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("entertainment"):
+        case let title where title.contains("entertainment") || title.contains("movie"):
             image = UIImage(systemName: "tv.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("health"):
+        case let title where title.contains("health") || title.contains("medical"):
             image = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("education"):
+        case let title where title.contains("education") || title.contains("school"):
             image = UIImage(systemName: "book.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("salary") || desc.contains("income"):
+        case let title where title.contains("salary") || title.contains("income"):
             image = UIImage(systemName: "dollarsign.circle.fill", withConfiguration: imageConfig)
+        case let title where title.contains("food") || title.contains("restaurant"):
+            image = UIImage(systemName: "fork.knife", withConfiguration: imageConfig)
+        case let title where title.contains("tech") || title.contains("technology"):
+            image = UIImage(systemName: "laptopcomputer", withConfiguration: imageConfig)
+        case let title where title.contains("app") || title.contains("software"):
+            image = UIImage(systemName: "app.fill", withConfiguration: imageConfig)
+        case let title where title.contains("stay") || title.contains("hotel"):
+            image = UIImage(systemName: "house.fill", withConfiguration: imageConfig)
+        case let title where title.contains("rent") || title.contains("housing"):
+            image = UIImage(systemName: "building.2.fill", withConfiguration: imageConfig)
+        case let title where title.contains("groceries"):
+            image = UIImage(systemName: "basket.fill", withConfiguration: imageConfig)
         default:
-            image = UIImage(systemName: "circle.fill", withConfiguration: imageConfig)
+            image = UIImage(systemName: "banknote.fill", withConfiguration: imageConfig)
         }
         
         content.image = image
         content.imageProperties.tintColor = transaction.type == "Income" ? UIColor(hex: "#3E7B27") : .systemRed
-        content.imageToTextPadding = 12
+        content.imageProperties.maximumSize = CGSize(width: 32, height: 32)
+        content.imageToTextPadding = 16
         
         cell.contentConfiguration = content
         cell.backgroundColor = .white
@@ -272,112 +383,17 @@ class WalletInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         
         return cell
     }
-}
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60 // Match HomeViewController cell height
+    }
 
-// MARK: - TransactionInfoTableViewCell
-class TransactionInfoTableViewCell: UITableViewCell {
-    let iconImageView = UIImageView()
-    let titleLabel = UILabel()
-    let dateLabel = UILabel()
-    let amountLabel = UILabel()
-    let badgeLabel = UILabel()
-    let container = UIView()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-        setupConstraints()
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupViews()
-        setupConstraints()
-    }
-    
-    func setupViews() {
-        backgroundColor = .clear
-        container.backgroundColor = UIColor.white
-        container.layer.cornerRadius = 14
-        container.layer.borderWidth = 2
-        container.layer.borderColor = UIColor.systemPurple.cgColor
-        container.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(container)
-        
-        iconImageView.contentMode = .scaleAspectFit
-        iconImageView.layer.cornerRadius = 22
-        iconImageView.clipsToBounds = true
-        iconImageView.backgroundColor = UIColor(white: 1, alpha: 0.2)
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(iconImageView)
-        
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        titleLabel.textColor = .black
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(titleLabel)
-        
-        dateLabel.font = UIFont.systemFont(ofSize: 13)
-        dateLabel.textColor = UIColor.gray
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(dateLabel)
-        
-        amountLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        amountLabel.textAlignment = .right
-        amountLabel.textColor = .black
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(amountLabel)
-        
-        badgeLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        badgeLabel.textAlignment = .center
-        badgeLabel.layer.cornerRadius = 8
-        badgeLabel.clipsToBounds = true
-        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(badgeLabel)
-    }
-    
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
-            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
-            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            
-            iconImageView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12),
-            iconImageView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 44),
-            iconImageView.heightAnchor.constraint(equalToConstant: 44),
-            
-            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: amountLabel.leadingAnchor, constant: -8),
-            
-            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
-            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            
-            amountLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            amountLabel.trailingAnchor.constraint(equalTo: badgeLabel.leadingAnchor, constant: -8),
-            amountLabel.widthAnchor.constraint(equalToConstant: 80),
-            
-            badgeLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            badgeLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12),
-            badgeLabel.widthAnchor.constraint(equalToConstant: 48),
-            badgeLabel.heightAnchor.constraint(equalToConstant: 24)
-        ])
-    }
-    
-    func configure(with transaction: Transaction, dateString: String, icon: UIImage?) {
-        titleLabel.text = transaction.title
-        dateLabel.text = dateString
-        amountLabel.text = "\(transaction.amount) \(transaction.currency)"
-        if transaction.type == "Income" {
-            badgeLabel.text = "+"
-            badgeLabel.backgroundColor = UIColor(red: 0.22, green: 0.65, blue: 0.32, alpha: 1)
-            amountLabel.textColor = UIColor(red: 0.22, green: 0.65, blue: 0.32, alpha: 1)
-        } else {
-            badgeLabel.text = "-"
-            badgeLabel.backgroundColor = UIColor(red: 0.98, green: 0.22, blue: 0.22, alpha: 1)
-            amountLabel.textColor = UIColor(red: 0.98, green: 0.22, blue: 0.22, alpha: 1)
+    // MARK: - Segue ile veri aktarımı
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toWalletInfo",
+           let dest = segue.destination as? WalletInfoViewController,
+           let wallet = sender as? Wallet {
+            dest.wallet = wallet
         }
-        iconImageView.image = icon
     }
 }

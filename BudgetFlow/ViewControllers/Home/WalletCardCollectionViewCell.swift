@@ -13,7 +13,7 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
     let walletNameLabel = UILabel()   // Cüzdan adı
     let balanceLabel = UILabel()      // Bakiye
     let currencyLabel = UILabel()     // Para birimi
-    let last4DigitsLabel = UILabel()  // Son 4 hane
+    let cardholderNameLabel = UILabel() // Cardholder name
     let detailsButton = UIButton(type: .system) // Detaylar butonu
     let cardLogoImageView = UIImageView() // Kart logosu
 
@@ -38,98 +38,105 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
 
     // UI elemanlarını oluştur ve özelleştir
     private func setupViews() {
-        // Kart arka planı
-        cardBackgroundView.backgroundColor = UIColor.white
-        cardBackgroundView.layer.cornerRadius = 20
-        cardBackgroundView.layer.masksToBounds = true
-        cardBackgroundView.layer.borderWidth = 3
-        cardBackgroundView.layer.borderColor = walletColor.cgColor
-        contentView.addSubview(cardBackgroundView)
-        cardBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        // Card background
+        cardBackgroundView.layer.cornerRadius = 16
+        cardBackgroundView.layer.borderWidth = 2
+        cardBackgroundView.clipsToBounds = true
+        addSubview(cardBackgroundView)
 
-        // Kart logosu
+        // Wallet name
+        walletNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        cardBackgroundView.addSubview(walletNameLabel)
+
+        // Balance
+        balanceLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        cardBackgroundView.addSubview(balanceLabel)
+
+        // Currency
+        currencyLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        cardBackgroundView.addSubview(currencyLabel)
+
+        // Card logo
         cardLogoImageView.contentMode = .scaleAspectFit
         cardBackgroundView.addSubview(cardLogoImageView)
-        cardLogoImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        // Cüzdan adı
-        walletNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        walletNameLabel.textColor = UIColor.black
-        cardBackgroundView.addSubview(walletNameLabel)
-        walletNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        // Cardholder name
+        cardholderNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        cardholderNameLabel.textColor = .gray
+        cardBackgroundView.addSubview(cardholderNameLabel)
 
-        // Bakiye
-        balanceLabel.font = UIFont.boldSystemFont(ofSize: 28)
-        balanceLabel.textColor = UIColor.black
-        cardBackgroundView.addSubview(balanceLabel)
-        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Para birimi
-        currencyLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        currencyLabel.textColor = UIColor.black
-        cardBackgroundView.addSubview(currencyLabel)
-        currencyLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Son 4 hane
-        last4DigitsLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        last4DigitsLabel.textColor = UIColor.darkGray
-        cardBackgroundView.addSubview(last4DigitsLabel)
-        last4DigitsLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Detaylar butonu
+        // Details button
         detailsButton.setTitle("Details", for: .normal)
-        detailsButton.setTitleColor(.black, for: .normal)
-        detailsButton.backgroundColor = UIColor.white
-        detailsButton.layer.cornerRadius = 12
-        detailsButton.layer.borderWidth = 2
-        detailsButton.layer.borderColor = UIColor.systemPurple.cgColor
         detailsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        detailsButton.layer.cornerRadius = 12
+        detailsButton.layer.borderWidth = 1
+        detailsButton.backgroundColor = .white
         cardBackgroundView.addSubview(detailsButton)
-        detailsButton.translatesAutoresizingMaskIntoConstraints = false
     }
 
     // Otomatik yerleşim (Auto Layout) kuralları
     private func setupConstraints() {
+        cardBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        walletNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        currencyLabel.translatesAutoresizingMaskIntoConstraints = false
+        cardLogoImageView.translatesAutoresizingMaskIntoConstraints = false
+        cardholderNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailsButton.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            cardBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            cardBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            cardBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            cardBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            cardBackgroundView.widthAnchor.constraint(equalToConstant: 240),
-            cardBackgroundView.heightAnchor.constraint(equalToConstant: 140),
-            cardLogoImageView.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 12),
+            // Card background
+            cardBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+            cardBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            cardBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            cardBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // Wallet name
+            walletNameLabel.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 16),
+            walletNameLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
+
+            // Balance
+            balanceLabel.topAnchor.constraint(equalTo: walletNameLabel.bottomAnchor, constant: 8),
+            balanceLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
+
+            // Currency
+            currencyLabel.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
+            currencyLabel.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 8),
+
+            // Card logo
+            cardLogoImageView.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 16),
             cardLogoImageView.trailingAnchor.constraint(equalTo: cardBackgroundView.trailingAnchor, constant: -16),
             cardLogoImageView.widthAnchor.constraint(equalToConstant: 32),
             cardLogoImageView.heightAnchor.constraint(equalToConstant: 32),
-            walletNameLabel.topAnchor.constraint(equalTo: cardBackgroundView.topAnchor, constant: 16),
-            walletNameLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
-            walletNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: cardLogoImageView.leadingAnchor, constant: -8),
-            balanceLabel.topAnchor.constraint(equalTo: walletNameLabel.bottomAnchor, constant: 16),
-            balanceLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
-            currencyLabel.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
-            currencyLabel.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 8),
-            last4DigitsLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
-            last4DigitsLabel.bottomAnchor.constraint(equalTo: cardBackgroundView.bottomAnchor, constant: -16),
+
+            // Cardholder name
+            cardholderNameLabel.leadingAnchor.constraint(equalTo: cardBackgroundView.leadingAnchor, constant: 16),
+            cardholderNameLabel.bottomAnchor.constraint(equalTo: cardBackgroundView.bottomAnchor, constant: -16),
+
+            // Details button
             detailsButton.trailingAnchor.constraint(equalTo: cardBackgroundView.trailingAnchor, constant: -16),
             detailsButton.bottomAnchor.constraint(equalTo: cardBackgroundView.bottomAnchor, constant: -16),
-            detailsButton.widthAnchor.constraint(equalToConstant: 90),
+            detailsButton.widthAnchor.constraint(equalToConstant: 80),
             detailsButton.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
 
     // Cüzdan ile hücreyi doldur
-    func configure(with wallet: Wallet, last4: String) {
+    func configure(with wallet: Wallet, userName: String = "") {
         walletNameLabel.text = "\(wallet.currency) Wallet"
         currencyLabel.text = wallet.currency
-        last4DigitsLabel.text = "•••• \(last4)"
+        cardholderNameLabel.text = userName.uppercased()
+        
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
+        
         if let formattedBalance = formatter.string(from: NSNumber(value: wallet.balance)) {
             balanceLabel.text = formattedBalance
         }
+        
         // Kart logosu ve renkler
         switch wallet.currency {
         case "TRY":
@@ -139,6 +146,9 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
             walletNameLabel.textColor = walletColor
             balanceLabel.textColor = walletColor
             currencyLabel.textColor = walletColor
+            detailsButton.layer.borderColor = walletColor.cgColor
+            detailsButton.setTitleColor(walletColor, for: .normal)
+            cardLogoImageView.tintColor = walletColor
         case "USD":
             cardLogoImageView.image = UIImage(systemName: "dollarsign.circle.fill")
             cardBackgroundView.backgroundColor = UIColor(red: 0.89, green: 0.94, blue: 0.98, alpha: 1) // Açık mavi
@@ -146,6 +156,9 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
             walletNameLabel.textColor = walletColor
             balanceLabel.textColor = walletColor
             currencyLabel.textColor = walletColor
+            detailsButton.layer.borderColor = walletColor.cgColor
+            detailsButton.setTitleColor(walletColor, for: .normal)
+            cardLogoImageView.tintColor = walletColor
         case "EUR":
             cardLogoImageView.image = UIImage(systemName: "eurosign.circle.fill")
             cardBackgroundView.backgroundColor = UIColor(red: 1.0, green: 0.96, blue: 0.86, alpha: 1) // Açık sarı
@@ -153,6 +166,9 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
             walletNameLabel.textColor = walletColor
             balanceLabel.textColor = walletColor
             currencyLabel.textColor = walletColor
+            detailsButton.layer.borderColor = walletColor.cgColor
+            detailsButton.setTitleColor(walletColor, for: .normal)
+            cardLogoImageView.tintColor = walletColor
         default:
             cardLogoImageView.image = UIImage(systemName: "creditcard.fill")
             cardBackgroundView.backgroundColor = UIColor(white: 0.97, alpha: 1)
@@ -160,8 +176,9 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
             walletNameLabel.textColor = walletColor
             balanceLabel.textColor = walletColor
             currencyLabel.textColor = walletColor
+            detailsButton.layer.borderColor = walletColor.cgColor
+            detailsButton.setTitleColor(walletColor, for: .normal)
+            cardLogoImageView.tintColor = walletColor
         }
-        cardBackgroundView.layer.borderColor = walletColor.cgColor
-        detailsButton.layer.borderColor = UIColor.systemPurple.cgColor
     }
 }

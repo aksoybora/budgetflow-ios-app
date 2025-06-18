@@ -16,14 +16,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let contentView = UIView()
     let greetingLabel = UILabel()
     let welcomeLabel = UILabel()
-    let bellButton = UIButton(type: .system)
+    let profileButton = UIButton(type: .system)
     let balanceCardView = UIView()
     let balanceTitleLabel = UILabel()
     let balanceLabel = UILabel()
+    let balanceCurrencyLabel = UILabel()
     let eyeButton = UIButton(type: .system)
     let addTransactionButton = UIButton(type: .system)
     let walletsTitleLabel = UILabel()
-    let newCardButton = UIButton(type: .system)
     var walletsCollectionView: UICollectionView!
     let transactionsTitleLabel = UILabel()
     let seeAllButton = UIButton(type: .system)
@@ -34,12 +34,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var selectedWalletIndex: Int = 0
     var transactions: [Transaction] = []
     var isBalanceHidden = false
+    private var userName: String = "CARDHOLDER"
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        loadUserName()
         loadWallets()
     }
     
@@ -75,14 +77,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(welcomeLabel)
         
-        // Bell button
-        bellButton.setImage(UIImage(systemName: "bell"), for: .normal)
-        bellButton.tintColor = UIColor.gray
-        bellButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(bellButton)
+        // Profile button
+        profileButton.setImage(UIImage(systemName: "person.circle"), for: .normal)
+        profileButton.tintColor = UIColor.gray
+        profileButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(profileButton)
         
         // Balance Card
-        balanceCardView.backgroundColor = UIColor.white
+        balanceCardView.backgroundColor = UIColor(red: 0.95, green: 0.90, blue: 1.0, alpha: 1.0) // Light purple
         balanceCardView.layer.cornerRadius = 24
         balanceCardView.layer.borderWidth = 2
         balanceCardView.layer.borderColor = UIColor.systemPurple.cgColor
@@ -95,11 +97,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         balanceTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceCardView.addSubview(balanceTitleLabel)
         
-        balanceLabel.text = "$0.00"
+        balanceLabel.text = "0.00"
         balanceLabel.font = UIFont.boldSystemFont(ofSize: 36)
         balanceLabel.textColor = .black
         balanceLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceCardView.addSubview(balanceLabel)
+        
+        balanceCurrencyLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        balanceCurrencyLabel.textColor = .black
+        balanceCurrencyLabel.translatesAutoresizingMaskIntoConstraints = false
+        balanceCardView.addSubview(balanceCurrencyLabel)
         
         eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         eyeButton.tintColor = UIColor.gray
@@ -126,12 +133,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         walletsTitleLabel.textColor = .black
         walletsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(walletsTitleLabel)
-        
-        newCardButton.setTitle("+ New card", for: .normal)
-        newCardButton.setTitleColor(UIColor.systemPurple, for: .normal)
-        newCardButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        newCardButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(newCardButton)
         
         // Wallets CollectionView
         let layout = UICollectionViewFlowLayout()
@@ -173,10 +174,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         NSLayoutConstraint.activate([
             greetingLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
             greetingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            bellButton.centerYAnchor.constraint(equalTo: greetingLabel.centerYAnchor),
-            bellButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            bellButton.widthAnchor.constraint(equalToConstant: 36),
-            bellButton.heightAnchor.constraint(equalToConstant: 36),
+            profileButton.centerYAnchor.constraint(equalTo: greetingLabel.centerYAnchor),
+            profileButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            profileButton.widthAnchor.constraint(equalToConstant: 36),
+            profileButton.heightAnchor.constraint(equalToConstant: 36),
             welcomeLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 4),
             welcomeLabel.leadingAnchor.constraint(equalTo: greetingLabel.leadingAnchor),
             
@@ -191,8 +192,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             balanceLabel.topAnchor.constraint(equalTo: balanceTitleLabel.bottomAnchor, constant: 8),
             balanceLabel.leadingAnchor.constraint(equalTo: balanceCardView.leadingAnchor, constant: 20),
             
+            balanceCurrencyLabel.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
+            balanceCurrencyLabel.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 8),
+            
             eyeButton.centerYAnchor.constraint(equalTo: balanceLabel.centerYAnchor),
-            eyeButton.leadingAnchor.constraint(equalTo: balanceLabel.trailingAnchor, constant: 12),
+            eyeButton.leadingAnchor.constraint(equalTo: balanceCurrencyLabel.trailingAnchor, constant: 12),
             eyeButton.widthAnchor.constraint(equalToConstant: 28),
             eyeButton.heightAnchor.constraint(equalToConstant: 28),
             
@@ -203,13 +207,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             walletsTitleLabel.topAnchor.constraint(equalTo: balanceCardView.bottomAnchor, constant: 32),
             walletsTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            newCardButton.centerYAnchor.constraint(equalTo: walletsTitleLabel.centerYAnchor),
-            newCardButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             
             walletsCollectionView.topAnchor.constraint(equalTo: walletsTitleLabel.bottomAnchor, constant: 12),
             walletsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             walletsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            walletsCollectionView.heightAnchor.constraint(equalToConstant: 140),
+            walletsCollectionView.heightAnchor.constraint(equalToConstant: 160),
             
             transactionsTitleLabel.topAnchor.constraint(equalTo: walletsCollectionView.bottomAnchor, constant: 32),
             transactionsTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
@@ -222,6 +224,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             transactionsTableView.heightAnchor.constraint(equalToConstant: 300),
             transactionsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
+        
+        seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Wallets CollectionView
@@ -232,8 +236,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalletCardCell", for: indexPath) as! WalletCardCollectionViewCell
         let wallet = wallets[indexPath.item]
-        let last4 = "4568" // Örnek, Firestore'dan son 4 hane alınabilir
-        cell.configure(with: wallet, last4: last4)
+        cell.configure(with: wallet, userName: userName)
         cell.detailsButton.tag = indexPath.item
         cell.detailsButton.addTarget(self, action: #selector(detailsButtonTapped(_:)), for: .touchUpInside)
         return cell
@@ -246,29 +249,29 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 240, height: 140)
+        return CGSize(width: 280, height: 160)
     }
     
     // MARK: - Transactions TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return min(transactions.count, 5) // Sadece son 5 işlem
+        return min(transactions.count, 4) // Show up to 4 transactions
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
         let transaction = transactions[indexPath.row]
         
-        // Tarihi formatla
+        // Format date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: transaction.date.dateValue())
         
-        // Hücre içeriğini ayarla
+        // Configure cell content
         var content = cell.defaultContentConfiguration()
         content.text = transaction.title
         content.secondaryText = "\(transaction.amount) \(transaction.currency) - \(dateString)"
         
-        // İşlem tipine göre renk ayarla
+        // Set text color based on transaction type
         if transaction.type == "Income" {
             content.secondaryTextProperties.color = UIColor(hex: "#3E7B27")
             cell.backgroundColor = UIColor(hex: "#A7D477", alpha: 0.2)
@@ -277,34 +280,47 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.2)
         }
         
-        // İkon ayarla
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        // Configure icon based on transaction description
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
         let image: UIImage?
         
-        switch transaction.description.lowercased() {
-        case let desc where desc.contains("food") || desc.contains("restaurant"):
-            image = UIImage(systemName: "fork.knife", withConfiguration: imageConfig)
-        case let desc where desc.contains("transport") || desc.contains("car"):
+        switch transaction.title.lowercased() {
+        case let title where title.contains("coffee"):
+            image = UIImage(systemName: "cup.and.saucer.fill", withConfiguration: imageConfig)
+        case let title where title.contains("transport") || title.contains("uber"):
             image = UIImage(systemName: "car.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("shopping"):
+        case let title where title.contains("shopping") || title.contains("market"):
             image = UIImage(systemName: "cart.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("bills") || desc.contains("utilities"):
+        case let title where title.contains("bill") || title.contains("utilities"):
             image = UIImage(systemName: "doc.text.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("entertainment"):
+        case let title where title.contains("entertainment") || title.contains("movie"):
             image = UIImage(systemName: "tv.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("health"):
+        case let title where title.contains("health") || title.contains("medical"):
             image = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("education"):
+        case let title where title.contains("education") || title.contains("school"):
             image = UIImage(systemName: "book.fill", withConfiguration: imageConfig)
-        case let desc where desc.contains("salary") || desc.contains("income"):
+        case let title where title.contains("salary") || title.contains("income"):
             image = UIImage(systemName: "dollarsign.circle.fill", withConfiguration: imageConfig)
+        case let title where title.contains("food") || title.contains("restaurant"):
+            image = UIImage(systemName: "fork.knife", withConfiguration: imageConfig)
+        case let title where title.contains("tech") || title.contains("technology"):
+            image = UIImage(systemName: "laptopcomputer", withConfiguration: imageConfig)
+        case let title where title.contains("app") || title.contains("software"):
+            image = UIImage(systemName: "app.fill", withConfiguration: imageConfig)
+        case let title where title.contains("stay") || title.contains("hotel"):
+            image = UIImage(systemName: "house.fill", withConfiguration: imageConfig)
+        case let title where title.contains("rent") || title.contains("housing"):
+            image = UIImage(systemName: "building.2.fill", withConfiguration: imageConfig)
+        case let title where title.contains("groceries"):
+            image = UIImage(systemName: "basket.fill", withConfiguration: imageConfig)
         default:
-            image = UIImage(systemName: "circle.fill", withConfiguration: imageConfig)
+            image = UIImage(systemName: "banknote.fill", withConfiguration: imageConfig)
         }
         
         content.image = image
         content.imageProperties.tintColor = transaction.type == "Income" ? UIColor(hex: "#3E7B27") : .systemRed
-        content.imageToTextPadding = 12
+        content.imageProperties.maximumSize = CGSize(width: 32, height: 32)
+        content.imageToTextPadding = 16
         
         cell.contentConfiguration = content
         cell.backgroundColor = .white
@@ -319,15 +335,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         guard wallets.indices.contains(selectedWalletIndex) else { return }
         let wallet = wallets[selectedWalletIndex]
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         if isBalanceHidden {
             balanceLabel.text = "••••••"
+            balanceCurrencyLabel.text = "••••"
             eyeButton.setImage(UIImage(systemName: "eye"), for: .normal)
         } else if let formattedBalance = formatter.string(from: NSNumber(value: wallet.balance)) {
             balanceLabel.text = formattedBalance
+            balanceCurrencyLabel.text = wallet.currency
             eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         }
     }
@@ -348,8 +366,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - See All Button Action
-    @objc func seeAllButtonTapped() {
-        performSegue(withIdentifier: "toTransactionsVC", sender: nil)
+    @objc private func seeAllButtonTapped() {
+        let walletInfoVC = WalletInfoViewController()
+        walletInfoVC.wallet = wallets[selectedWalletIndex]
+        navigationController?.pushViewController(walletInfoVC, animated: true)
     }
     
     // MARK: - Firestore'dan Cüzdanları Yükle
@@ -362,7 +382,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 return
             }
             guard let documents = snapshot?.documents else { return }
-            self?.wallets = documents.compactMap { Wallet(document: $0) }
+            
+            // First get all wallets
+            var allWallets = documents.compactMap { Wallet(document: $0) }
+            
+            // Sort wallets in the desired order: TRY, USD, EUR
+            let currencyOrder = ["TRY", "USD", "EUR"]
+            self?.wallets = allWallets.sorted { wallet1, wallet2 in
+                guard let index1 = currencyOrder.firstIndex(of: wallet1.currency),
+                      let index2 = currencyOrder.firstIndex(of: wallet2.currency) else {
+                    // If currency not in the order list, put it at the end
+                    return false
+                }
+                return index1 < index2
+            }
+            
             DispatchQueue.main.async {
                 self?.walletsCollectionView.reloadData()
                 self?.updateBalanceCard()
@@ -373,11 +407,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     // MARK: - Firestore'dan İşlemleri Yükle
     func loadTransactionsForSelectedWallet() {
-        guard let userID = Auth.auth().currentUser?.uid else { return }
+        guard let userID = Auth.auth().currentUser?.uid,
+              selectedWalletIndex < wallets.count else { return }
+        
+        let selectedWallet = wallets[selectedWalletIndex]
         let db = Firestore.firestore()
         
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
+            .whereField("currency", isEqualTo: selectedWallet.currency)
             .getDocuments { [weak self] snapshot, error in
                 if let error = error {
                     print("İşlemler çekilirken hata:", error.localizedDescription)
@@ -385,28 +423,35 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
                 
                 guard let documents = snapshot?.documents else { return }
-                self?.transactions = documents.compactMap { doc in
+                var allTransactions = documents.compactMap { doc in
                     let data = doc.data()
-                    guard let title = data["title"] as? String,
-                          let description = data["description"] as? String,
-                          let amount = data["amount"] as? String,
-                          let currency = data["currency"] as? String,
-                          let category = data["category"] as? String,
-                          let type = data["type"] as? String,
-                          let date = data["date"] as? Timestamp,
-                          let walletID = data["walletID"] as? String else { return nil }
-                    
                     return Transaction(
-                        title: title,
-                        description: description,
-                        amount: amount,
-                        currency: currency,
-                        category: category,
-                        type: type,
-                        date: date,
-                        walletID: walletID
+                        title: data["title"] as? String ?? "",
+                        description: data["description"] as? String ?? "",
+                        amount: {
+                            if let amountStr = data["amount"] as? String {
+                                return amountStr
+                            } else if let amountDouble = data["amount"] as? Double {
+                                return String(format: "%.2f", amountDouble)
+                            } else {
+                                return ""
+                            }
+                        }(),
+                        currency: data["currency"] as? String ?? "",
+                        category: data["category"] as? String ?? "",
+                        type: data["type"] as? String ?? "",
+                        date: data["date"] as? Timestamp ?? Timestamp(),
+                        walletID: ""
                     )
-                }.sorted(by: { $0.date.dateValue() > $1.date.dateValue() })
+                }
+                
+                // Sort by date descending
+                allTransactions.sort { (t1: Transaction, t2: Transaction) in 
+                    t1.date.dateValue() > t2.date.dateValue() 
+                }
+                
+                // Take only the first 4 transactions
+                self?.transactions = Array(allTransactions.prefix(4))
                 
                 DispatchQueue.main.async {
                     self?.transactionsTableView.reloadData()
@@ -422,6 +467,46 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             dest.wallet = wallet
         }
     }
+
+    private func loadUserName() {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(userID).collection("info").getDocuments { [weak self] (snapshot, error) in
+            if let document = snapshot?.documents.first {
+                let name = document.data()["name"] as? String ?? ""
+                let surname = document.data()["surname"] as? String ?? ""
+                let fullName = "\(name) \(surname)".trimmingCharacters(in: .whitespaces)
+                DispatchQueue.main.async {
+                    self?.userName = fullName
+                    self?.greetingLabel.text = "Good morning, \(name)"
+                    self?.walletsCollectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    // MARK: - CollectionView DataSource & Delegate
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        // If there's only one wallet, center it
+        if wallets.count == 1 {
+            let totalWidth = collectionView.bounds.width
+            let itemWidth: CGFloat = 240 // Width of a single wallet card
+            let padding = (totalWidth - itemWidth) / 2
+            return UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
+        }
+        // Otherwise use default left alignment
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
+    }
 }
+
 
 
