@@ -321,13 +321,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="V5v-RA-ptk"/>
-                    <connections>
-                        <outlet property="chartView1" destination="YyW-AI-BGL" id="dL2-xd-Qbz"/>
-                        <outlet property="chartView2" destination="b5d-uF-opd" id="2aF-FV-FfJ"/>
-                        <outlet property="chartView3" destination="GDm-Oh-5IP" id="FTd-Dl-UZi"/>
-                        <outlet property="contentView" destination="AHQ-Fm-x9O" id="Pur-b2-Ua2"/>
-                        <outlet property="scrollView" destination="C6x-jy-G3r" id="spv-0s-yer"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIM-5x-6OF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

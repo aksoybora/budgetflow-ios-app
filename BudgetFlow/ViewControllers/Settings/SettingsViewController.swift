@@ -14,7 +14,39 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var userEmailLabel: UILabel!
     @IBOutlet weak var settingsTableView: UITableView!
     
-    let titleLabel = UILabel()
+    // MARK: - Properties
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor(hex: "#F5F5F5")
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.font = .systemFont(ofSize: 28, weight: .bold)
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Manage your account preferences"
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     // Define sections
     enum SettingsSection: Int, CaseIterable {
@@ -40,18 +72,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             switch self {
             case .profile:
                 return [
-        ("Account Info", "person"),
+                    ("Account Info", "person"),
                     ("Edit Profile", "pencil")
                 ]
             case .security:
                 return [
-        ("Change Password", "lock"),
+                    ("Change Password", "lock"),
                     ("Two-Factor Authentication", "lock.shield")
                 ]
             case .appearance:
                 return [
-                    ("Theme", "moon"),
-                    ("Accent Color", "paintpalette")
+                    ("Theme", "moon")
                 ]
             case .notifications:
                 return [
@@ -60,38 +91,65 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 ]
             case .support:
                 return [
-        ("FAQ", "questionmark"),
-        ("Contact Support", "envelope"),
-        ("Rate the App", "star"),
-                    ("Privacy Policy", "hand.raised")
+                    ("FAQ", "questionmark.circle"),
+                    ("Contact Support", "envelope"),
+                    ("Rate the App", "star")
                 ]
             case .account:
                 return [
-        ("Sign Out", "arrow.backward")
-    ]
+                    ("Sign Out", "arrow.right.square")
+                ]
             }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
-        setupTableView()
     }
-        
+    
     private func setupUI() {
-        titleLabel.text = "Settings"
-        titleLabel.textColor = .black
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titleLabel.sizeToFit()
-        navigationItem.titleView = titleLabel
-    }
+        view.backgroundColor = UIColor(hex: "#F5F5F5")
         
-    private func setupTableView() {
+        // Add views to hierarchy
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subtitleLabel)
+        contentView.addSubview(settingsTableView)
+        
+        // Setup table view
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
         settingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingsCell")
+        
+        // Setup constraints
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            
+            settingsTableView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 24),
+            settingsTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            settingsTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            settingsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
     
     // MARK: - UITableViewDataSource
@@ -109,24 +167,29 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "SettingsCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
         
         guard let section = SettingsSection(rawValue: indexPath.section),
               let item = section.items[safe: indexPath.row] else {
             return cell
         }
-
-        cell.textLabel?.text = item.title
-        cell.imageView?.image = UIImage(systemName: item.icon)
-        cell.imageView?.tintColor = .systemBlue
+        
+        var content = cell.defaultContentConfiguration()
+        content.text = item.title
+        content.textProperties.font = .systemFont(ofSize: 16, weight: .regular)
+        content.textProperties.color = item.title == "Sign Out" ? .systemRed : .label
+        
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        content.image = UIImage(systemName: item.icon, withConfiguration: imageConfig)
+        content.imageProperties.tintColor = item.title == "Sign Out" ? .systemRed : .systemBlue
+        
+        cell.contentConfiguration = content
+        cell.backgroundColor = .systemBackground
+        cell.layer.cornerRadius = 12
         cell.accessoryType = .disclosureIndicator
         
-        if item.title == "Sign Out" {
-            cell.backgroundColor = UIColor(hex: "#F44336", alpha: 0.1)
-        }
-
-            return cell
-        }
+        return cell
+    }
     
     // MARK: - UITableViewDelegate
     
@@ -168,8 +231,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             print("Sign Out failed!")
         }
     }
-    }
-    
+}
+
 // MARK: - Array Extension
 extension Array {
     subscript(safe index: Index) -> Element? {

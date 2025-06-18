@@ -8,7 +8,7 @@
 import UIKit
 
 class AnalysisHomeViewController: UIViewController {
-    
+
     // MARK: - UI Elements
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -72,7 +72,7 @@ class AnalysisHomeViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-    
+
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -197,16 +197,16 @@ class AnalysisHomeViewController: UIViewController {
         
         return card
     }
-    
+
     // MARK: - Actions
     @objc private func graphsButtonTapped() {
         performSegue(withIdentifier: "toGraphs", sender: self)
     }
-    
+
     @objc private func predictButtonTapped() {
         performSegue(withIdentifier: "toPredict", sender: self)
     }
-    
+
     @objc private func exportButtonTapped() {
         performSegue(withIdentifier: "toExport", sender: self)
     }

@@ -12,7 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class AnalysisViewController: UIViewController {
-    
+
     // MARK: - Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -47,6 +47,24 @@ class AnalysisViewController: UIViewController {
         return label
     }()
     
+    // Filter controls
+    private let filterSegmentedControl: UISegmentedControl = {
+        let items = ["1M", "3M", "6M", "1Y", "All"]
+        let control = UISegmentedControl(items: items)
+        control.selectedSegmentIndex = 0
+        control.translatesAutoresizingMaskIntoConstraints = false
+        return control
+    }()
+    
+    private let currencySegmentedControl: UISegmentedControl = {
+        let items = ["All", "TRY", "USD", "EUR"]
+        let control = UISegmentedControl(items: items)
+        control.selectedSegmentIndex = 0
+        control.translatesAutoresizingMaskIntoConstraints = false
+        return control
+    }()
+    
+    // MARK: - Chart Views
     private let pieChartCard: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -88,6 +106,11 @@ class AnalysisViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupCharts()
+        setupFilterActions()
+        
+        // Remove tab bar item image insets
+        tabBarItem.imageInsets = .zero
+        tabBarItem.titlePositionAdjustment = .zero
     }
     
     // MARK: - UI Setup
@@ -100,6 +123,8 @@ class AnalysisViewController: UIViewController {
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
+        contentView.addSubview(filterSegmentedControl)
+        contentView.addSubview(currencySegmentedControl)
         contentView.addSubview(pieChartCard)
         contentView.addSubview(barChartCard)
         contentView.addSubview(walletChartCard)
@@ -109,8 +134,8 @@ class AnalysisViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -125,7 +150,15 @@ class AnalysisViewController: UIViewController {
             subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             
-            pieChartCard.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 24),
+            filterSegmentedControl.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
+            filterSegmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            filterSegmentedControl.widthAnchor.constraint(equalToConstant: 200),
+            
+            currencySegmentedControl.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
+            currencySegmentedControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            currencySegmentedControl.widthAnchor.constraint(equalToConstant: 160),
+            
+            pieChartCard.topAnchor.constraint(equalTo: filterSegmentedControl.bottomAnchor, constant: 16),
             pieChartCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             pieChartCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             pieChartCard.heightAnchor.constraint(equalToConstant: 480),
@@ -143,6 +176,48 @@ class AnalysisViewController: UIViewController {
         ])
     }
     
+    private func setupFilterActions() {
+        filterSegmentedControl.addTarget(self, action: #selector(filterChanged), for: .valueChanged)
+        currencySegmentedControl.addTarget(self, action: #selector(currencyChanged), for: .valueChanged)
+    }
+    
+    @objc private func filterChanged() {
+        updateCharts()
+    }
+    
+    @objc private func currencyChanged() {
+        updateCharts()
+    }
+    
+    private func updateCharts() {
+        setupPieChart()
+        setupBarChart()
+        setupBarChartt()
+    }
+    
+    private func getDateRange() -> Date {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        switch filterSegmentedControl.selectedSegmentIndex {
+        case 0: // 1M
+            return calendar.date(byAdding: .month, value: -1, to: now) ?? now
+        case 1: // 3M
+            return calendar.date(byAdding: .month, value: -3, to: now) ?? now
+        case 2: // 6M
+            return calendar.date(byAdding: .month, value: -6, to: now) ?? now
+        case 3: // 1Y
+            return calendar.date(byAdding: .year, value: -1, to: now) ?? now
+        default: // All - use 5 years ago instead of distant past
+            return calendar.date(byAdding: .year, value: -5, to: now) ?? now
+        }
+    }
+    
+    private func getSelectedCurrency() -> String? {
+        let index = currencySegmentedControl.selectedSegmentIndex
+        return index == 0 ? nil : currencySegmentedControl.titleForSegment(at: index)
+    }
+    
     private func setupCharts() {
         setupPieChart()
         setupBarChart()
@@ -151,6 +226,9 @@ class AnalysisViewController: UIViewController {
     
     // MARK: - Chart Setup
     private func setupPieChart() {
+        // Remove any existing subviews first
+        pieChartCard.subviews.forEach { $0.removeFromSuperview() }
+        
         // Title Label
         let titleLabel = UILabel()
         titleLabel.text = "Expense Breakdown by Category"
@@ -168,7 +246,7 @@ class AnalysisViewController: UIViewController {
         let legendView = UIView()
         legendView.translatesAutoresizingMaskIntoConstraints = false
         pieChartCard.addSubview(legendView)
-        
+
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: pieChartCard.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: pieChartCard.leadingAnchor, constant: 16),
@@ -197,15 +275,15 @@ class AnalysisViewController: UIViewController {
                 var entries: [PieChartDataEntry] = []
                 var colors: [UIColor] = []
                 var legendItems: [(color: UIColor, category: String, percentage: Double, amount: Double)] = []
-                
+
                 let customColors: [UIColor] = [
                     .systemBlue, .systemGreen, .systemOrange,
                     .systemRed, .systemPurple, .systemTeal,
                     .systemYellow, .brown, .systemIndigo
                 ]
-                
+
                 var colorIndex = 0
-                
+
                 for (category, amount) in categoryTotals {
                     let percentage = (amount / total) * 100
                     let color = customColors[colorIndex % customColors.count]
@@ -221,7 +299,7 @@ class AnalysisViewController: UIViewController {
                 dataSet.colors = colors
                 dataSet.valueFont = .systemFont(ofSize: 14)
                 dataSet.entryLabelFont = .systemFont(ofSize: 14)
-                
+
                 let data = PieChartData(dataSet: dataSet)
                 pieChart.data = data
                 pieChart.legend.enabled = false
@@ -230,7 +308,7 @@ class AnalysisViewController: UIViewController {
                 // Update legend
                 legendView.subviews.forEach { $0.removeFromSuperview() }
                 var previousRow: UIView? = nil
-                
+
                 for item in legendItems {
                     let rowStack = UIStackView()
                     rowStack.axis = .horizontal
@@ -289,6 +367,9 @@ class AnalysisViewController: UIViewController {
     }
     
     private func setupBarChart() {
+        // Remove any existing subviews first
+        barChartCard.subviews.forEach { $0.removeFromSuperview() }
+        
         // Title Label
         let titleLabel = UILabel()
         titleLabel.text = "Monthly Income-Expense Breakdown"
@@ -358,6 +439,9 @@ class AnalysisViewController: UIViewController {
     }
     
     private func setupBarChartt() {
+        // Remove any existing subviews first
+        walletChartCard.subviews.forEach { $0.removeFromSuperview() }
+        
         // Title Label
         let titleLabel = UILabel()
         titleLabel.text = "Wallet Balances"
@@ -382,25 +466,32 @@ class AnalysisViewController: UIViewController {
             barChart.bottomAnchor.constraint(equalTo: walletChartCard.bottomAnchor, constant: -16)
         ])
         
-        let wallets = ["Main Account", "Cash", "Savings"]
-        let balances: [Double] = [3500, 1500, 8000]
-        
-        var dataEntries: [BarChartDataEntry] = []
-        for (i, value) in balances.enumerated() {
-            dataEntries.append(BarChartDataEntry(x: Double(i), y: value))
+        // Fetch wallet data from Firestore
+        fetchWalletBalances { [weak self] wallets in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                let walletNames = wallets.map { $0.name }
+                let balances = wallets.map { $0.balance }
+                
+                var dataEntries: [BarChartDataEntry] = []
+                for (i, value) in balances.enumerated() {
+                    dataEntries.append(BarChartDataEntry(x: Double(i), y: value))
+                }
+                
+                let chartDataSet = BarChartDataSet(entries: dataEntries, label: "Balance")
+                chartDataSet.colors = [UIColor.systemBlue]
+                let chartData = BarChartData(dataSet: chartDataSet)
+                
+                barChart.data = chartData
+                barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: walletNames)
+                barChart.xAxis.labelPosition = .bottom
+                barChart.legend.enabled = false
+                barChart.rightAxis.enabled = false
+                barChart.chartDescription.enabled = false
+                barChart.animate(yAxisDuration: 1.0)
+            }
         }
-        
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "Balance")
-        chartDataSet.colors = [UIColor.systemBlue]
-        let chartData = BarChartData(dataSet: chartDataSet)
-        
-        barChart.data = chartData
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: wallets)
-        barChart.xAxis.labelPosition = .bottom
-        barChart.legend.enabled = false
-        barChart.rightAxis.enabled = false
-        barChart.chartDescription.enabled = false
-        barChart.animate(yAxisDuration: 1.0)
     }
     
     // MARK: - Data Fetching
@@ -408,22 +499,46 @@ class AnalysisViewController: UIViewController {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         
+        // First fetch all transactions
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
             .whereField("type", isEqualTo: "Expense")
             .getDocuments { (snapshot, error) in
-                var categoryTotals: [String: Double] = [:]
-                
                 if let error = error {
                     print("Error fetching expenses: \(error)")
                     completion([:])
                     return
                 }
                 
+                var categoryTotals: [String: Double] = [:]
+                let startDate = self.getDateRange()
+                
                 for document in snapshot?.documents ?? [] {
                     let data = document.data()
-                    if let category = data["category"] as? String,
-                       let amount = data["amount"] as? Double {
+                    if let timestamp = data["date"] as? Timestamp,
+                       let category = data["category"] as? String {
+                        let date = timestamp.dateValue()
+                        
+                        // Apply date filter
+                        guard date >= startDate else { continue }
+                        
+                        // Apply currency filter if selected
+                        if let selectedCurrency = self.getSelectedCurrency(),
+                           let currency = data["currency"] as? String,
+                           currency != selectedCurrency {
+                            continue
+                        }
+                        
+                        // Handle amount (could be String or Double)
+                        let amount: Double
+                        if let amountStr = data["amount"] as? String {
+                            amount = Double(amountStr) ?? 0.0
+                        } else if let amountDouble = data["amount"] as? Double {
+                            amount = amountDouble
+                        } else {
+                            continue
+                        }
+                        
                         categoryTotals[category, default: 0] += amount
                     }
                 }
@@ -436,6 +551,7 @@ class AnalysisViewController: UIViewController {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
         
+        // First fetch all transactions
         db.collection("transactions")
             .whereField("userID", isEqualTo: userID)
             .getDocuments { (snapshot, error) in
@@ -448,21 +564,43 @@ class AnalysisViewController: UIViewController {
                 var monthlyData: [String: (income: Double, expense: Double)] = [:]
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMM yyyy"
+                let startDate = self.getDateRange()
                 
                 for document in snapshot?.documents ?? [] {
                     let data = document.data()
                     if let timestamp = data["date"] as? Timestamp,
-                       let type = data["type"] as? String,
-                       let amount = data["amount"] as? Double {
+                       let type = data["type"] as? String {
                         let date = timestamp.dateValue()
-                        let monthKey = dateFormatter.string(from: date)
                         
+                        // Apply date filter
+                        guard date >= startDate else { continue }
+                        
+                        // Apply currency filter if selected
+                        if let selectedCurrency = self.getSelectedCurrency(),
+                           let currency = data["currency"] as? String,
+                           currency != selectedCurrency {
+                            continue
+                        }
+                        
+                        // Handle amount (could be String or Double)
+                        let amount: Double
+                        if let amountStr = data["amount"] as? String {
+                            amount = Double(amountStr) ?? 0.0
+                        } else if let amountDouble = data["amount"] as? Double {
+                            amount = amountDouble
+                        } else {
+                            continue
+                        }
+                        
+                        let monthKey = dateFormatter.string(from: date)
                         var currentData = monthlyData[monthKey] ?? (income: 0, expense: 0)
+                        
                         if type == "Income" {
                             currentData.income += amount
                         } else if type == "Expense" {
                             currentData.expense += amount
                         }
+                        
                         monthlyData[monthKey] = currentData
                     }
                 }
@@ -474,5 +612,42 @@ class AnalysisViewController: UIViewController {
                 
                 completion(sortedMonthlyData)
             }
+    }
+
+    private func fetchWalletBalances(completion: @escaping ([(name: String, balance: Double)]) -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(userID).collection("wallets").getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching wallets: \(error)")
+                completion([])
+                    return
+                }
+
+            var wallets: [(name: String, balance: Double)] = []
+            
+            for document in snapshot?.documents ?? [] {
+                let data = document.data()
+                if let currency = data["currency"] as? String,
+                   let balance = data["balance"] as? Double {
+                    wallets.append((name: "\(currency) Wallet", balance: balance))
+                }
+            }
+            
+            // Sort wallets in the desired order: TRY, USD, EUR
+            let currencyOrder = ["TRY", "USD", "EUR"]
+            wallets.sort { wallet1, wallet2 in
+                let currency1 = wallet1.name.split(separator: " ")[0]
+                let currency2 = wallet2.name.split(separator: " ")[0]
+                guard let index1 = currencyOrder.firstIndex(of: String(currency1)),
+                      let index2 = currencyOrder.firstIndex(of: String(currency2)) else {
+                    return false
+                }
+                return index1 < index2
+            }
+            
+            completion(wallets)
+        }
     }
 }

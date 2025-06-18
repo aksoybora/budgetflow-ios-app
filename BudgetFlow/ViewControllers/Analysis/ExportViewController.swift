@@ -13,11 +13,97 @@ import PDFKit
 // Bu ekran, kullanıcıya filtreli işlemlerini PDF olarak dışa aktarma imkanı sunar.
 class ExportViewController: UIViewController {
     // UI elemanları
-    private let startDatePicker = UIDatePicker()
-    private let endDatePicker = UIDatePicker()
-    private let categoryPicker = UIPickerView()
-    private let typeSegment = UISegmentedControl(items: ["All", "Income", "Expense"])
-    private let exportButton = UIButton(type: .system)
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor(hex: "#F5F5F5")
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Export Transactions"
+        label.font = .systemFont(ofSize: 28, weight: .bold)
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Export your filtered transactions as PDF"
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let filterCard: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 16
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 8
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private let startDatePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .compact
+        picker.tintColor = .systemBlue
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+
+    private let endDatePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .compact
+        picker.tintColor = .systemBlue
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+
+    private let categoryPicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+
+    private let typeSegment: UISegmentedControl = {
+        let segment = UISegmentedControl(items: ["All", "Income", "Expense"])
+        segment.selectedSegmentIndex = 0
+        segment.backgroundColor = .systemBackground
+        segment.selectedSegmentTintColor = .systemBlue
+        segment.setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal)
+        segment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segment.translatesAutoresizingMaskIntoConstraints = false
+        return segment
+    }()
+
+    private let exportButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Export as PDF", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 14
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     private let infoLabel = UILabel()
     private let categories = ["All", "Food", "Transportation", "Electricity", "Entertainment", "Accommodation", "Education", "Technology", "Salary", "Other"]
     private var selectedCategory: String = "All"
@@ -28,145 +114,111 @@ class ExportViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGroupedBackground
-        title = "Export Transactions"
+        view.backgroundColor = UIColor(hex: "#F5F5F5")
         setupUI()
+        setupActions()
     }
 
-    // UI elemanlarını ekrana yerleştir
     private func setupUI() {
-        // Bilgi etiketi
-        infoLabel.text = "Select filters and export your transactions as a PDF."
-        infoLabel.font = UIFont.systemFont(ofSize: 15)
-        infoLabel.textColor = .darkGray
-        infoLabel.numberOfLines = 0
-        infoLabel.textAlignment = .center
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(infoLabel)
-
-        // Yeni başlık etiketi
-        let filterLabel = UILabel()
-        filterLabel.text = "Filtering Options"
-        filterLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        filterLabel.textColor = .black
-        filterLabel.textAlignment = .center
-        filterLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(filterLabel)
-
-        // Başlangıç tarihi seçici
-        let startDateLabel = UILabel()
-        startDateLabel.text = "Start Date"
-        startDateLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        startDateLabel.textColor = .black
-        startDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(startDateLabel)
-
-        startDatePicker.datePickerMode = .date
-        startDatePicker.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(startDatePicker)
-
-        // Bitiş tarihi seçici
-        let endDateLabel = UILabel()
-        endDateLabel.text = "End Date"
-        endDateLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        endDateLabel.textColor = .black
-        endDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(endDateLabel)
-
-        endDatePicker.datePickerMode = .date
-        endDatePicker.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(endDatePicker)
-
-        // Kategori seçici
-        let categoryLabel = UILabel()
-        categoryLabel.text = "Category"
-        categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        categoryLabel.textColor = .black
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(categoryLabel)
-
+        // Add views to hierarchy
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subtitleLabel)
+        contentView.addSubview(filterCard)
+        
+        // Add filter card content
+        let dateStack = createLabeledStack(title: "Date Range", spacing: 16)
+        dateStack.addArrangedSubview(createLabeledComponent(label: "From", component: startDatePicker))
+        dateStack.addArrangedSubview(createLabeledComponent(label: "To", component: endDatePicker))
+        
+        let categoryStack = createLabeledStack(title: "Category", spacing: 8)
+        categoryStack.addArrangedSubview(categoryPicker)
+        
+        let typeStack = createLabeledStack(title: "Transaction Type", spacing: 8)
+        typeStack.addArrangedSubview(typeSegment)
+        
+        let filterStack = UIStackView(arrangedSubviews: [dateStack, categoryStack, typeStack])
+        filterStack.axis = .vertical
+        filterStack.spacing = 24
+        filterStack.translatesAutoresizingMaskIntoConstraints = false
+        filterCard.addSubview(filterStack)
+        
+        contentView.addSubview(exportButton)
+        
+        // Setup constraints
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            
+            filterCard.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 24),
+            filterCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            filterCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            filterStack.topAnchor.constraint(equalTo: filterCard.topAnchor, constant: 24),
+            filterStack.leadingAnchor.constraint(equalTo: filterCard.leadingAnchor, constant: 24),
+            filterStack.trailingAnchor.constraint(equalTo: filterCard.trailingAnchor, constant: -24),
+            filterStack.bottomAnchor.constraint(equalTo: filterCard.bottomAnchor, constant: -24),
+            
+            categoryPicker.heightAnchor.constraint(equalToConstant: 120),
+            
+            exportButton.topAnchor.constraint(equalTo: filterCard.bottomAnchor, constant: 32),
+            exportButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            exportButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            exportButton.heightAnchor.constraint(equalToConstant: 56),
+            exportButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+        ])
+        
+        // Setup delegates
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
-        categoryPicker.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(categoryPicker)
-
-        // Tip segmenti
-        let typeLabel = UILabel()
-        typeLabel.text = "Type"
-        typeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        typeLabel.textColor = .black
-        typeLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(typeLabel)
-
-        typeSegment.selectedSegmentIndex = 0
-        typeSegment.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupActions() {
         typeSegment.addTarget(self, action: #selector(typeChanged), for: .valueChanged)
-        view.addSubview(typeSegment)
-
-        // Export butonu
-        exportButton.setTitle("Export as PDF", for: .normal)
-        exportButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        exportButton.backgroundColor = .systemBlue
-        exportButton.setTitleColor(.white, for: .normal)
-        exportButton.layer.cornerRadius = 14
-        exportButton.translatesAutoresizingMaskIntoConstraints = false
         exportButton.addTarget(self, action: #selector(exportTapped), for: .touchUpInside)
-        view.addSubview(exportButton)
-
-        // Layout
-        NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
-            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            infoLabel.heightAnchor.constraint(equalToConstant: 40),
-
-            filterLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
-            filterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            filterLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            filterLabel.heightAnchor.constraint(equalToConstant: 24),
-
-            startDateLabel.topAnchor.constraint(equalTo: filterLabel.bottomAnchor, constant: 12),
-            startDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            startDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            startDateLabel.heightAnchor.constraint(equalToConstant: 20),
-
-            startDatePicker.topAnchor.constraint(equalTo: startDateLabel.bottomAnchor, constant: 4),
-            startDatePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            startDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-
-            endDateLabel.topAnchor.constraint(equalTo: startDatePicker.bottomAnchor, constant: 8),
-            endDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            endDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            endDateLabel.heightAnchor.constraint(equalToConstant: 20),
-
-            endDatePicker.topAnchor.constraint(equalTo: endDateLabel.bottomAnchor, constant: 4),
-            endDatePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            endDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-
-            categoryLabel.topAnchor.constraint(equalTo: endDatePicker.bottomAnchor, constant: 8),
-            categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            categoryLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            categoryLabel.heightAnchor.constraint(equalToConstant: 20),
-
-            categoryPicker.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 4),
-            categoryPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            categoryPicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            categoryPicker.heightAnchor.constraint(equalToConstant: 180),
-
-            typeLabel.topAnchor.constraint(equalTo: categoryPicker.bottomAnchor, constant: 8),
-            typeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            typeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            typeLabel.heightAnchor.constraint(equalToConstant: 20),
-
-            typeSegment.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 4),
-            typeSegment.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            typeSegment.widthAnchor.constraint(equalToConstant: 260),
-
-            exportButton.topAnchor.constraint(equalTo: typeSegment.bottomAnchor, constant: 140),
-            exportButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            exportButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            exportButton.heightAnchor.constraint(equalToConstant: 48)
-        ])
+    }
+    
+    private func createLabeledStack(title: String, spacing: CGFloat) -> UIStackView {
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        titleLabel.textColor = .systemBlue
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel])
+        stack.axis = .vertical
+        stack.spacing = spacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }
+    
+    private func createLabeledComponent(label: String, component: UIView) -> UIStackView {
+        let titleLabel = UILabel()
+        titleLabel.text = label
+        titleLabel.font = .systemFont(ofSize: 14)
+        titleLabel.textColor = .secondaryLabel
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel, component])
+        stack.axis = .vertical
+        stack.spacing = 4
+        return stack
     }
 
     // Tip segmenti değişince
