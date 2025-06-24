@@ -1,4 +1,3 @@
-
 import UIKit
 import Firebase
 import FirebaseAuth
@@ -26,6 +25,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         setupUI() // UI elemanlarını kur
         setupDatePicker() // Tarih seçiciyi ayarla
+        setupKeyboardDismissal() // Klavye kapatma özelliğini ayarla
     }
     
     // MARK: - UI Kurulumu
@@ -238,6 +238,19 @@ class SignUpViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    // MARK: - Klavye Kapatma Özelliği
+    private func setupKeyboardDismissal() {
+        // Boş alana tıklandığında klavyeyi kapatmak için tap gesture recognizer ekle
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false // Diğer touch event'lerin çalışmasına izin ver
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // Klavyeyi kapatma fonksiyonu
+    @objc private func dismissKeyboard() {
+        view.endEditing(true) // Aktif text field'ı kapat ve klavyeyi gizle
     }
     
     // MARK: - Yardımcı Metodlar

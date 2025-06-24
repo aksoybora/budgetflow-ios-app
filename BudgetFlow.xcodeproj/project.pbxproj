@@ -16,8 +16,6 @@
 		7C1D8FD12DDCC15000E528F2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD02DDCC15000E528F2 /* FirebaseFirestore */; };
 		7C1D8FD32DDCC15000E528F2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */; };
 		7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD52DDCC17000E528F2 /* DGCharts */; };
-		7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; settings = {ATTRIBUTES = (Required, ); }; };
-		7C1D8FD92DDCC19700E528F2 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7C2B9AA62E01FBBC0005F852 /* WalletInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B9AA52E01FBBC0005F852 /* WalletInfoViewController.swift */; };
 		7C2B9AA92E01FDC30005F852 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7C2B9AA82E01FDC30005F852 /* SDWebImage */; };
 		7C2B9AAB2E01FDC30005F852 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C2B9AAA2E01FDC30005F852 /* SDWebImageMapKit */; };
@@ -56,17 +54,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7C6AE1132DD8C2600044A2A5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				7C1D8FD92DDCC19700E528F2 /* DGChartsDynamic in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -118,11 +105,10 @@
 				7C1D8FCD2DDCC15000E528F2 /* FirebaseCore in Frameworks */,
 				7C1D8FCF2DDCC15000E528F2 /* FirebaseDatabase in Frameworks */,
 				7C1D8FD12DDCC15000E528F2 /* FirebaseFirestore in Frameworks */,
-				7C1D8FD82DDCC17000E528F2 /* DGChartsDynamic in Frameworks */,
+				7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */,
 				7C1D8FCB2DDCC15000E528F2 /* FirebaseAuth in Frameworks */,
 				7C2B9AAB2E01FDC30005F852 /* SDWebImageMapKit in Frameworks */,
 				7C2B9AA92E01FDC30005F852 /* SDWebImage in Frameworks */,
-				7C1D8FD62DDCC17000E528F2 /* DGCharts in Frameworks */,
 				7C1D8FD32DDCC15000E528F2 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,7 +265,6 @@
 				7C58E5A92D50F1AC006A2451 /* Sources */,
 				7C58E5AA2D50F1AC006A2451 /* Frameworks */,
 				7C58E5AB2D50F1AC006A2451 /* Resources */,
-				7C6AE1132DD8C2600044A2A5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -294,7 +279,6 @@
 				7C1D8FD02DDCC15000E528F2 /* FirebaseFirestore */,
 				7C1D8FD22DDCC15000E528F2 /* FirebaseStorage */,
 				7C1D8FD52DDCC17000E528F2 /* DGCharts */,
-				7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */,
 				7C2B9AA82E01FDC30005F852 /* SDWebImage */,
 				7C2B9AAA2E01FDC30005F852 /* SDWebImageMapKit */,
 			);
@@ -676,11 +660,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
-		};
-		7C1D8FD72DDCC17000E528F2 /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7C1D8FD42DDCC17000E528F2 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
 		};
 		7C2B9AA82E01FDC30005F852 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;

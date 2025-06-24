@@ -1,6 +1,5 @@
 import UIKit
 import DGCharts
-import Charts
 import FirebaseAuth
 import FirebaseFirestore
 

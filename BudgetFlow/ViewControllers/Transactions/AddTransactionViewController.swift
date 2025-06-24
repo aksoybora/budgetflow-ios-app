@@ -1,4 +1,3 @@
-
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
@@ -165,6 +164,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         setupUI() // UI elemanlarını ayarla
         setupNavigationBar() // Navigasyon çubuğunu ayarla
         setupPickers() // Seçicileri ayarla
+        setupKeyboardDismissal() // Klavye kapatma özelliğini ayarla
     }
     
     // MARK: - Kurulum Metodları
@@ -308,6 +308,19 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         selectedCurrency = currencyOptions[0]
         selectedCategory = categoryOptions[0]
         selectedTransactionType = "Income"
+    }
+    
+    // MARK: - Klavye Kapatma Özelliği
+    private func setupKeyboardDismissal() {
+        // Boş alana tıklandığında klavyeyi kapatmak için tap gesture recognizer ekle
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false // Diğer touch event'lerin çalışmasına izin ver
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // Klavyeyi kapatma fonksiyonu
+    @objc private func dismissKeyboard() {
+        view.endEditing(true) // Aktif text field'ı kapat ve klavyeyi gizle
     }
     
     // MARK: - Aksiyonlar
